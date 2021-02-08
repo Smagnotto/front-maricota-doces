@@ -32,8 +32,6 @@ export class CadastroProdutoComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    console.log("ENTROU");
-
     this.produtosFormGroup.reset();
     this.idProduto?.setValue(this.data.id);
     this.nomeProduto?.setValue(this.data.nome);
