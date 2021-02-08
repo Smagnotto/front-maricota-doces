@@ -1,6 +1,11 @@
 <form [formGroup]="produtosFormGroup">
   <div class="row">
 
+    <mat-form-field [hidden]>
+      <mat-label>Id Produto</mat-label>
+      <input matInput type="text" formControlName="idProduto">
+    </mat-form-field>
+
     <mat-form-field>
       <mat-label>Nome do produto</mat-label>
       <input type="text" matInput #input formControlName="nomeProduto" required placeholder="Ex. Torta de limão"
@@ -13,7 +18,7 @@
 
     <mat-form-field>
       <mat-label>Preço</mat-label>
-      <input matInput type="number" placeholder="10,00" required>
+      <input matInput type="number" placeholder="10,00" required formControlName="precoProduto">
       <span matPrefix>R$&nbsp;</span>
       <mat-error *ngIf="precoProduto!.errors?.required">
         Preço do produto é<strong>obrigatório</strong>
@@ -36,12 +41,12 @@
 
   <div class="flex-container">
     <div class="button-container">
-      <button mat-mini-fab color="warn" (click)="closeModal()">
+      <button mat-mini-fab color="warn" (click)="cancel()" matTooltip="Cancelar">
         <mat-icon>clear_outlined</mat-icon>
       </button>
     </div>
     <div class="button-container">
-      <button mat-mini-fab color="primary">
+      <button mat-mini-fab color="primary" (click)="saveProduto()" matTooltip="Salvar">
         <mat-icon>done</mat-icon>
       </button>
     </div>
