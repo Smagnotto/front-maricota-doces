@@ -13,12 +13,14 @@
 <mat-sidenav-container>
   <mat-sidenav [permanentAt]="960" #sidenav [mode]="'side'" [opened]="'false'" [disableClose]="'false'">
     <mat-list role="list">
-      <mat-list-item role="listitem">Item 1</mat-list-item>
+      <mat-list-item role="listitem">
+        <a matLine href="/produtos">Produtos</a>
+      </mat-list-item>
       <mat-list-item role="listitem">Item 2</mat-list-item>
       <mat-list-item role="listitem">Item 3</mat-list-item>
     </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-      <ng-component></ng-component>
+    <ng-component></ng-component>
   </mat-sidenav-content>
 </mat-sidenav-container>
