@@ -1,0 +1,24 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <!-- <a href="/" class="nav-link home">
+      <img src="assets/images/logos/angular/logo-nav@2x.png" width="150" height="40" title="Home" alt="Maricota Doces"
+        class="ng-star-inserted">
+    </a> -->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav [permanentAt]="960" #sidenav [mode]="'side'" [opened]="'false'" [disableClose]="'false'">
+    <mat-list role="list">
+      <mat-list-item role="listitem">Item 1</mat-list-item>
+      <mat-list-item role="listitem">Item 2</mat-list-item>
+      <mat-list-item role="listitem">Item 3</mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <ng-component></ng-component>
+  </mat-sidenav-content>
+</mat-sidenav-container>
