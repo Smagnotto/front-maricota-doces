@@ -39,18 +39,8 @@
     </mat-form-field>
   </div>
 
-  <div class="flex-container">
-    <div class="button-container">
-      <button mat-mini-fab color="warn" (click)="cancel()" matTooltip="Cancelar">
-        <mat-icon>clear_outlined</mat-icon>
-      </button>
-    </div>
-    <div class="button-container">
-      <button mat-mini-fab color="primary" (click)="saveProduto()" matTooltip="Salvar">
-        <mat-icon>done</mat-icon>
-      </button>
-    </div>
+  <div mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined" color="primary">Cancelar</button>
+    <button mat-button (click)="saveProduto()" cdkFocusInitial color="primary">Ok</button>
   </div>
-
-
 </form>

@@ -61,18 +61,9 @@ export class CadastroProdutoComponent implements OnInit {
       nome: this.nomeProduto?.value,
       ativo: true,
       materia_prima: true,
-      preco: this.precoProduto?.value
+      preco: this.precoProduto?.value,
     };
 
-    this.closeModal(produto);
-  }
-
-  cancel() {
-    this.closeModal();
-  }
-
-  closeModal(produto?: Produto): void {
-    this.produtosFormGroup.reset();
     this.dialogRef.close(produto);
   }
 }
