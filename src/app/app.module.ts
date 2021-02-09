@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialUIModule } from './material-ui.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SidenavModule } from './components/sidenav/sidenav.module';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SidenavModule } from './components/sidenav/sidenav.module';
     HttpClientModule,
 
     //Custom Module
-    SidenavModule
+    SidenavModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

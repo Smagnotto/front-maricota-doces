@@ -32,44 +32,50 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatBadgeModule } from '@angular/material/badge'
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatTreeModule } from '@angular/material/tree'
 
 @NgModule({
-    exports: [
-      CdkTableModule,
-      MatAutocompleteModule,
-      MatButtonModule,
-      MatButtonToggleModule,
-      MatCardModule,
-      MatCheckboxModule,
-      MatChipsModule,
-      MatStepperModule,
-      MatDatepickerModule,
-      MatDialogModule,
-      MatExpansionModule,
-      MatGridListModule,
-      MatIconModule,
-      MatInputModule,
-      MatListModule,
-      MatMenuModule,
-      MatNativeDateModule,
-      MatPaginatorModule,
-      MatProgressBarModule,
-      MatProgressSpinnerModule,
-      MatRadioModule,
-      MatRippleModule,
-      MatSelectModule,
-      MatSidenavModule,
-      MatSliderModule,
-      MatSlideToggleModule,
-      MatSnackBarModule,
-      MatSortModule,
-      MatTableModule,
-      MatTabsModule,
-      MatToolbarModule,
-      MatTooltipModule,
-      MatFormFieldModule
-    ]
-  })
-
-  export class MaterialUIModule {}
+  exports: [
+    CdkTableModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatRippleModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatSortModule,
+    MatTableModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatDividerModule,
+    MatTreeModule,
+  ],
+})
+export class MaterialUIModule {}
