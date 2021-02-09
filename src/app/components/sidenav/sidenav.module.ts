@@ -1,17 +1,15 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { LayoutModule } from "@angular/cdk/layout";
-import { MatSidenavModule } from "@angular/material/sidenav";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { RouterModule } from "@angular/router";
-import { SidenavDirective } from "./sidenav.directive";
-import { SidenavComponent } from "./sidenav.component";
-import { MaterialUIModule } from "src/app/material-ui.module";
+import { MaterialUIModule } from 'src/app/material-ui.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SidenavComponent } from './sidenav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [SidenavDirective, SidenavComponent],
-  imports: [CommonModule, RouterModule, LayoutModule, MatSidenavModule, MaterialUIModule],
-  exports: [SidenavDirective, SidenavComponent]
+  declarations: [SidenavComponent],
+  imports: [CommonModule, RouterModule, LayoutModule, MaterialUIModule],
+  exports: [SidenavComponent],
 })
-
 export class SidenavModule {}
