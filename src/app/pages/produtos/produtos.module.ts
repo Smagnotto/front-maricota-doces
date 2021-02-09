@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ProdutosRoutingModule } from './produtos-routing.module';
+import { ProdutosRoutingModule } from '../produtos/produtos-routing.module';
 import { MaterialUIModule } from 'src/app/material-ui.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CadastroProdutoComponent } from './cadastro/cadastro-produtos.component';
 import { ProdutosComponent } from './lista/produtos.component';
-
+import { CadastroProdutoComponent } from './cadastro/cadastro-produtos.component';
 
 @NgModule({
   declarations: [ProdutosComponent, CadastroProdutoComponent],
@@ -14,7 +13,7 @@ import { ProdutosComponent } from './lista/produtos.component';
     CommonModule,
     ProdutosRoutingModule,
     MaterialUIModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
-export class ProdutosModule { }
+export class ProdutosModule {}
