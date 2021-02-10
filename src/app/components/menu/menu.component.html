@@ -1,8 +1,12 @@
 <div class="layout-sidebar" [ngClass]="{'active': active}">
   <div class="layout-menu">
+    <div class="menu-category">Inicio</div>
+    <div class="menu-items">
+      <a [routerLink]=" ['/dashboard']" routerLinkActive="router-link-exact-active">Dashboard</a>
+    </div>
+
     <div class="menu-category">Cadastro</div>
     <div class="menu-items">
       <a [routerLink]=" ['/produtos']" routerLinkActive="router-link-exact-active">Produtos</a>
     </div>
-</div>
-
+  </div>

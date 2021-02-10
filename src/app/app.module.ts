@@ -11,6 +11,8 @@ import { PrimeNGModule } from './primeng.module';
 import { FooterModule } from './components/footer/footer.module';
 import { MenuModule } from './components/menu/menu.module';
 import { TopbarModule } from './components/topbar/topbar.module';
+import { DashboardModule } from './pages/dashboard/dashboard.module';
+import { BarChartModule } from './components/bar-chart/bar-chart.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +30,7 @@ import { TopbarModule } from './components/topbar/topbar.module';
     FooterModule,
     MenuModule,
     TopbarModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent],
