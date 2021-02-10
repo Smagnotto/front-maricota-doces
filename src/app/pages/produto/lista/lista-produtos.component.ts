@@ -8,7 +8,9 @@ import { Produto } from '../domain/produto';
   styleUrls: ['./lista-produtos.component.css'],
 })
 export class ListaProdutosComponent implements OnInit {
-  produtos: Produto[];
+
+  //Precisa preencher o array pro skeleton funcionar
+  produtos: Produto[] = [ undefined, undefined, undefined, undefined, undefined,undefined, undefined, undefined, undefined, undefined] ;
 
   isLoading: boolean = false;
 
@@ -27,6 +29,6 @@ export class ListaProdutosComponent implements OnInit {
         this.produtos = produtos;
         this.isLoading = false;
       });
-    }, 1000);
+    }, 5000);
   }
 }
