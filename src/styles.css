@@ -1,6 +1,7 @@
 html {
   font-size: 14px;
 }
+
 body {
   margin: 0px;
   height: 100%;
@@ -13,62 +14,91 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 a {
   text-decoration: none;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 1.5rem 0 1rem 0;
   font-family: inherit;
   font-weight: 600;
   line-height: 1.2;
   color: inherit;
 }
-h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
   margin-top: 0;
 }
+
 h1 {
   font-size: 2.5rem;
 }
+
 h2 {
   font-size: 2rem;
 }
+
 h3 {
   font-size: 1.75rem;
 }
+
 h4 {
   font-size: 1.5rem;
 }
+
 h5 {
   font-size: 1.25rem;
 }
+
 h6 {
   font-size: 1rem;
 }
+
 p {
   line-height: 1.5;
   margin: 0 0 1rem 0;
 }
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
-input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 @keyframes pulse {
   0% {
     background-color: rgba(165, 165, 165, 0.1);
- }
+  }
+
   50% {
     background-color: rgba(165, 165, 165, 0.3);
- }
+  }
+
   100% {
     background-color: rgba(165, 165, 165, 0.1);
- }
+  }
 }
-pre[class*="language-"]:before, pre[class*="language-"]:after {
+
+pre[class*="language-"]:before,
+pre[class*="language-"]:after {
   display: none !important;
 }
+
 pre[class*="language-"] code {
   border-left: 10px solid var(--surface-d) !important;
   box-shadow: none !important;
@@ -77,24 +107,35 @@ pre[class*="language-"] code {
   color: var(--text-color);
   font-size: 14px;
 }
-pre[class*="language-"] code .token.tag, pre[class*="language-"] code .token.keyword {
+
+pre[class*="language-"] code .token.tag,
+pre[class*="language-"] code .token.keyword {
   color: #2196f3 !important;
 }
-pre[class*="language-"] code .token.attr-name, pre[class*="language-"] code .token.attr-string {
+
+pre[class*="language-"] code .token.attr-name,
+pre[class*="language-"] code .token.attr-string {
   color: #2196f3 !important;
 }
+
 pre[class*="language-"] code .token.attr-value {
   color: #4caf50 !important;
 }
+
 pre[class*="language-"] code .token.punctuation {
   color: var(--text-color);
 }
-pre[class*="language-"] code .token.operator, pre[class*="language-"] code .token.string {
+
+pre[class*="language-"] code .token.operator,
+pre[class*="language-"] code .token.string {
   background: transparent;
 }
-.p-toast.p-toast-topright, .p-toast.p-toast-topleft {
+
+.p-toast.p-toast-topright,
+.p-toast.p-toast-topleft {
   top: 100px;
 }
+
 .action-button {
   font-weight: bold;
   text-align: center;
@@ -104,6 +145,7 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   border-radius: 3px;
   transition: background-color 0.2s;
 }
+
 .action-button:hover {
   background-color: #708ea5;
   color: #fff;
@@ -115,9 +157,11 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   margin-left: 250px;
   padding-top: 70px;
 }
+
 .layout-content .content-section {
   padding: 2rem;
 }
+
 .layout-content .content-section.introduction {
   background-color: var(--surface-b);
   color: var(--text-color);
@@ -126,50 +170,63 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   align-items: top;
   justify-content: space-between;
 }
+
 .layout-content .content-section.introduction .feature-intro h1 span {
   font-weight: 400;
   color: var(--text-color-secondary);
 }
+
 .layout-content .content-section.introduction .feature-intro p {
   margin: 0;
 }
+
 .layout-content .content-section.introduction .feature-intro a {
   text-decoration: none;
   color: #2196f3;
   font-weight: 600;
 }
+
 .layout-content .content-section.introduction .feature-intro a:hover {
   text-decoration: underline;
 }
+
 .layout-content .content-section.introduction .app-inputstyleswitch {
   margin-left: 2rem;
 }
+
 .layout-content .content-section.implementation {
   background-color: var(--surface-b);
   color: var(--text-color);
 }
-.layout-content .content-section.implementation + .documentation {
+
+.layout-content .content-section.implementation+.documentation {
   padding-top: 0;
 }
+
 .layout-content .content-section.documentation {
   background-color: var(--surface-b);
   color: var(--text-color);
 }
+
 .layout-content .content-section.documentation li {
   line-height: 1.5;
 }
+
 .layout-content .content-section.documentation a {
   text-decoration: none;
   color: #2196f3;
   font-weight: 600;
 }
+
 .layout-content .content-section.documentation a:hover {
   text-decoration: underline;
 }
+
 .layout-content .content-section.documentation .doc-tablewrapper {
   margin: 1rem 0;
   overflow: auto;
 }
+
 .layout-content .content-section.documentation i:not([class~="pi"]) {
   background-color: var(--surface-a);
   color: #2196f3;
@@ -183,23 +240,28 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   font-weight: 600;
   margin: 0 2px;
 }
+
 .layout-content .content-section.documentation .p-tabview {
   background: transparent;
   border: 0 none;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-nav {
   border-radius: 0;
   padding: 0;
   border-bottom: 1px solid var(--surface-d);
   background-color: transparent;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-nav li {
   margin-right: 0;
   border: 0 none;
   top: 1px;
   line-height: 1;
 }
-.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a, .layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited {
+
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a,
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited {
   color: var(--text-color-secondary);
   text-shadow: none;
   height: inherit;
@@ -209,58 +271,74 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   margin-bottom: -1px;
   transition: border-bottom-color 0.2s;
 }
-.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:focus, .layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited:focus {
+
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:focus,
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited:focus {
   outline: 0 none;
   transition: box-shadow 0.2s;
   box-shadow: 0 0 0 0.2rem #bbdefb;
 }
-.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:hover, .layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited:hover {
+
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:hover,
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li a:visited:hover {
   background: transparent;
   text-decoration: none;
 }
-.layout-content .content-section.documentation .p-tabview .p-tabview-nav li.p-highlight a, .layout-content .content-section.documentation .p-tabview .p-tabview-nav li.p-highlight:hover a {
+
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li.p-highlight a,
+.layout-content .content-section.documentation .p-tabview .p-tabview-nav li.p-highlight:hover a {
   background: transparent;
   color: var(--primary-color);
   border-bottom: 1px solid var(--primary-color);
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover a {
   color: var(--text-color);
   border-bottom: 1px solid var(--primary-color);
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-nav .p-tabview-ink-bar {
   display: none;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-panels {
   background: transparent;
   border: 0 none;
   padding: 2rem 1rem;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-panels .btn-viewsource {
   display: inline-block;
   padding: 0.5rem 1rem;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-panels a {
   text-decoration: none;
   color: #2196f3;
   font-weight: 600;
 }
+
 .layout-content .content-section.documentation .p-tabview .p-tabview-panels a:hover {
   text-decoration: underline;
 }
+
 .layout-content .content-section .doc-table {
   border-collapse: collapse;
   width: 100%;
   background-color: var(--surface-a);
 }
+
 .layout-content .content-section .doc-table th {
   border-bottom: 1px solid var(--surface-d);
   padding: 1rem;
   text-align: left;
 }
+
 .layout-content .content-section .doc-table tbody td {
   padding: 1rem;
   border-bottom: 1px solid var(--surface-d);
 }
+
 .layout-content .card {
   background: var(--surface-e);
   padding: 2rem;
@@ -268,21 +346,36 @@ pre[class*="language-"] code .token.operator, pre[class*="language-"] code .toke
   border-radius: 4px;
   margin-bottom: 2rem;
 }
+
 .layout-content .card .card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .layout-content .fluid-video {
   position: relative;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
 }
+
 .layout-content .fluid-video iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+@media screen and (max-width: 960px) {
+
+  .layout-content {
+    margin-left: 0;
+    padding-top: 110px;
+  }
+
+  .layout-content .content-section.introduction {
+    flex-direction: column;
+  }
 }

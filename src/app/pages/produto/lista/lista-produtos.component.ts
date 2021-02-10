@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProdutosService } from 'src/app/pages/produto/services/produtos.service';
 import { Produto } from '../domain/produto';
 
-
 @Component({
   selector: 'app-lista-produtos',
   templateUrl: './lista-produtos.component.html',
@@ -10,6 +9,8 @@ import { Produto } from '../domain/produto';
 })
 export class ListaProdutosComponent implements OnInit {
   produtos: Produto[];
+
+  isLoading: boolean = false;
 
   cols: any[] = [];
 
@@ -20,8 +21,12 @@ export class ListaProdutosComponent implements OnInit {
   }
 
   private getAllProdutos(): void {
-    this.service.getAllProdutos().subscribe((produtos: Produto[]) => {
-      this.produtos = produtos;
-    });
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.getAllProdutos().subscribe((produtos: Produto[]) => {
+        this.produtos = produtos;
+        this.isLoading = false;
+      });
+    }, 1000);
   }
 }

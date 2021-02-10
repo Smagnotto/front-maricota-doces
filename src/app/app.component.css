@@ -1,28 +1,57 @@
 @media (max-width: 500px) {
-    /* Mobile */
-    .layout-topmenu {
-        display: none;
-    }
-    .layout-sidemenu {
-        visibility: visible;
-    }
+
+  /* Mobile */
+  .layout-topmenu {
+    display: none;
+  }
+
+  .layout-sidemenu {
+    visibility: visible;
+  }
 }
+
 @media (min-width: 500px) {
-    /* Desktop */
-    .layout-topmenu {
-        visibility: visible;
-    }
-    .layout-sidemenu {
-        display: none;
-    }
+
+  /* Desktop */
+  .layout-topmenu {
+    visibility: visible;
+  }
+
+  .layout-sidemenu {
+    display: none;
+  }
 }
+
 .layout-main {
-    padding-left: 20px;
-    padding-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
+
 .layout-topmenu {
-    padding-top: 190px;
+  padding-top: 190px;
 }
+
 .app-bar {
-    background-color:gainsboro;
+  background-color: gainsboro;
+}
+
+
+
+@media screen and (max-width: 960px) {
+
+
+  .layout-mask {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .layout-mask.layout-mask-active {
+    z-index: 998;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 0.5s;
+  }
 }

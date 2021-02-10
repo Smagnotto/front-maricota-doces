@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNGModule } from './primeng.module';
 import { FooterModule } from './components/footer/footer.module';
 import { MenuModule } from './components/menu/menu.module';
+import { TopbarModule } from './components/topbar/topbar.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { MenuModule } from './components/menu/menu.module';
     PrimeNGModule,
     FooterModule,
     MenuModule,
+    TopbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

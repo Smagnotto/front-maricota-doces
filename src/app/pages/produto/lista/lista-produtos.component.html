@@ -18,7 +18,21 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-row>
-        <tr>
+        <!-- <tr  *ngIf="isLoading">
+          <td>
+            <p-skeleton></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton></p-skeleton>
+          </td>
+          <td>
+            <p-skeleton></p-skeleton>
+          </td>
+        </tr> -->
+        <tr *ngIf="!isLoading">
           <td>{{row.nome}}</td>
           <td>{{row.preco | currency: 'BRL'}}</td>
           <td>
