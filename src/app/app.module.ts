@@ -1,30 +1,33 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialUIModule } from './material-ui.module';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { SidenavModule } from './components/sidenav/sidenav.module';
-import { DashboardModule } from './pages/dashboard/dashboard.module';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PrimeNGModule } from './primeng.module';
+import { FooterModule } from './components/footer/footer.module';
+import { MenuModule } from './components/menu/menu.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialUIModule,
     HttpClientModule,
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
 
-    //Custom Module
-    SidenavModule,
-    DashboardModule
+    //Application Modules
+    PrimeNGModule,
+    FooterModule,
+    MenuModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
