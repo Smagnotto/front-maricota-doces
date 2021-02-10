@@ -1,3 +1,15 @@
-<sidenav> -->
-    <router-outlet></router-outlet>
-</sidenav>
+<div class="layout-wrapper">
+  <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
+  <app-menu [active]="menuActive"></app-menu>
+  <!-- <app-config></app-config> -->
+  <div class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}" (click)="onMaskClick()"></div>
+
+  <div class="layout-content">
+    <div class="content-section documentation">
+      <p-card>
+        <router-outlet></router-outlet>
+      </p-card>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>
