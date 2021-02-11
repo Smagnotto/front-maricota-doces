@@ -1,13 +1,13 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { Produto } from '../domain/produto';
 import { catchError, retry } from 'rxjs/operators';
+import { Insumo } from '../domain/insumo';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProdutosService {
+export class InsumoService {
   constructor(private http: HttpClient) {}
 
   httpOptions = {
@@ -15,11 +15,11 @@ export class ProdutosService {
   };
 
   private url: string =
-    'https://my-json-server.typicode.com/smagnotto/maricota-doces-fake/produtos';
+    'https://my-json-server.typicode.com/smagnotto/fake_db/insumos';
 
-  getAllProdutos(): Observable<Produto[]> {
+  getAllInsumos(): Observable<Insumo[]> {
     return this.http
-      .get<Produto[]>(this.url)
+      .get<Insumo[]>(this.url)
       .pipe(retry(2), catchError(this.handleError));
   }
 

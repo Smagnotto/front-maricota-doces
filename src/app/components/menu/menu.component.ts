@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   trigger,
   state,
@@ -36,6 +36,8 @@ import { Router } from '@angular/router';
 export class MenuComponent {
   @Input() active: boolean;
 
+  @Output() onClickMenus: EventEmitter<any> = new EventEmitter();
+
   activeSubmenus: { [key: string]: boolean } = {};
 
   constructor(private router: Router) {}
@@ -54,5 +56,10 @@ export class MenuComponent {
     }
 
     return false;
+  }
+
+  onMenuButtonClick(event: Event) {
+    this.onClickMenus.emit();
+    event.preventDefault();
   }
 }

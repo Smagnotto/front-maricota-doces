@@ -22,6 +22,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ChartModule } from 'primeng/chart';
+import { InputSwitchModule } from 'primeng/inputswitch'
+
 @NgModule({
   exports: [
     MenubarModule,
@@ -49,6 +51,7 @@ import { ChartModule } from 'primeng/chart';
     CardModule,
     SkeletonModule,
     ChartModule,
+    InputSwitchModule
   ],
 })
 export class PrimeNGModule {}

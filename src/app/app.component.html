@@ -1,6 +1,6 @@
 <div class="layout-wrapper">
   <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
-  <app-menu [active]="menuActive"></app-menu>
+  <app-menu [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>
   <!-- <app-config></app-config> -->
   <div class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}" (click)="onMaskClick()"></div>
 

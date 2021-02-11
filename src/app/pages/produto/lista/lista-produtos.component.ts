@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProdutosService } from 'src/app/pages/produto/services/produtos.service';
+import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { Produto } from '../domain/produto';
 
 @Component({
@@ -8,40 +8,39 @@ import { Produto } from '../domain/produto';
   styleUrls: ['./lista-produtos.component.css'],
 })
 export class ListaProdutosComponent implements OnInit {
-
   //Precisa preencher o array pro skeleton funcionar
   produtos: Produto[] = [
     {
-      "id": 1,
-      "nome": "Bolo de Chocolate",
-      "preco": 30.39,
-      "ativo": true,
+      id: 1,
+      nome: 'Bolo de Chocolate',
+      preco: 30.39,
+      ativo: true,
     },
     {
-      "id": 2,
-      "nome": "Red Velvet",
-      "preco": 50.91,
-      "ativo": true,
+      id: 2,
+      nome: 'Red Velvet',
+      preco: 50.91,
+      ativo: true,
     },
     {
-      "id": 3,
-      "nome": "Brownie de Avelã",
-      "preco": 64.98,
-      "ativo": false,
+      id: 3,
+      nome: 'Brownie de Avelã',
+      preco: 64.98,
+      ativo: false,
     },
     {
-      "id": 4,
-      "nome": "Chocolate",
-      "preco": 16,
-      "ativo": false,
-    }
-  ] ;
+      id: 4,
+      nome: 'Chocolate',
+      preco: 16,
+      ativo: false,
+    },
+  ];
 
   isLoading: boolean = false;
 
   cols: any[] = [];
 
-  constructor(private service: ProdutosService) {}
+  constructor(private service: ProdutoService) {}
 
   ngOnInit() {
     this.getAllProdutos();

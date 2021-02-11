@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaProdutosComponent } from './lista/lista-produtos.component';
 import { ProdutosRoutingModule } from './produto-routing.module';
 import { PrimeNGModule } from 'src/app/primeng.module';
-import { ProdutosService } from 'src/app/pages/produto/services/produtos.service';
+import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
 
 @NgModule({
@@ -16,6 +16,6 @@ import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [ProdutosService],
+  providers: [ProdutoService],
 })
-export class ProdutosModule {}
+export class ProdutoModule {}
