@@ -1,19 +1,20 @@
-<div class="p-grid">
-  <div class="p-col-8">
-    <div class="p-grid">
-      <div class="p-col-6">
-        <p-card>
-            6
-        </p-card>
-      </div>
-      <div class="p-col-6">
-        <p-card>6</p-card>
-      </div>
-      <div class="p-col-12">
-        <p-card>12</p-card>
+<div class="layout-dashboard">
+  <div class="p-grid">
+    <div class="p-col-12 p-md-12 p-xl-9">
+      <div class="p-grid">
+        <div class="p-col-12 p-sm-12 p-md-12 p-xl-12">
+          <app-card-dashboard></app-card-dashboard>
+          <app-card-dashboard></app-card-dashboard>
+          <div class="p-col-12">
+            <div class="card sale-graph">
+              <div class="card-header">
+                <h6>Comparação de Vendas</h6>
+              </div>
+              <app-line-chart [data]="dataLineChart"></app-line-chart>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="p-col-4">
   </div>
 </div>

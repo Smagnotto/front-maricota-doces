@@ -2,15 +2,26 @@
   <div class="layout-menu">
     <div class="menu-category">Inicio</div>
     <div class="menu-items">
-      <a [routerLink]=" ['/dashboard']" routerLinkActive="router-link-exact-active" (click)="onMenuButtonClick($event)">Dashboard</a>
+      <a [routerLink]=" ['/dashboard']" routerLinkActive="router-link-exact-active" (click)="onMenuButtonClick($event)">
+        Dashboard <i class="fa fa-bar-chart" aria-hidden="true"></i>
+      </a>
     </div>
 
     <div class="menu-category">Cadastro</div>
     <div class="menu-items">
-      <a [routerLink]=" ['/produtos']" routerLinkActive="router-link-exact-active" (click)="onMenuButtonClick($event)">Produtos</a>
+      <a [routerLink]=" ['/produtos']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Produtos</a>
     </div>
     <div class="menu-items">
-      <a [routerLink]=" ['/insumos']" routerLinkActive="router-link-exact-active" (click)="onMenuButtonClick($event)">Insumos</a>
+      <a [routerLink]=" ['/insumos']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Insumos</a>
+    </div>
+    <div class="menu-category">Configuração</div>
+    <div class="menu-items">
+      <a [routerLink]=" ['/configuracao']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Configuracao 
+        <i class="fa fa-cogs" aria-hidden="true"></i>
+      </a>
     </div>
   </div>
 </div>

@@ -22,8 +22,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ChartModule } from 'primeng/chart';
-import { InputSwitchModule } from 'primeng/inputswitch'
-
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { MessagesModule } from 'primeng/messages';
+import { StepsModule } from 'primeng/steps';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 @NgModule({
   exports: [
     MenubarModule,
@@ -51,7 +54,11 @@ import { InputSwitchModule } from 'primeng/inputswitch'
     CardModule,
     SkeletonModule,
     ChartModule,
-    InputSwitchModule
+    InputSwitchModule,
+    MessagesModule,
+    StepsModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
 })
 export class PrimeNGModule {}

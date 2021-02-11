@@ -1,0 +1,174 @@
+.overview-box {
+  height: 100%;
+}
+
+h3 {
+  font-size: 1.75rem;
+  margin-top: 0;
+}
+
+.overview-box .card-header {
+  padding-bottom: 17px;
+}
+
+.overview-box .card-header .header-buttons>a {
+  width: 20px;
+  height: 20px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: rgba(148, 154, 166, 0.1);
+  border: 1px solid transparent;
+}
+
+.overview-box .card-header .header-buttons>a i {
+  color: #949aa6;
+  font-size: 12px;
+  width: 12px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.overview-box .card-header .header-buttons>a:hover {
+  border-color: #949aa6;
+}
+
+.overview-box .overview-content {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 11px 4px 6px 0px;
+}
+
+.overview-box .overview-content .overview-graph {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+
+.overview-box .overview-content .overview-graph>span {
+  width: 8px;
+  height: 12px;
+  display: block;
+  background-color: #2f8ee5;
+  margin-left: 4px;
+  border-radius: 1px;
+  opacity: 0.4;
+  cursor: pointer;
+  position: relative;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.overview-box .overview-content .overview-graph>span:last-child {
+  opacity: 1;
+}
+
+.overview-box .overview-content .overview-graph>span>span {
+  font-size: 12px;
+  min-width: 6px;
+  position: absolute;
+  padding: 1px;
+  border-radius: 2px;
+  background-color: var(surface-a);
+  top: -22px;
+  left: -4px;
+  display: none;
+  z-index: 2;
+}
+
+.overview-box .overview-content .overview-graph>span:hover {
+  transform: scale3d(1.1, 1.1, 1);
+  opacity: 1;
+}
+
+.overview-box .overview-content .overview-graph>span:hover .graph-tooltip {
+  display: block;
+}
+
+.overview-box .overview-footer>span {
+  font-size: 13px;
+}
+
+.overview-box .overview-footer>span i {
+  color: #00acac;
+}
+
+.overview-box .overview-footer>span>span {
+  color: #00acac;
+  font-weight: 600;
+}
+
+.overview-box .overview-footer.down>span i {
+  color: #f16383;
+}
+
+.overview-box .overview-footer.down>span>span {
+  color: #f16383;
+}
+
+.overview-box.teal .overview-content .overview-graph>span {
+  background-color: #00acac;
+}
+
+.overview-box.orange .overview-content .overview-graph>span {
+  background-color: #f1b263;
+}
+
+.card {
+  border-radius: 5px;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
+
+.card .card-header {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding-bottom: 6px;
+}
+
+.card .card-header h6,
+.card .card-header h5 {
+  margin-bottom: 0;
+  color: #657380;
+}
+
+.card .card-header .header-buttons {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.card.no-gutter {
+  margin-bottom: 0;
+}

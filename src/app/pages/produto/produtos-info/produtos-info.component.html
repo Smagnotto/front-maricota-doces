@@ -11,7 +11,8 @@
 
     <div class="p-col-12 p-md-3">
       <span class="p-float-label">
-        <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" [disabled]="true"></p-inputNumber>
+        <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" [disabled]="true">
+        </p-inputNumber>
         <label for="preco_insumo">Preço</label>
       </span>
       <small id="preco_insumo-help">Valor Calculado Automaticamente (Trocar mensagem).</small>
@@ -20,12 +21,11 @@
     <div class="p-col-12 p-md-2">
       <p-checkbox name="ativo" [binary]="true" label="Ativo"> </p-checkbox>
     </div>
-
-    <div class="p-col-12 p-md-3">
-      <div class="p-col-12 p-d-flex">
-        <button pButton pRipple type="button" label="Cancelar" class="p-button-raised p-button-danger p-m-2" icon="pi pi-trash" iconPos="right"></button>
-        <button pButton pRipple type="button" label="Salvar" class="p-button-raised p-m-2" icon="pi pi-check" iconPos="right"></button>
-      </div>
-     </div>
   </div>
+  <ng-template pTemplate="footer">
+    <div class="p-grid p-nogutter p-justify-between">
+      <p-button label="Cancelar" (onClick)="cancel()" icon="pi pi-times" styleClass="p-button-danger"></p-button>
+      <p-button label="Avançar" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    </div>
+  </ng-template>
 </p-card>
