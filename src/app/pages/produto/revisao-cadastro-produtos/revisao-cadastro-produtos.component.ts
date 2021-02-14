@@ -9,7 +9,7 @@ import { CadastroProdutoService } from '../services/cadastro-produtos.service';
   styleUrls: ['./revisao-cadastro-produtos.component.css'],
 })
 export class RevisaoCadastroProdutosComponent implements OnInit {
-  constructor(private cadastroProdutoService: CadastroProdutoService, private router: Router) {}
+  constructor(public cadastroProdutoService: CadastroProdutoService, private router: Router) {}
 
   margemLucro = 100;
   precoProduto: number;

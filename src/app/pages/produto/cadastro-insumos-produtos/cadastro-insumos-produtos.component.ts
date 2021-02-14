@@ -18,7 +18,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     private service: InsumoService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private cadastroProdutoService: CadastroProdutoService
+    public cadastroProdutoService: CadastroProdutoService
   ) {}
 
   formCadastroInsumo: FormGroup = new FormGroup({

@@ -12,7 +12,7 @@ export class ProdutosInfoComponent implements OnInit {
   constructor(
     private router: Router,
     private confirmationService: ConfirmationService,
-    private cadastroProdutoService: CadastroProdutoService
+    public cadastroProdutoService: CadastroProdutoService
   ) {}
 
   submitted: boolean = false;
