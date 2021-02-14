@@ -1,8 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
-import { trigger, style, transition, animate, AnimationEvent } from '@angular/animations';
-import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
-
+import { Component, EventEmitter, Output} from '@angular/core';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',

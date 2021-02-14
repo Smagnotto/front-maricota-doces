@@ -1,31 +1,55 @@
-<p-card>
-  <h5>Cadastro de Insumo</h5>
-  <br />
-  <div class="p-grid p-fluid">
-    <div class="p-col-12 p-md-4">
-      <span class="p-float-label">
-        <input id="nome_insumo" type="text" pInputText>
-        <label for="nome_insumo">Nome do produto</label>
-      </span>
-    </div>
+<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
+  defaultFocus="Não" rejectButtonStyleClass="p-button-danger"></p-confirmDialog>
 
-    <div class="p-col-12 p-md-3">
-      <span class="p-float-label">
-        <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
-        <label for="preco_insumo">Preço</label>
-      </span>
-      <small id="preco_insumo-help">Insira o valor referente a 1000g (1kg).</small>
-    </div>
+<form [formGroup]="formInsumo" (ngSubmit)="onSubmit(formInsumo)">
 
-    <div class="p-col-12 p-md-2">
-      <p-checkbox name="ativo" [binary]="true" label="Ativo"> </p-checkbox>
-    </div>
+  <p-card>
+    <h5>Cadastro de Insumo</h5>
+    <br />
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-4">
+        <span class="p-float-label">
+          <input id="nome_insumo" type="text" pInputText formControlName="nomeInsumo">
+          <label for="nome_insumo">Nome do produto</label>
+            <small *ngIf="nomeInsumo?.errors?.required" id="nome_insumo-help" class="p-error">Informe o nome do
+            produto.</small>
 
-    <div class="p-col-12 p-md-3">
-      <div class="p-col-12 p-d-flex">
-        <button pButton pRipple type="button" label="Cancelar" class="p-button-raised p-button-danger p-m-2" icon="pi pi-trash" iconPos="right"></button>
-        <button pButton pRipple type="button" label="Salvar" class="p-button-raised p-m-2" icon="pi pi-check" iconPos="right"></button>
+        </span>
       </div>
-     </div>
-  </div>
-</p-card>
+
+      <div class="p-col-12 p-md-3">
+        <span class="p-float-label">
+          <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo">
+          </p-inputNumber>
+          <label for="preco_insumo">Preço</label>
+        </span>
+
+        <div class="p-col-12">
+          <small id="preco_insumo-help">Insira o valor referente a 1000g (1kg).</small>
+        </div>
+        <div class="p-col-12 " *ngIf="precoInsumo?.errors?.required">
+          <small id="nome_insumo-help" class="p-error">Informe o preço do
+            produto.</small>
+        </div>
+        <div class="p-col-12 " *ngIf="precoInsumo?.errors?.min">
+          <small id="nome_insumo-help" class="p-error">O preço do produto deve ser
+            maior que R$ 0,00.</small>
+        </div>
+
+      </div>
+
+      <div class="p-col-12 p-md-2">
+        <p-checkbox name="ativo" [binary]="true" label="Ativo" formControlName="insumoAtivo"> </p-checkbox>
+      </div>
+
+      <div class="p-col-12 p-md-3">
+        <div class="p-col-12 p-d-flex">
+          <button pButton pRipple type="button" (click)="cancel()" label="Cancelar"
+            class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
+          <button pButton pRipple type="button" type="submit" label="Salvar" class="p-button-raised p-m-2"
+            icon="pi pi-check" iconPos="right" [disabled]="!formInsumo.valid"></button>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</form>

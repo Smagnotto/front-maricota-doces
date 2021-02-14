@@ -13,6 +13,7 @@ import { MenuModule } from './components/menu/menu.module';
 import { TopbarModule } from './components/topbar/topbar.module';
 import { DashboardModule } from './pages/dashboard/dashboard.module';
 import { BarChartModule } from './components/bar-chart/bar-chart.module';
+import { TableResponsiveModule } from './components/table-responsive/table-responsive.module';
 
 @NgModule({
   declarations: [AppComponent],

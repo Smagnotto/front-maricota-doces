@@ -14,11 +14,11 @@ export class ProdutosStepsComponent implements OnInit {
   ngOnInit(): void {
     this.items = [
       {
-        label: 'Cadastro Produto',
+        label: 'Produto',
         routerLink: '/cadastro',
       },
       {
-        label: 'Cadastro de Insumos',
+        label: 'Insumos',
         routerLink: '/insumos',
       },
       {

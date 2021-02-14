@@ -8,6 +8,7 @@ import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
 import { ProdutosStepsComponent } from './produtos-steps/produtos-steps.component';
 import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/cadastro-insumos-produtos.component';
+import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
 
 @NgModule({
   declarations: [ListaProdutosComponent, ProdutosInfoComponent, ProdutosStepsComponent, CadastroInsumosProdutosComponent],
@@ -16,7 +17,8 @@ import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/ca
     ProdutosRoutingModule,
     PrimeNGModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    TableResponsiveModule
   ],
   providers: [ProdutoService],
 })

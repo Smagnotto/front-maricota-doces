@@ -1,4 +1,4 @@
-:host ::ng-deep .p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
+/* :host ::ng-deep .p-datatable-responsive-demo .p-datatable-tbody>tr>td .p-column-title {
     display: none;
   }
   
@@ -32,10 +32,9 @@
   
     :host ::ng-deep .p-datatable-responsive-demo .p-paginator .p-paginator-current {
       text-align: left;
-      /* display: block; */
       width: 100%;
       float: left;
       clear: left;
       border: 0 none;
     }
-  }
+  } */

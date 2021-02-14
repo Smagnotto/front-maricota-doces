@@ -1,12 +1,12 @@
 <div class="layout-wrapper">
   <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
   <app-menu [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>
-  <!-- <app-config></app-config> -->
   <div class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}" (click)="onMaskClick()"></div>
 
   <div class="layout-content">
     <div class="content-section documentation">
-      <p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+      <p-toast></p-toast>
+
       <router-outlet></router-outlet>
       <app-footer></app-footer>
     </div>

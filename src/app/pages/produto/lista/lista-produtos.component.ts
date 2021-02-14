@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
+import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { Produto } from '../domain/produto';
 
@@ -8,37 +10,36 @@ import { Produto } from '../domain/produto';
   styleUrls: ['./lista-produtos.component.css'],
 })
 export class ListaProdutosComponent implements OnInit {
-  //Precisa preencher o array pro skeleton funcionar
-  produtos: Produto[] = [
+  produtos: Produto[] = [];
+
+  headers: TableHeader[] = [
     {
-      id: 1,
-      nome: 'Bolo de Chocolate',
-      preco: 30.39,
-      ativo: true,
+      fieldName: 'nome',
+      labelColumn: 'Nome',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
     },
     {
-      id: 2,
-      nome: 'Red Velvet',
-      preco: 50.91,
-      ativo: true,
+      fieldName: 'preco',
+      labelColumn: 'Preço',
+      sortableColumn: true,
+      typeColumn: TypeColumns.Currency,
     },
     {
-      id: 3,
-      nome: 'Brownie de Avelã',
-      preco: 64.98,
-      ativo: false,
+      fieldName: 'ativo',
+      labelColumn: 'Ativo',
+      sortableColumn: false,
+      typeColumn: TypeColumns.Boolean,
     },
     {
-      id: 4,
-      nome: 'Chocolate',
-      preco: 16,
-      ativo: false,
+      fieldName: '',
+      labelColumn: 'Ações',
+      sortableColumn: false,
+      typeColumn: TypeColumns.ActionsButtons,
     },
   ];
 
   isLoading: boolean = false;
-
-  cols: any[] = [];
 
   constructor(private service: ProdutoService) {}
 
@@ -54,5 +55,13 @@ export class ListaProdutosComponent implements OnInit {
         this.isLoading = false;
       });
     }, 5000);
+  }
+
+  onEdit(insumo: Produto) {
+    console.log(`Edit -> ${insumo.id}`)
+  }
+
+  onDelete(insumo: Produto) {
+    console.log(`Delete -> ${insumo.id}`)
   }
 }

@@ -1,44 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
+import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../domain/insumo';
 import { InsumoService } from '../services/insumo.service';
 
 @Component({
   selector: 'app-lista-insumos',
   templateUrl: './lista-insumos.component.html',
-  styleUrls: ['./lista-insumos.component.css']
+  styleUrls: ['./lista-insumos.component.css'],
 })
 export class ListaInsumosComponent implements OnInit {
+  produtos: Insumo[] = [];
 
-  produtos: Insumo[] = [
+  headers: TableHeader[] = [
     {
-      "id": 1,
-      "nome": "Bolo de Chocolate",
-      "preco": 30.39,
-      "ativo": true,
+      fieldName: 'nome',
+      labelColumn: 'Nome',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
     },
     {
-      "id": 2,
-      "nome": "Red Velvet",
-      "preco": 50.91,
-      "ativo": true,
+      fieldName: 'preco',
+      labelColumn: 'Preço',
+      sortableColumn: true,
+      typeColumn: TypeColumns.Currency,
     },
     {
-      "id": 3,
-      "nome": "Brownie de Avelã",
-      "preco": 64.98,
-      "ativo": false,
+      fieldName: 'ativo',
+      labelColumn: 'Ativo',
+      sortableColumn: false,
+      typeColumn: TypeColumns.Boolean,
     },
     {
-      "id": 4,
-      "nome": "Chocolate",
-      "preco": 16,
-      "ativo": false,
+      fieldName: '',
+      labelColumn: 'Ações',
+      sortableColumn: false,
+      typeColumn: TypeColumns.ActionsButtons,
     }
-  ] ;
+  ];
 
   isLoading: boolean = false;
-
-  cols: any[] = [];
 
   constructor(private service: InsumoService) {}
 
@@ -54,5 +55,13 @@ export class ListaInsumosComponent implements OnInit {
         this.isLoading = false;
       });
     }, 5000);
+  }
+
+  onEdit(insumo: Insumo) {
+    console.log(`Edit -> ${insumo.id}`)
+  }
+
+  onDelete(insumo: Insumo) {
+    console.log(`Delete -> ${insumo.id}`)
   }
 }

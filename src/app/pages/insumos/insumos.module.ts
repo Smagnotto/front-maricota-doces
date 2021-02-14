@@ -6,6 +6,7 @@ import { InsumosRoutingModule } from './insumos-routing.module';
 import { ListaInsumosComponent } from './lista-insumos/lista-insumos.component';
 import { InsumoService } from './services/insumo.service';
 import { InsumoInfoComponent } from './insumo-info/insumo-info.component';
+import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
 
 @NgModule({
   declarations: [ListaInsumosComponent, InsumoInfoComponent],
@@ -15,6 +16,7 @@ import { InsumoInfoComponent } from './insumo-info/insumo-info.component';
     PrimeNGModule,
     ReactiveFormsModule,
     FormsModule,
+    TableResponsiveModule
   ],
   providers: [InsumoService],
 })

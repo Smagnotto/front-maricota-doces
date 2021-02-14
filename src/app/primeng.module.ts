@@ -26,7 +26,11 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MessagesModule } from 'primeng/messages';
 import { StepsModule } from 'primeng/steps';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DividerModule } from 'primeng/divider'
+import { TagModule } from 'primeng/tag';
+import {ToastModule} from 'primeng/toast';
+
 @NgModule({
   exports: [
     MenubarModule,
@@ -58,7 +62,10 @@ import { ConfirmationService } from 'primeng/api';
     MessagesModule,
     StepsModule,
     ConfirmDialogModule,
+    DividerModule,
+    TagModule,
+    ToastModule
   ],
-  providers: [ConfirmationService],
+  providers: [ConfirmationService, MessageService],
 })
 export class PrimeNGModule {}

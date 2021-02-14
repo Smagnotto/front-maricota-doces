@@ -11,51 +11,8 @@
     </div>
 
     <div class="p-col-12">
-      <p-table [value]="produtos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
-        currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} produtos"
-        [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-responsive-demo p-datatable-striped">
-        <ng-template pTemplate="header">
-          <tr>
-            <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
-            </th>
-            <th pSortableColumn="preco">Preço <p-sortIcon field="preco"></p-sortIcon>
-            </th>
-            <th>Ativo</th>
-            <th>Ações</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-row>
-          <tr *ngIf="isLoading">
-            <td>
-              <p-skeleton></p-skeleton>
-            </td>
-            <td>
-              <p-skeleton></p-skeleton>
-            </td>
-            <td>
-              <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
-            </td>
-            <td>
-              <div class="p-d-flex p-ai-end">
-                <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
-                <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
-              </div>
-            </td>
-          </tr>
-          <tr *ngIf="!isLoading">
-            <td>{{row.nome}}</td>
-            <td>{{row.preco | currency: 'BRL'}}</td>
-            <td>
-              <p-checkbox name="ativo" [value]="row.ativo" [(ngModel)]="row.ativo" [binary]="true" [disabled]="true">
-              </p-checkbox>
-            </td>
-            <td>
-              <button pButton pRipple type="button" icon="pi pi-pencil" class="p-mr-2 p-button-sm"></button>
-              <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-danger p-button-sm"></button>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
+      <app-table-responsive [data]="produtos" [headers]="headers" [isLoading]="isLoading"
+        (onEdit)="onEdit($event)" (onDelete)="onDelete($event)"></app-table-responsive>
     </div>
   </div>
 </p-card>
