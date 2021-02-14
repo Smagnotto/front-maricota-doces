@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
 import { InsumoService } from '../../insumos/services/insumo.service';
+import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
   selector: 'app-cadastro-insumos-produtos',
@@ -15,9 +16,9 @@ import { InsumoService } from '../../insumos/services/insumo.service';
 export class CadastroInsumosProdutosComponent implements OnInit {
   constructor(
     private service: InsumoService,
-    private messageService: MessageService,
     private router: Router,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private cadastroProdutoService: CadastroProdutoService
   ) {}
 
   formCadastroInsumo: FormGroup = new FormGroup({
@@ -28,8 +29,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     autoCompleteNomeInsumo: new FormControl(''),
   });
 
+  submitted: boolean = false;
   insumos: Insumo[];
-  insumosVinculados: Insumo[] = [];
   suggestions: any[];
 
   headersInsumos: TableHeader[] = [
@@ -96,26 +97,34 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   vincularInsumo() {
-    let insumo: Insumo = {
-      id: this.idInsumo?.value,
-      ativo: this.insumoAtivo?.value,
-      nome: this.nomeInsumo?.value,
-      preco: this.precoInsumo?.value,
-    };
+    if (this.formCadastroInsumo.valid) {
+      let insumo: Insumo = {
+        id: this.idInsumo?.value,
+        ativo: this.insumoAtivo?.value,
+        nome: this.nomeInsumo?.value,
+        preco: this.precoInsumo?.value,
+      };
 
-    if (this.insumosVinculados.filter((x) => x.id === insumo.id).length > 0) {
-      this.messageService.add({
-        summary: 'Insumo repetido',
-        detail: 'Não é possível adicionar um insumo igual',
-        severity: 'error',
-        life: 3000
-      });
-      return;
+      if (this.cadastroProdutoService.insumosVinculados.filter((x) => x.id === insumo.id).length > 0) {
+        this.confirmationService.confirm({
+          header: 'Insumo repetido.',
+          message: 'Não é possível adicionar o mesmo insumo',
+          acceptLabel: 'OK',
+          rejectVisible: false,
+        });
+
+        this.submitted = true;
+      } else {
+
+        this.cadastroProdutoService.insumosVinculados.push(insumo);
+
+        this.formCadastroInsumo.reset();
+        this.suggestions = [];
+        this.submitted = false;
+      }
+    } else {
+      this.submitted = true;
     }
-
-    this.insumosVinculados.push(insumo);
-    this.formCadastroInsumo.reset();
-    this.suggestions = [];
   }
 
   onEdit(insumo: Insumo) {

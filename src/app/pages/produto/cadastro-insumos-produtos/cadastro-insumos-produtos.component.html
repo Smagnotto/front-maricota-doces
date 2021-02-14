@@ -3,19 +3,21 @@
     <h5>Vinculação de Insumos</h5>
     <br />
 
-    <input type="text" formControlName="idInsumo" hidden/>
+    <input type="text" formControlName="idInsumo" hidden />
 
     <div class="p-grid p-fluid">
       <div class="p-col-12 p-md-4">
         <span class="p-float-label">
           <input type="text" formControlName="nomeInsumo" hidden />
-         
+
           <p-autoComplete [suggestions]="suggestions" (completeMethod)="search($event)" [dropdown]="true"
             (onSelect)="selecionaInsumo($event)" field="nome" [required]="true" formControlName="autoCompleteNomeInsumo"
-            [forceSelection]="true"></p-autoComplete>
+            [forceSelection]="true"
+            [ngClass]="{'ng-dirty': (nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)}">
+          </p-autoComplete>
           <label for="nome_insumo">Nome do Insumo</label>
-          <small *ngIf="nomeInsumo?.errors?.required" id="nome_insumo-help" class="p-error">Selecione um produto.</small>
         </span>
+        <small *ngIf="(nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)" class="p-error">Selecione um produto.</small>
       </div>
 
       <div class="p-col-12 p-md-3">
@@ -30,8 +32,7 @@
         <p-checkbox name="insumo_ativo" [binary]="true" label="Ativo" formControlName="insumoAtivo"> </p-checkbox>
       </div>
 
-      <p-button label="Vincular" (onClick)="vincularInsumo()" icon="pi pi-plus" iconPos="right"
-        [disabled]="!formCadastroInsumo.valid"></p-button>
+      <p-button label="Vincular" (onClick)="vincularInsumo()" icon="pi pi-plus" iconPos="right"></p-button>
     </div>
 
     <br />
@@ -41,14 +42,15 @@
     </p-divider>
 
     <div class="p-col-12">
-      <app-table-responsive [data]="insumosVinculados" [headers]="headersInsumos" (onEdit)="onEdit($event)"
+      <app-table-responsive [data]="cadastroProdutoService.insumosVinculados" [headers]="headersInsumos" (onEdit)="onEdit($event)"
         (onDelete)="onDelete($event)"></app-table-responsive>
     </div>
 
     <ng-template pTemplate="footer">
       <div class="p-grid p-nogutter p-justify-between">
         <p-button label="Voltar" (onClick)="prevPage()" icon="pi pi-angle-left" styleClass="p-button-danger"></p-button>
-        <p-button label="Avançar" [disabled]="insumosVinculados.length === 0" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        <p-button label="Avançar" [disabled]="cadastroProdutoService.insumosVinculados.length === 0" (onClick)="nextPage()"
+          icon="pi pi-angle-right" iconPos="right"></p-button>
       </div>
     </ng-template>
   </p-card>

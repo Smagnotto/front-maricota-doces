@@ -1,0 +1,40 @@
+<form>
+  <p-card>
+    <p-table [value]="cadastroProdutoService.insumosVinculados">
+      <ng-template pTemplate="header">
+        <tr>
+          <th rowspan="3">Insumos</th>
+        </tr>
+        <tr>
+          <th colspan="2">Precificação do Produto</th>
+        </tr>
+        <tr>
+          <th>Quantidade</th>
+          <th>Preço</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-insumo>
+        <tr>
+          <td>{{insumo.nome}}</td>
+          <td>Quantidade</td>
+          <td>{{insumo.preco | currency: 'BRL'}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <tr>
+          <td colspan="1" class="p-text-right"></td>
+          <td>Total: {{precoProduto | currency: 'BRL'}}</td>
+          <td>Preço: {{precoTotalProduto | currency: 'BRL'}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-between">
+        <p-button label="Voltar" (onClick)="prevPage()" icon="pi pi-angle-left" styleClass="p-button-danger"></p-button>
+        <p-button label="Finalizar" (onClick)="finalizar()" icon="pi pi-angle-right" iconPos="right"
+          styleClass="p-button-success"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</form>

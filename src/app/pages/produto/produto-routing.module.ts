@@ -4,6 +4,7 @@ import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/ca
 import { ListaProdutosComponent } from './lista/lista-produtos.component';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
 import { ProdutosStepsComponent } from './produtos-steps/produtos-steps.component';
+import { RevisaoCadastroProdutosComponent } from './revisao-cadastro-produtos/revisao-cadastro-produtos.component';
 
 const routes: Routes = [
   { path: '', component: ListaProdutosComponent },
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'insumos',
         component: CadastroInsumosProdutosComponent,
+      },
+      {
+        path: 'revisao',
+        component: RevisaoCadastroProdutosComponent,
       },
     ],
   },

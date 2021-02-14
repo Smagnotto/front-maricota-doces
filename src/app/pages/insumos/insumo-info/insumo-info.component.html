@@ -11,10 +11,13 @@
         <span class="p-float-label">
           <input id="nome_insumo" type="text" pInputText formControlName="nomeInsumo">
           <label for="nome_insumo">Nome do produto</label>
-            <small *ngIf="nomeInsumo?.errors?.required" id="nome_insumo-help" class="p-error">Informe o nome do
-            produto.</small>
-
         </span>
+        <small *ngIf="nomeInsumo?.errors?.required" id="nome_insumo-help" class="p-error">Informe o nome do
+          produto.</small>
+      </div>
+
+      <div class="p-col-12 p-md-2">
+        <p-dropdown inputId="tipoInsumo" [options]="tiposInsumos" placeholder="Tipo" optionLabel="nome"></p-dropdown>
       </div>
 
       <div class="p-col-12 p-md-3">
@@ -23,7 +26,6 @@
           </p-inputNumber>
           <label for="preco_insumo">Preço</label>
         </span>
-
         <div class="p-col-12">
           <small id="preco_insumo-help">Insira o valor referente a 1000g (1kg).</small>
         </div>
@@ -35,7 +37,6 @@
           <small id="nome_insumo-help" class="p-error">O preço do produto deve ser
             maior que R$ 0,00.</small>
         </div>
-
       </div>
 
       <div class="p-col-12 p-md-2">

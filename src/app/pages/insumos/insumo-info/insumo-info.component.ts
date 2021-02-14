@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { TiposInsumos } from '../domain/tipos-insumos';
 
 @Component({
   selector: 'app-insumo-info',
@@ -10,6 +11,24 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class InsumoInfoComponent implements OnInit {
   constructor(private confirmationService: ConfirmationService, private router: Router) {}
+
+    tiposInsumos: TiposInsumos[] = [{
+      nome: 'kg',
+      codigo: 'kg'
+    },
+    {
+      nome: 'g',
+      codigo: 'g'
+    },
+    {
+      nome: 'l',
+      codigo: 'l'
+    },
+        {
+      nome: 'ml',
+      codigo: 'ml'
+    }
+  ]
 
   formInsumo: FormGroup = new FormGroup({
     nomeInsumo: new FormControl('', [Validators.required]),
