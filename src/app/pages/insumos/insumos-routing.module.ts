@@ -9,6 +9,10 @@ const routes: Routes = [
     path: 'cadastro',
     component: InsumoInfoComponent,
   },
+  {
+    path: 'cadastro/:id',
+    component: InsumoInfoComponent,
+  },
 ];
 
 @NgModule({

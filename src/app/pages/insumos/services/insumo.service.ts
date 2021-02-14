@@ -1,7 +1,12 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { Insumo } from '../domain/insumo';
 
 @Injectable({
@@ -14,13 +19,44 @@ export class InsumoService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  private url: string =
-    'https://my-json-server.typicode.com/smagnotto/fake_db/insumos';
+  private url: string = environment.baseUrl;
 
   getAllInsumos(): Observable<Insumo[]> {
     return this.http
-      .get<Insumo[]>(this.url)
+      .get<Insumo[]>(`${this.url}/insumos`)
       .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getInsumoById(id: number): Observable<Insumo> {
+    return this.http
+      .get<Insumo>(`${this.url}/insumos/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  saveInsumo(insumo: Insumo): Observable<Insumo> {
+    return this.http
+      .post<Insumo>(
+        `${this.url}/insumos`,
+        JSON.stringify(insumo),
+        this.httpOptions
+      )
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  updateInsumo(insumo: Insumo): Observable<Insumo> {
+    return this.http
+      .put<Insumo>(
+        `${this.url}/insumos/${insumo.id}`,
+        JSON.stringify(insumo),
+        this.httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  deleteInsumo(id: number) {
+    return this.http
+      .delete<Insumo>(this.url + '/' + id, this.httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../domain/insumo';
@@ -36,12 +38,17 @@ export class ListaInsumosComponent implements OnInit {
       labelColumn: 'Ações',
       sortableColumn: false,
       typeColumn: TypeColumns.ActionsButtons,
-    }
+    },
   ];
 
   isLoading: boolean = false;
 
-  constructor(private service: InsumoService) {}
+  constructor(
+    private service: InsumoService,
+    private confirmationService: ConfirmationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.getAllInsumos();
@@ -49,19 +56,24 @@ export class ListaInsumosComponent implements OnInit {
 
   private getAllInsumos(): void {
     this.isLoading = true;
-    setTimeout(() => {
-      this.service.getAllInsumos().subscribe((produtos: Insumo[]) => {
-        this.produtos = produtos;
-        this.isLoading = false;
-      });
-    }, 5000);
+    this.service.getAllInsumos().subscribe((produtos: Insumo[]) => {
+      this.produtos = produtos;
+      this.isLoading = false;
+    });
   }
 
   onEdit(insumo: Insumo) {
-    console.log(`Edit -> ${insumo.id}`)
+    this.router.navigate(['cadastro', insumo.id], { relativeTo: this.route });
   }
 
   onDelete(insumo: Insumo) {
-    console.log(`Delete -> ${insumo.id}`)
+    this.confirmationService.confirm({
+      message: 'Deseja excluir o insumo? Essa operação não pode ser desfeita',
+      accept: () => {
+        this.service.deleteInsumo(insumo.id).subscribe((response) => {
+          this.getAllInsumos();
+        });
+      },
+    });
   }
 }

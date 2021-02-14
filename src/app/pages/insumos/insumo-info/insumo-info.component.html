@@ -3,16 +3,17 @@
 
 <form [formGroup]="formInsumo" (ngSubmit)="onSubmit(formInsumo)">
 
+  <input type="text" formControlName="id" hidden/>
   <p-card>
     <h5>Cadastro de Insumo</h5>
     <br />
     <div class="p-grid p-fluid">
       <div class="p-col-12 p-md-4">
         <span class="p-float-label">
-          <input id="nome_insumo" type="text" pInputText formControlName="nomeInsumo">
+          <input id="nome_insumo" type="text" pInputText formControlName="nome">
           <label for="nome_insumo">Nome do produto</label>
         </span>
-        <small *ngIf="nomeInsumo?.errors?.required" id="nome_insumo-help" class="p-error">Informe o nome do
+        <small *ngIf="nome?.errors?.required" id="nome_insumo-help" class="p-error">Informe o nome do
           produto.</small>
       </div>
 
@@ -22,25 +23,25 @@
 
       <div class="p-col-12 p-md-3">
         <span class="p-float-label">
-          <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo">
+          <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="preco">
           </p-inputNumber>
           <label for="preco_insumo">Preço</label>
         </span>
         <div class="p-col-12">
           <small id="preco_insumo-help">Insira o valor referente a 1000g (1kg).</small>
         </div>
-        <div class="p-col-12 " *ngIf="precoInsumo?.errors?.required">
+        <div class="p-col-12 " *ngIf="preco?.errors?.required">
           <small id="nome_insumo-help" class="p-error">Informe o preço do
             produto.</small>
         </div>
-        <div class="p-col-12 " *ngIf="precoInsumo?.errors?.min">
+        <div class="p-col-12 " *ngIf="preco?.errors?.min">
           <small id="nome_insumo-help" class="p-error">O preço do produto deve ser
             maior que R$ 0,00.</small>
         </div>
       </div>
 
       <div class="p-col-12 p-md-2">
-        <p-checkbox name="ativo" [binary]="true" label="Ativo" formControlName="insumoAtivo"> </p-checkbox>
+        <p-checkbox name="ativo" [binary]="true" label="Ativo" formControlName="ativo"> </p-checkbox>
       </div>
 
       <div class="p-col-12 p-md-5 p-lg-4">
