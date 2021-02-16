@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { Observable, Subscription } from 'rxjs';
 import { Insumo } from '../domain/insumo';
-import { TiposInsumos } from '../domain/tipos-insumos';
 import { InsumoService } from '../services/insumo.service';
 
 @Component({
@@ -19,29 +19,9 @@ export class InsumoInfoComponent implements OnInit {
     private service: InsumoService
   ) {}
 
-  tiposInsumos: TiposInsumos[] = [
-    {
-      nome: 'kg',
-      codigo: 'kg',
-    },
-    {
-      nome: 'g',
-      codigo: 'g',
-    },
-    {
-      nome: 'l',
-      codigo: 'l',
-    },
-    {
-      nome: 'ml',
-      codigo: 'ml',
-    },
-  ];
-
   formInsumo: FormGroup = new FormGroup({
     id: new FormControl(0),
     nome: new FormControl('', [Validators.required]),
-    preco: new FormControl(0, [Validators.required, Validators.min(1)]),
     ativo: new FormControl(true),
   });
 
@@ -50,7 +30,8 @@ export class InsumoInfoComponent implements OnInit {
       let idInsumo = params['id'];
 
       if (idInsumo) this.getInsumo(idInsumo);
-      else this.fillForm({ ativo: true, id: 0, nome: '', preco: 0 });
+      else this.fillForm({
+         ativo: true, id: 0, nome: '' });
     });
   }
 
@@ -63,7 +44,6 @@ export class InsumoInfoComponent implements OnInit {
   private fillForm(insumo: Insumo) {
     this.id?.setValue(insumo.id);
     this.nome?.setValue(insumo.nome);
-    this.preco?.setValue(insumo.preco);
     this.ativo?.setValue(insumo.ativo);
   }
 
@@ -91,18 +71,20 @@ export class InsumoInfoComponent implements OnInit {
     return this.formInsumo.get('id');
   }
 
+  get quantidade() {
+    return this.formInsumo.get('quantidade');
+  }
+
   onSubmit(form: FormGroup) {
     if (form.valid) {
       let insumo: Insumo = form.value;
 
-      let subscribeApi;
+      let subscribeApi: Observable<Insumo>;
 
       if (!insumo.id) subscribeApi = this.service.saveInsumo(insumo);
       else subscribeApi = this.service.updateInsumo(insumo);
 
       subscribeApi.subscribe((response) => {
-        console.log(response);
-
         this.goBack();
       });
     }

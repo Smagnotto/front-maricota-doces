@@ -7,7 +7,6 @@ import { Produto } from '../domain/produto';
 @Injectable()
 export class CadastroProdutoService {
   cadastroProduto: Produto;
-  insumosVinculados: Insumo[];
 
   private cadastroComplete = new Subject<any>();
 
@@ -17,24 +16,19 @@ export class CadastroProdutoService {
     this.init();
   }
 
-  private init(): void {
+  init(): void {
     this.cadastroProduto = {
       id: 0,
       ativo: true,
       nome: '',
       preco: 0,
+      insumos: []
     };
 
-    this.insumosVinculados = [];
   }
 
   complete() {
-    let cadastroCompleto = {
-      produto: this.cadastroProduto,
-      insumosVinculados: this.insumosVinculados,
-    };
-
-    this.cadastroComplete.next(cadastroCompleto);
+    this.cadastroComplete.next(this.cadastroProduto);
 
     this.init();
   }

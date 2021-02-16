@@ -1,27 +1,28 @@
 <form [formGroup]="formProduto">
   <p-card>
-    <h5>Cadastro de Produtos</h5>
-    <br />
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+      <h5>Cadastro de Produtos</h5>
+    </div>
 
     <input type="text" formControlName="id" hidden />
 
     <div class="p-grid p-fluid">
       <div class="p-col-12 p-md-4">
         <span class="p-float-label">
-          <input id="nome_produto" type="text" pInputText formControlName="nome" [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
+          <input id="nome_produto" type="text" pInputText formControlName="nome"
+            [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
           <label for="nome_produto">Nome do produto</label>
         </span>
-        <small *ngIf="(nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)" class="p-error">Informe o nome do produto.</small>
+        <small *ngIf="(nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)" class="p-error">Informe o nome do
+          produto.</small>
       </div>
 
       <div class="p-col-12 p-md-3">
         <span class="p-float-label">
-          <p-inputNumber id="preco_produto" mode="currency" currency="BRL" locale="pt-BR"
-            formControlName="preco">
+          <p-inputNumber id="preco_produto" mode="currency" currency="BRL" locale="pt-BR" formControlName="preco">
           </p-inputNumber>
           <label for="preco_produto">Preço</label>
         </span>
-        <small id="preco_produto-help">Valor calculado automaticamente.</small>
       </div>
 
       <div class="p-col-12 p-md-2">
@@ -31,8 +32,7 @@
     <ng-template pTemplate="footer">
       <div class="p-grid p-nogutter p-justify-between">
         <p-button label="Cancelar" (onClick)="cancel()" icon="pi pi-times" styleClass="p-button-danger"></p-button>
-        <p-button label="Avançar"  (onClick)="nextPage()" icon="pi pi-angle-right"
-          iconPos="right"></p-button>
+        <p-button label="Avançar" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
       </div>
     </ng-template>
   </p-card>

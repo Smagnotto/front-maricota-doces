@@ -1,8 +1,9 @@
-import { Insumo } from '../../insumos/domain/insumo';
+import { InsumoProduto } from "./insumo-produto";
 
 export interface Produto {
-  id: number;
-  nome: string;
-  preco: number;
-  ativo: boolean;
+    id: number;
+    nome: String;
+    preco: number;
+    ativo: boolean;
+    insumos: InsumoProduto[];
 }

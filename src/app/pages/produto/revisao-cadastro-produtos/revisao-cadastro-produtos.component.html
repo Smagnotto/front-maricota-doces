@@ -1,32 +1,32 @@
 <form>
   <p-card>
-    <p-table [value]="cadastroProdutoService.insumosVinculados">
+    <p-table [value]="cadastroProdutoService.cadastroProduto.insumos">
       <ng-template pTemplate="header">
         <tr>
           <th rowspan="3">Insumos</th>
         </tr>
         <tr>
-          <th colspan="2">Precificação do Produto</th>
+          <th colspan="2">Resumo Produto</th>
         </tr>
         <tr>
           <th>Quantidade</th>
-          <th>Preço</th>
+          <th>Tipo</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-insumo>
         <tr>
           <td>{{insumo.nome}}</td>
-          <td>Quantidade</td>
-          <td>{{insumo.preco | currency: 'BRL'}}</td>
+          <td>{{insumo.quantidade}}</td>
+          <td>{{insumo.tipo}}</td>
         </tr>
       </ng-template>
-      <ng-template pTemplate="footer">
+      <!-- <ng-template pTemplate="footer">
         <tr>
           <td colspan="1" class="p-text-right"></td>
           <td>Total: {{precoProduto | currency: 'BRL'}}</td>
           <td>Preço: {{precoTotalProduto | currency: 'BRL'}}</td>
         </tr>
-      </ng-template>
+      </ng-template> -->
     </p-table>
 
     <ng-template pTemplate="footer">

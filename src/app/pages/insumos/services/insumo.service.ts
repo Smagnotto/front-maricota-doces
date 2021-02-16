@@ -20,23 +20,24 @@ export class InsumoService {
   };
 
   private url: string = environment.baseUrl;
+  private path: string = 'v1/insumos'
 
   getAllInsumos(): Observable<Insumo[]> {
     return this.http
-      .get<Insumo[]>(`${this.url}/insumos`)
+      .get<Insumo[]>(`${this.url}/${this.path}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
   getInsumoById(id: number): Observable<Insumo> {
     return this.http
-      .get<Insumo>(`${this.url}/insumos/${id}`)
+      .get<Insumo>(`${this.url}/${this.path}/${id}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
   saveInsumo(insumo: Insumo): Observable<Insumo> {
     return this.http
       .post<Insumo>(
-        `${this.url}/insumos`,
+        `${this.url}/${this.path}`,
         JSON.stringify(insumo),
         this.httpOptions
       )
@@ -46,7 +47,7 @@ export class InsumoService {
   updateInsumo(insumo: Insumo): Observable<Insumo> {
     return this.http
       .put<Insumo>(
-        `${this.url}/insumos/${insumo.id}`,
+        `${this.url}/${this.path}/${insumo.id}`,
         JSON.stringify(insumo),
         this.httpOptions
       )
@@ -55,7 +56,7 @@ export class InsumoService {
 
   deleteInsumo(id: number) {
     return this.http
-      .delete<Insumo>(this.url + '/' + id, this.httpOptions)
+      .delete<Insumo>(`${this.url}/${this.path}/${id}`, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
   }
 

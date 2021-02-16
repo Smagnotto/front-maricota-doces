@@ -1,7 +1,8 @@
 <form [formGroup]="formCadastroInsumo">
   <p-card>
-    <h5>Vinculação de Insumos</h5>
-    <br />
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+      <h5>Vinculação de Insumos</h5>
+    </div>
 
     <input type="text" formControlName="idInsumo" hidden />
 
@@ -17,14 +18,26 @@
           </p-autoComplete>
           <label for="nome_insumo">Nome do Insumo</label>
         </span>
-        <small *ngIf="(nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)" class="p-error">Selecione um produto.</small>
+        <small *ngIf="(nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)"
+          class="p-error">Selecione um produto.</small>
       </div>
 
       <div class="p-col-12 p-md-3">
         <span class="p-float-label">
-          <p-inputNumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo">
+          <p-inputNumber id="preco_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo">
           </p-inputNumber>
-          <label for="preco_insumo">Preço</label>
+          <label for="preco_insumo">Quantidade</label>
+        </span>
+        <small
+          *ngIf="(quantidadeInsumo?.invalid && submitted) || (quantidadeInsumo?.dirty && quantidadeInsumo?.invalid)"
+          class="p-error">Informe a quantidade do insumo</small>
+      </div>
+
+      <div class="p-col-12 p-md-2">
+        <span class="p-float-label">
+          <p-dropdown inputId="tipoInsumo" [options]="tiposInsumos" optionLabel="nome"
+            formControlName="tipoInsumo" optionValue="codigo"></p-dropdown>
+          <label for="preco_insumo">Tipo</label>
         </span>
       </div>
 
@@ -32,7 +45,9 @@
         <p-checkbox name="insumo_ativo" [binary]="true" label="Ativo" formControlName="insumoAtivo"> </p-checkbox>
       </div>
 
-      <p-button label="Vincular" (onClick)="vincularInsumo()" icon="pi pi-plus" iconPos="right"></p-button>
+      <div class="p-col-12 p-lg-1 p-md-12 p-d-flex p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
+        <p-button label="Vincular" (onClick)="vincularInsumo()" icon="pi pi-plus" iconPos="right"></p-button>
+      </div>
     </div>
 
     <br />
@@ -42,15 +57,15 @@
     </p-divider>
 
     <div class="p-col-12">
-      <app-table-responsive [data]="cadastroProdutoService.insumosVinculados" [headers]="headersInsumos" (onEdit)="onEdit($event)"
-        (onDelete)="onDelete($event)"></app-table-responsive>
+      <app-table-responsive [data]="cadastroProdutoService.cadastroProduto.insumos" [headers]="headersInsumos"
+        (onEdit)="onEdit($event)" (onDelete)="onDelete($event)"></app-table-responsive>
     </div>
 
     <ng-template pTemplate="footer">
       <div class="p-grid p-nogutter p-justify-between">
         <p-button label="Voltar" (onClick)="prevPage()" icon="pi pi-angle-left" styleClass="p-button-danger"></p-button>
-        <p-button label="Avançar" [disabled]="cadastroProdutoService.insumosVinculados.length === 0" (onClick)="nextPage()"
-          icon="pi pi-angle-right" iconPos="right"></p-button>
+        <p-button label="Avançar" [disabled]="cadastroProdutoService.cadastroProduto.insumos?.length === 0"
+          (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
       </div>
     </ng-template>
   </p-card>

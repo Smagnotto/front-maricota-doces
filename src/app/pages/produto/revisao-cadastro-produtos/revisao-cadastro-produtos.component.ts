@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Produto } from '../domain/produto';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
@@ -9,7 +8,9 @@ import { CadastroProdutoService } from '../services/cadastro-produtos.service';
   styleUrls: ['./revisao-cadastro-produtos.component.css'],
 })
 export class RevisaoCadastroProdutosComponent implements OnInit {
-  constructor(public cadastroProdutoService: CadastroProdutoService, private router: Router) {}
+  constructor(public cadastroProdutoService: CadastroProdutoService, 
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   margemLucro = 100;
   precoProduto: number;
@@ -17,26 +18,26 @@ export class RevisaoCadastroProdutosComponent implements OnInit {
   precoTotalProduto: number;
 
   ngOnInit() {
-    this.calculatePrecoProduto();
-    this.calculatePrecoTotalProduto();
+    // this.calculatePrecoProduto();
+    // this.calculatePrecoTotalProduto();
   }
 
-  calculatePrecoProduto() {
-    let total = 0;
-    for (let insumo of this.cadastroProdutoService.insumosVinculados) {
-      total += insumo.preco;
-    }
+  // calculatePrecoProduto() {
+  //   let total = 0;
+  //   for (let insumo of this.cadastroProdutoService.insumosVinculados) {
+  //     total += insumo.preco;
+  //   }
 
-    this.precoProduto = total;
-  }
+  //   this.precoProduto = total;
+  // }
 
-  calculatePrecoTotalProduto() {
+  // calculatePrecoTotalProduto() {
 
-    this.precoTotalProduto = this.precoProduto + this.precoProduto * (this.margemLucro / 100);
-  }
+  //   this.precoTotalProduto = this.precoProduto + this.precoProduto * (this.margemLucro / 100);
+  // }
 
   prevPage(): void {
-    this.router.navigate(['produtos/cadastro/insumos']);
+    this.router.navigate(['../insumos'], { relativeTo: this.route });
   }
 
   finalizar(): void {

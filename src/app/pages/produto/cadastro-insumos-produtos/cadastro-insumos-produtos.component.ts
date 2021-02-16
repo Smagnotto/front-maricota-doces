@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
+import { TiposInsumos } from '../../insumos/domain/tipos-insumos';
 import { InsumoService } from '../../insumos/services/insumo.service';
+import { InsumoProduto } from '../domain/insumo-produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
@@ -18,16 +20,42 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     private service: InsumoService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    public cadastroProdutoService: CadastroProdutoService
+    public cadastroProdutoService: CadastroProdutoService,
+    private route: ActivatedRoute
   ) {}
+
+  private readonly tipoInsumoConst: String = 'KG';
 
   formCadastroInsumo: FormGroup = new FormGroup({
     nomeInsumo: new FormControl({ value: '' }, [Validators.required]),
-    precoInsumo: new FormControl({ value: 0, disabled: true }, []),
+    quantidadeInsumo: new FormControl(0, [
+      Validators.required,
+      Validators.min(1),
+    ]),
     insumoAtivo: new FormControl({ value: false, disabled: true }, []),
     idInsumo: new FormControl({ value: 0, disabled: true }),
     autoCompleteNomeInsumo: new FormControl(''),
+    tipoInsumo: new FormControl(this.tipoInsumoConst),
   });
+
+  tiposInsumos: TiposInsumos[] = [
+    {
+      nome: 'Kg',
+      codigo: 'KG',
+    },
+    {
+      nome: 'g',
+      codigo: 'G',
+    },
+    {
+      nome: 'l',
+      codigo: 'L',
+    },
+    {
+      nome: 'ml',
+      codigo: 'ML',
+    },
+  ];
 
   submitted: boolean = false;
   insumos: Insumo[];
@@ -41,16 +69,16 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       typeColumn: TypeColumns.String,
     },
     {
-      fieldName: 'preco',
-      labelColumn: 'Preço',
+      fieldName: 'quantidade',
+      labelColumn: 'Quantidade',
       sortableColumn: true,
-      typeColumn: TypeColumns.Currency,
+      typeColumn: TypeColumns.String,
     },
     {
-      fieldName: 'ativo',
-      labelColumn: 'Ativo',
-      sortableColumn: false,
-      typeColumn: TypeColumns.Boolean,
+      fieldName: 'tipo',
+      labelColumn: 'Tipo',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
     },
     {
       fieldName: '',
@@ -62,10 +90,10 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getAllInsumos().subscribe((insumos: Insumo[]) => {
-      this.insumos = insumos;
+      this.insumos = insumos.filter((x) => x.ativo);
     });
 
-    this.formCadastroInsumo.reset();
+    this.resetForm();
   }
 
   search(event: any) {
@@ -82,30 +110,33 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   selecionaInsumo(insumo: Insumo): void {
-    this.precoInsumo?.setValue(insumo.preco);
     this.insumoAtivo?.setValue(insumo.ativo);
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);
   }
 
   prevPage(): void {
-    this.router.navigate(['produtos/cadastro']);
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   nextPage(): void {
-    this.router.navigate(['produtos/cadastro/revisao']);
+    this.router.navigate(['../revisao'], { relativeTo: this.route });
   }
 
   vincularInsumo() {
     if (this.formCadastroInsumo.valid) {
-      let insumo: Insumo = {
-        id: this.idInsumo?.value,
-        ativo: this.insumoAtivo?.value,
+      let insumo: InsumoProduto = {
+        id_insumo: this.idInsumo?.value,
         nome: this.nomeInsumo?.value,
-        preco: this.precoInsumo?.value,
+        quantidade: this.quantidadeInsumo?.value,
+        tipo: this.tipoInsumo?.value,
       };
 
-      if (this.cadastroProdutoService.insumosVinculados.filter((x) => x.id === insumo.id).length > 0) {
+      if (
+        this.cadastroProdutoService.cadastroProduto.insumos.filter(
+          (x) => x.id_insumo === insumo.id_insumo
+        ).length > 0
+      ) {
         this.confirmationService.confirm({
           header: 'Insumo repetido.',
           message: 'Não é possível adicionar o mesmo insumo',
@@ -115,16 +146,23 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
         this.submitted = true;
       } else {
+        this.cadastroProdutoService.cadastroProduto.insumos.push(insumo);
 
-        this.cadastroProdutoService.insumosVinculados.push(insumo);
-
-        this.formCadastroInsumo.reset();
+        this.resetForm();
         this.suggestions = [];
         this.submitted = false;
       }
     } else {
       this.submitted = true;
     }
+  }
+
+  private resetForm(): void {
+    this.formCadastroInsumo.reset({
+      tipoInsumo: this.tipoInsumoConst,
+      idInsumo: 0,
+      quantidadeInsumo: 0,
+    });
   }
 
   onEdit(insumo: Insumo) {
@@ -134,9 +172,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   onDelete(insumo: Insumo) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        console.log(`Delete -> ${insumo.id}`);
-      },
+      accept: () => {},
     });
   }
 
@@ -144,8 +180,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     return this.formCadastroInsumo.get('nomeInsumo');
   }
 
-  get precoInsumo() {
-    return this.formCadastroInsumo.get('precoInsumo');
+  get quantidadeInsumo() {
+    return this.formCadastroInsumo.get('quantidadeInsumo');
   }
 
   get insumoAtivo() {
@@ -154,5 +190,9 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   get idInsumo() {
     return this.formCadastroInsumo.get('idInsumo');
+  }
+
+  get tipoInsumo() {
+    return this.formCadastroInsumo.get('tipoInsumo');
   }
 }

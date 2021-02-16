@@ -1,6 +1,7 @@
+import { TiposInsumos } from "./tipos-insumos";
+
 export interface Insumo {
     id: number;
     nome: string;
-    preco: number;
     ativo: boolean;
 }

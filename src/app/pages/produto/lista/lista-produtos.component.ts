@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
-import { Produto } from '../domain/produto';
+import { ListaProduto } from '../domain/produto-lista';
+import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -10,7 +13,7 @@ import { Produto } from '../domain/produto';
   styleUrls: ['./lista-produtos.component.css'],
 })
 export class ListaProdutosComponent implements OnInit {
-  produtos: Produto[] = [];
+  produtos: ListaProduto[] = [];
 
   headers: TableHeader[] = [
     {
@@ -41,7 +44,13 @@ export class ListaProdutosComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  constructor(private service: ProdutoService) {}
+  constructor(
+    private service: ProdutoService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private cadastroProdutoService: CadastroProdutoService
+  ) {}
 
   ngOnInit() {
     this.getAllProdutos();
@@ -49,19 +58,24 @@ export class ListaProdutosComponent implements OnInit {
 
   private getAllProdutos(): void {
     this.isLoading = true;
-    setTimeout(() => {
-      this.service.getAllProdutos().subscribe((produtos: Produto[]) => {
-        this.produtos = produtos;
-        this.isLoading = false;
-      });
-    }, 5000);
+    this.service.getAllProdutos().subscribe((produtos: ListaProduto[]) => {
+      this.produtos = produtos;
+      this.isLoading = false;
+    });
   }
 
-  onEdit(insumo: Produto) {
-    console.log(`Edit -> ${insumo.id}`)
+  onEdit(produto: ListaProduto) {
+    this.router.navigate(['/produtos/cadastro', produto.id], { relativeTo: this.route });
   }
 
-  onDelete(insumo: Produto) {
-    console.log(`Delete -> ${insumo.id}`)
+  onDelete(produto: ListaProduto) {
+    this.confirmationService.confirm({
+      message: 'Deseja excluir o insumo? Essa operação não pode ser desfeita',
+      accept: () => {
+        this.service.deleteProduto(produto.id).subscribe((response) => {
+          this.getAllProdutos();
+        });
+      },
+    });
   }
 }

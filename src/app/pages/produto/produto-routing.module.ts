@@ -26,6 +26,24 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'cadastro/:id',
+    component: ProdutosStepsComponent,
+    children: [
+      {
+        path: '',
+        component: ProdutosInfoComponent,
+      },
+      {
+        path: 'insumos',
+        component: CadastroInsumosProdutosComponent,
+      },
+      {
+        path: 'revisao',
+        component: RevisaoCadastroProdutosComponent,
+      },
+    ],
+  }
 ];
 
 @NgModule({
