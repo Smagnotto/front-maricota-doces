@@ -16,9 +16,16 @@
       <a [routerLink]=" ['/produtos']" routerLinkActive="router-link-exact-active"
         (click)="onMenuButtonClick($event)">Produtos</a>
     </div>
+
+    <div class="menu-category">Encomendas</div>
+    <div class="menu-items">
+      <a [routerLink]=" ['/encomendas']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Encomendas</a>
+    </div>
+
     <div class="menu-category">Configuração</div>
     <div class="menu-items">
-      <a>Configuracao
+      <a>Configuração
         <p-tag value="Comming Soon" severity="warning"></p-tag>
       </a>
     </div>

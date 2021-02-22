@@ -10,7 +10,7 @@
       <div class="p-col-12 p-md-4">
         <span class="p-float-label">
           <input id="nome_produto" type="text" pInputText formControlName="nome"
-            [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
+            [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}" [maxLength]="30">
           <label for="nome_produto">Nome do produto</label>
         </span>
         <small *ngIf="(nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)" class="p-error">Informe o nome do

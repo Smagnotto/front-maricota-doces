@@ -19,6 +19,8 @@ export class InsumoInfoComponent implements OnInit {
     private service: InsumoService
   ) {}
 
+  submitted: boolean = false;
+
   formInsumo: FormGroup = new FormGroup({
     id: new FormControl(0),
     nome: new FormControl('', [Validators.required]),
@@ -30,8 +32,12 @@ export class InsumoInfoComponent implements OnInit {
       let idInsumo = params['id'];
 
       if (idInsumo) this.getInsumo(idInsumo);
-      else this.fillForm({
-         ativo: true, id: 0, nome: '' });
+      else
+        this.fillForm({
+          ativo: true,
+          id: 0,
+          nome: '',
+        });
     });
   }
 
@@ -88,6 +94,7 @@ export class InsumoInfoComponent implements OnInit {
         this.goBack();
       });
     }
+    this.submitted = true;
   }
 
   private goBack(): void {

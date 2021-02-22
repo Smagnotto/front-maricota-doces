@@ -29,12 +29,15 @@
         <!-- Real Values And Actions -->
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.String">{{row[header.fieldName]}}</span>
         <span
-          *ngIf="!isLoading && header.typeColumn === typeColumns.Currency">{{row[header.fieldName] | currency: 'BRL'}}</span>
+          *ngIf="!isLoading && header.typeColumn === typeColumns.Currency">{{row[header.fieldName] | currency}}</span>
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.Boolean">
           <p-checkbox name="checkbox-row" [value]="row[header.fieldName]" [(ngModel)]="row[header.fieldName]"
-            [binary]="true" [disabled]="true">
+            [binary]="true" [disabled]="header.isDisabled || false" (onChange)="header.callback ? header.callback(row) : null"> 
           </p-checkbox>
         </span>
+
+        <span *ngIf="!isLoading && header.typeColumn === typeColumns.Date">{{row[header.fieldName] | date: 'short'}}</span>
+
 
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.ActionsButtons">
           <button pButton pRipple type="button" icon="pi pi-pencil" class="p-mr-2 p-button-sm"

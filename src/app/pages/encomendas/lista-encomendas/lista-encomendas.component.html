@@ -3,16 +3,16 @@
 <p-card>
   <div class="p-grid">
     <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
-      <h5>Cadastro de Insumos</h5>
+      <h5>Cadastro de Encomendas</h5>
     </div>
     <div class="p-col-12 p-d-flex p-jc-end p-sm-end p-md-end p-xl-end">
-      <button pButton pRipple label="Adicionar" icon="pi pi-plus" [routerLink]="['/insumos/cadastro']"
+      <button pButton pRipple label="Adicionar" icon="pi pi-plus" [routerLink]="['/encomendas/cadastro']"
         routerLinkActive="router-link-exact-active">
       </button>
     </div>
 
     <div class="p-col-12">
-      <app-table-responsive [data]="produtos" [headers]="headers" [isLoading]="isLoading" (onEdit)="onEdit($event)"
+      <app-table-responsive [data]="encomendas" [headers]="headers" [isLoading]="isLoading" (onEdit)="onEdit($event)"
         (onDelete)="onDelete($event)"></app-table-responsive>
     </div>
   </div>

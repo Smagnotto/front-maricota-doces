@@ -26,6 +26,7 @@ export class ListaInsumosComponent implements OnInit {
       labelColumn: 'Ativo',
       sortableColumn: false,
       typeColumn: TypeColumns.Boolean,
+      isDisabled: true,
     },
     {
       fieldName: '',

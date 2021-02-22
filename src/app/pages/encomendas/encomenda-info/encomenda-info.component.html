@@ -1,0 +1,89 @@
+<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
+  defaultFocus="Não" rejectButtonStyleClass="p-button-danger"></p-confirmDialog>
+
+<form [formGroup]="formEncomenda" (ngSubmit)="onSubmit(formEncomenda)">
+
+  <input type="text" formControlName="idEncomenda" hidden />
+  <input type="text" formControlName="idCliente" hidden />
+  <p-card>
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+      <h5>Cadastro de Encomendas</h5>
+    </div>
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-4 p-lg-6">
+        <span class="p-float-label">
+          <input type="text" formControlName="nomeCliente" hidden />
+          <p-autoComplete formControlName="autoCompleteNomeCliente" field="nome" [suggestions]="filteredClients" 
+          [minLength]="1" (completeMethod)="filterClient($event)"
+          (onSelect)="selecionaCliente($event)"></p-autoComplete>
+          <label for="nome_cliente">Nome do cliente</label>
+        </span>
+        <small *ngIf="nomeCliente?.errors?.required" id="nome_cliente-help" class="p-error">Informe o nome do
+          cliente.</small>
+      </div>
+
+      <div class="p-col-12 p-md-4 p-lg-4">
+        <span class="p-float-label">
+          <p-calendar [showIcon]="true" inputId="data_entrega" [showTime]="true" dateFormat="dd/mm/yy"
+            formControlName="dataEntrega"></p-calendar>
+          <label for="data_entrega">Data Entrega</label>
+        </span>
+        <small *ngIf="dataEntrega?.errors?.required" id="data_entrega-help" class="p-error">Informe a data da
+          entrega</small>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-lg-2">
+        <p-checkbox name="ativo" [binary]="true" label="Pago" formControlName="pago"> </p-checkbox>
+      </div>
+
+      <p-divider>
+        <h5>Endereço do Cliente</h5>
+      </p-divider>
+
+      <div class="p-col-12 p-grid p-fluid" formGroupName="enderecoCliente">
+        <div class="p-col-12 p-md-4 p-lg-2">
+          <span class="p-float-label">
+            <p-inputMask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputMask>
+            <label for="cep_cliente">CEP</label>
+          </span>
+          <small *ngIf="cep?.errors?.required" id="cep_cliente-help" class="p-error">Informe o cep do cliente.</small>
+        </div>
+
+        <div class="p-col-12 p-md-4 p-lg-4">
+          <span class="p-float-label">
+            <input id="logradouro_cliente" type="text" pInputText formControlName="logradouro" [maxLength]="100">
+            <label for="logradouro_cliente">Logradouro</label>
+          </span>
+          <small *ngIf="logradouro?.errors?.required" id="logradouro_cliente-help" class="p-error">Informe o logradouro
+            do cliente.</small>
+        </div>
+
+        <div class="p-col-12 p-md-4 p-lg-2">
+          <span class="p-float-label">
+            <p-inputNumber mode="decimal" inputId="numero_cliente" [useGrouping]="false" formControlName="numero">
+            </p-inputNumber>
+            <label for="numero_cliente">Número</label>
+          </span>
+          <small *ngIf="numero?.errors?.required" id="numero_cliente-help" class="p-error">Informe o número.</small>
+          <small *ngIf="numero?.errors?.min" id="numero_cliente-help" class="p-error">Nº deve ser maior que 0.</small>
+        </div>
+
+        <div class="p-col-12 p-md-4 p-lg-4">
+          <span class="p-float-label">
+            <input id="logradouro_cliente" type="text" pInputText formControlName="complemento" [maxLength]="60">
+            <label for="logradouro_cliente">Complemento</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="p-col-12">
+        <div class="p-col-12 p-md-5 p-lg-4 p-d-flex">
+          <button pButton pRipple type="button" (click)="cancel()" label="Cancelar"
+            class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
+          <button pButton pRipple type="button" type="submit" label="Salvar" class="p-button-raised p-m-2"
+            icon="pi pi-check" iconPos="right" [disabled]="!formEncomenda.valid"></button>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</form>

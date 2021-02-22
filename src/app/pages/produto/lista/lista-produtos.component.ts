@@ -33,6 +33,7 @@ export class ListaProdutosComponent implements OnInit {
       labelColumn: 'Ativo',
       sortableColumn: false,
       typeColumn: TypeColumns.Boolean,
+      isDisabled: true
     },
     {
       fieldName: '',
