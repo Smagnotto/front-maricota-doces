@@ -1,12 +1,8 @@
 <p-table [value]="data" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
   currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} produtos" [rowsPerPageOptions]="[10,25,50]"
-  [responsive]="true">
+  [responsive]="true" styleClass="p-datatable-responsive-demo">
   <ng-template pTemplate="header">
     <tr>
-      <!-- <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon>
-      </th>
-      <th pSortableColumn="preco">Preço <p-sortIcon field="preco"></p-sortIcon>
-      </th> -->
       <th *ngFor="let header of headers" [pSortableColumn]="header.fieldName"
         [pSortableColumnDisabled]="!header.sortableColumn">
         {{ header.labelColumn }}
@@ -17,8 +13,10 @@
   <ng-template pTemplate="body" let-row>
     <tr>
       <td *ngFor="let header of headers">
-        <!-- Skeletons -->
-        <p-skeleton *ngIf="isLoading && header.typeColumn !== typeColumns.Boolean && header.typeColumn !== typeColumns.ActionsButtons"></p-skeleton>
+        <!-- Skeletons --> 
+        <p-skeleton
+          *ngIf="isLoading && header.typeColumn !== typeColumns.Boolean && header.typeColumn !== typeColumns.ActionsButtons">
+        </p-skeleton>
         <p-skeleton *ngIf="isLoading && header.typeColumn === typeColumns.Boolean" size="2rem" styleClass="p-mr-2">
         </p-skeleton>
         <div class="p-d-flex p-ai-end" *ngIf="isLoading && header.typeColumn === typeColumns.ActionsButtons">
@@ -27,17 +25,19 @@
         </div>
 
         <!-- Real Values And Actions -->
+        <span *ngIf="!isLoading" class="p-column-title">{{header.labelColumn}}</span>
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.String">{{row[header.fieldName]}}</span>
         <span
           *ngIf="!isLoading && header.typeColumn === typeColumns.Currency">{{row[header.fieldName] | currency}}</span>
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.Boolean">
           <p-checkbox name="checkbox-row" [value]="row[header.fieldName]" [(ngModel)]="row[header.fieldName]"
-            [binary]="true" [disabled]="header.isDisabled || false" (onChange)="header.callback ? header.callback(row) : null"> 
+            [binary]="true" [disabled]="header.isDisabled || false"
+            (onChange)="header.callback ? header.callback(row) : null">
           </p-checkbox>
         </span>
 
-        <span *ngIf="!isLoading && header.typeColumn === typeColumns.Date">{{row[header.fieldName] | date: 'short'}}</span>
-
+        <span
+          *ngIf="!isLoading && header.typeColumn === typeColumns.Date">{{row[header.fieldName] | date: 'short'}}</span>
 
         <span *ngIf="!isLoading && header.typeColumn === typeColumns.ActionsButtons">
           <button pButton pRipple type="button" icon="pi pi-pencil" class="p-mr-2 p-button-sm"
@@ -49,3 +49,22 @@
     </tr>
   </ng-template>
 </p-table>
+
+
+<!-- <p-table [columns]="headers" [value]="data" styleClass="p-datatable-responsive-demo">
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of headers">
+              {{col.labelColumn}}
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+          <td *ngFor="let col of columns">
+              <span class="p-column-title">{{col.labelColumn}}</span>
+              {{rowData[col.fieldName]}}
+          </td>
+      </tr>
+  </ng-template>
+</p-table> -->
