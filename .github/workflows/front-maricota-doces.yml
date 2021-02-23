@@ -24,8 +24,8 @@ jobs:
         npm install
         npm run-script deploy
     - name: Deploy
-      uses: google-github-actions/upload-cloud-storage@v0.2.0
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        credentials: ${{ secrets.gcp_credentials }}
-        path: dist/front-maricota-doces
-        destination: front-maricota-1
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist/front-maricota-doces
