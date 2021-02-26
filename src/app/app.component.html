@@ -1,4 +1,4 @@
-<div class="layout-wrapper">
+<div class="layout-wrapper" *ngIf="isAuthenticated">
   <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
   <app-menu [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>
   <div class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}" (click)="onMaskClick()"></div>
@@ -8,5 +8,11 @@
       <router-outlet></router-outlet>
       <app-footer></app-footer>
     </div>
+  </div>
+</div>
+
+<div class="layout-wrapper" *ngIf="!isAuthenticated">
+  <div class="layout-content">
+    <app-login></app-login>
   </div>
 </div>

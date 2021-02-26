@@ -1,4 +1,9 @@
 export const environment = {
   production: true,
-  baseUrl: ''
+  baseUrl: '',
+  firebase: {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+  }
 };

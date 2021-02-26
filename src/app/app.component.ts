@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuItem, PrimeNGConfig } from 'primeng/api';
+import { Component } from '@angular/core';
+import { PrimeNGConfig } from 'primeng/api';
+import { LoginService } from './pages/login/service/login.service';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,14 @@ import { MenuItem, PrimeNGConfig } from 'primeng/api';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(public primengConfig: PrimeNGConfig) {
+  constructor(public primengConfig: PrimeNGConfig, private loginService: LoginService) {
     this.primengConfig.ripple = true;
   }
 
+  isAuthenticated: boolean = this.loginService.isLoggedIn;
   menuActive: boolean = false;
 
-  title = 'front-maricota-doces';
+  title = 'Maricota Doces';
 
   onMenuButtonClick() {
     this.menuActive = true;
