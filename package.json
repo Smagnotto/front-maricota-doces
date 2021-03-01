@@ -4,12 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4300 --open",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href https://smagnotto.github.io/front-maricota-doces/",
-    "deploy-gcp": "ng build --prod --base-href=https://storage.googleapis.com/maricota-doces/"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
