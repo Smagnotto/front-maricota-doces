@@ -5,7 +5,7 @@ on:
     branches:
       - master
 jobs:
-  build-and-deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
@@ -13,36 +13,16 @@ jobs:
       FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
       FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_AUTH_PROJECT_ID }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - uses: actions/setup-node@v1 #this installs node and npm for us
-      with:
-        node-version: '10.x'
-    - uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Build
-      run: |
-        npm install
-        npm run-script deploy
-    - name: Deploy
-    - uses: FirebaseExtended/action-hosting-deploy@v0
-      with:
-        repoToken: "${{ secrets.GITHUB_TOKEN }}"
-        firebaseServiceAccount: >-
-          ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARICOTA_DOCES_81756 }}
-        channelId: live
-        projectId: maricota-doces-81756
-      env:
-        FIREBASE_CLI_PREVIEWS: hostingchannels
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: >-
+            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARICOTA_DOCES_81756 }}
+          channelId: live
+          projectId: maricota-doces-81756
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
 
-
-    # - name: Deploy GCP
-    #   uses: google-github-actions/upload-cloud-storage@v0.2.0
-    #   with:
-    #     credentials: ${{ secrets.gcp_credentials }}
-    #     path: dist/front-maricota-doces
-    #     destination: front-maricota-1
