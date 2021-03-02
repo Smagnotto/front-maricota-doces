@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Message } from 'primeng/api';
 import { LoginService } from './service/login.service';
 
 @Component({
@@ -15,14 +16,23 @@ export class LoginComponent implements OnInit {
   });
 
   submitted: boolean = false;
+  error: boolean = false;
+  isLoading: boolean = false;
+  returnUrl: string;
 
-  constructor(
-    private loginService: LoginService,
-    private ngZone: NgZone,
-    private router: Router
-  ) {}
+  mensagem: Message[] = [
+    { severity: 'error', summary: 'Erro', detail: 'Usuário ou senha inválida' },
+  ];
 
-  ngOnInit(): void {}
+  constructor(private loginService: LoginService, private router: Router, private route: ActivatedRoute) {
+    if (this.loginService.isLoggedIn) {
+      this.router.navigate(['/']);
+    }
+  }
+
+  ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  }
 
   get email() {
     return this.formLogin.get('email');
@@ -34,22 +44,23 @@ export class LoginComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (form.valid) {
+      this.isLoading = true;
+      this.error = false;
+
       const email: string = form.get('email')?.value;
       const password: string = form.get('password')?.value;
 
       this.loginService
         .login(email, password)
-        .then((result: any) => {
-          this.ngZone.run(() => {
-            this.router.navigate(['/']);
-          });
-          this.loginService.setUserData(result.user);
+        .then(() => {
+          this.router.navigate([this.returnUrl]);
+          this.error = false;
+          this.isLoading = false;
         })
-        .catch((error: any) => {
-          console.log(error);
-
-          //Adding feedback
-        })
+        .catch(() => {
+          this.error = true;
+          this.isLoading = false;
+        });
     }
     this.submitted = true;
   }
