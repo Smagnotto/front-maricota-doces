@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import {
-  AngularFirestore,
-} from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../model/User';
@@ -17,7 +14,6 @@ export class LoginService {
   private KEY_USER: string = 'user';
 
   constructor(
-    private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private router: Router
   ) {
