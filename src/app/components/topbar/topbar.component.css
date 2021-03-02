@@ -242,6 +242,12 @@
     height: 40px;
     line-height: 40px;
     width: 25%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    margin-left: auto;
+    display: flex;
   }
 
   .layout-topbar .topbar-menu>li>a {

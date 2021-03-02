@@ -1,8 +1,13 @@
 <div class="layout-topbar">
-    <a class="menu-button" (click)="onMenuButtonClick($event)">
-        <i class="pi pi-bars"></i>
-    </a>
-    <ul class="topbar-menu">
-        <!-- <li><a [routerLink]="['/setup']">Get Started</a></li> -->
-    </ul>
+  <a class="menu-button" (click)="onMenuButtonClick($event)">
+    <i class="pi pi-bars"></i>
+  </a>
+
+  <ul class="topbar-menu">
+    <li>
+      <a (click)="logout()">
+        <i class="pi pi-power-off" aria-hidden="true" style="font-size: 1rem"></i>
+      </a>
+    </li>
+  </ul>
 </div>
