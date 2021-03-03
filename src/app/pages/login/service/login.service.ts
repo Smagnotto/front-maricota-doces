@@ -25,6 +25,7 @@ export class LoginService {
 
     this.afAuth.authState.subscribe((user) => {
       if (user) {
+        localStorage.setItem(this.KEY_USER, JSON.stringify(user as User));
         this.userSubject.next(user as User);
       } else {
         localStorage.setItem(this.KEY_USER, null!);
@@ -49,9 +50,8 @@ export class LoginService {
       })
   }
 
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem(this.KEY_USER)!);
-    return user !== null && user.email !== null;
+  get userValue(): User {
+    return this.userSubject.value;
   }
 
   logout() {

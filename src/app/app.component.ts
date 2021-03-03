@@ -8,11 +8,18 @@ import { LoginService } from './pages/login/service/login.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(public primengConfig: PrimeNGConfig, private loginService: LoginService) {
+  constructor(
+    public primengConfig: PrimeNGConfig,
+    private loginService: LoginService
+  ) {
     this.primengConfig.ripple = true;
+
+    this.loginService.user.subscribe((user) => {
+      this.isAuthenticated = user !== null;
+    });
   }
 
-  isAuthenticated: boolean = this.loginService.isLoggedIn;
+  isAuthenticated: boolean;
   menuActive: boolean = false;
 
   title = 'Maricota Doces';
