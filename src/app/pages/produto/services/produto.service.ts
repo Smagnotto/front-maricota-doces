@@ -21,13 +21,19 @@ export class ProdutoService {
 
   getAllProdutos(): Observable<ListaProduto[]> {
     return this.http
-      .get<ListaProduto[]>(`${this.url}/${this.path}`)
+      .get<ListaProduto[]>(`${this.url}/${this.path}/`)
       .pipe(retry(2), catchError(this.handleError));
   }
 
   getProdutoById(id: number): Observable<Produto> {
     return this.http
       .get<Produto>(`${this.url}/${this.path}/${id}`)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getProdutoByNome(nome: String): Observable<Produto[]> {
+    return this.http
+      .get<Produto[]>(`${this.url}/${this.path}?nome=${nome}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

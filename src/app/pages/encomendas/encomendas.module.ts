@@ -8,9 +8,11 @@ import { TableResponsiveModule } from 'src/app/components/table-responsive/table
 import { ListaEncomendasComponent } from './lista-encomendas/lista-encomendas.component';
 import { EncomendaInfoComponent } from './encomenda-info/encomenda-info.component';
 import { ClienteService } from '../clientes/services/cliente.service';
+import { ProdutosEncomendaComponent } from './encomenda-info/produtos-encomenda/produtos-encomenda.component';
+import { ClienteEncomendaComponent } from './encomenda-info/cliente-encomenda/cliente-encomenda.component';
 
 @NgModule({
-  declarations: [ListaEncomendasComponent, EncomendaInfoComponent],
+  declarations: [ListaEncomendasComponent, EncomendaInfoComponent, ProdutosEncomendaComponent, ClienteEncomendaComponent],
   imports: [
     CommonModule,
     EncomendasRoutingModule,

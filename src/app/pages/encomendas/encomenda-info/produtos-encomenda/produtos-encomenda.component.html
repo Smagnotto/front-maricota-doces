@@ -1,0 +1,50 @@
+<p-divider>
+  <h5>Produtos</h5>
+</p-divider>
+
+<div class="p-col-12 p-grid p-fluid" [formGroup]="formProdutos">
+  <div class="p-col-12 p-md-4">
+    <span class="p-float-label">
+      <input type="text" formControlName="nomeProduto" hidden />
+      <input type="text" formControlName="idProduto" hidden />
+
+      <p-autoComplete formControlName="autoCompleteNomeProduto" [suggestions]="filteredProdutos"
+        (completeMethod)="filterProduto($event)" [dropdown]="true" (onSelect)="selecionaProduto($event)"
+        field="nome" [required]="true" formControlName="autoCompleteNomeProduto" [forceSelection]="true"
+        [minLength]="1"
+        [ngClass]="{'ng-dirty': (nomeProduto?.invalid && submitted) || (nomeProduto?.dirty && nomeProduto?.invalid)}">
+      </p-autoComplete>
+      <label for="nome_produto">Nome do Produto</label>
+    </span>
+    <small *ngIf="(nomeProduto?.invalid && submitted) || (nomeProduto?.dirty && nomeProduto?.invalid)"
+      class="p-error">Selecione um produto.</small>
+  </div>
+
+  <div class="p-col-12 p-md-3 ">
+    <span class="p-float-label">
+      <p-inputNumber id="preco_produto" mode="decimal" [useGrouping]="false" formControlName="quantidadeProduto">
+      </p-inputNumber>
+      <label for="preco_produto">Quantidade</label>
+    </span>
+    <small
+      *ngIf="(quantidadeProduto?.invalid && submitted) || (quantidadeProduto?.dirty && quantidadeProduto?.invalid)"
+      class="p-error">Informe a quantidade do produto</small>
+  </div>
+
+  <div class="p-col-12 p-md-3">
+    <span class="p-float-label">
+      <p-inputNumber id="preco_produto" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoProduto">
+      </p-inputNumber>
+      <label for="preco_produto">Preço</label>
+    </span>
+  </div>
+
+  <div class="p-col-12 p-lg-1 p-md-12 p-d-flex p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
+    <p-button label="Vincular" icon="pi pi-plus" iconPos="right" (click)="VincularProdutos(formProdutos)"></p-button>
+  </div>
+</div>
+
+<div class="p-col-12">
+  <app-table-responsive [data]="produtosVinculados" [headers]="headerProdutos" (onEdit)="onEdit($event)"
+    (onDelete)="onDelete($event)"></app-table-responsive>
+</div>

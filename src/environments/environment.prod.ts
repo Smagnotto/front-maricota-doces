@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   baseUrl: $ENV.BASE_URL,
+  urlViaCep: $ENV.BASE_URL_VIA_CEP,
   firebase: {
     apiKey: $ENV.FIREBASE_API_KEY,
     authDomain: $ENV.FIREBASE_AUTH_DOMAIN,

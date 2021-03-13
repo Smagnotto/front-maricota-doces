@@ -165,14 +165,24 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     });
   }
 
-  onEdit(insumo: Insumo) {
-    console.log(`Edit -> ${insumo.id}`);
+  private deleteInsumo(insumos: InsumoProduto[], insumo: InsumoProduto) {
+    return insumos.filter((item) => {
+      return item != insumo;
+    });
   }
 
-  onDelete(insumo: Insumo) {
+  onEdit(insumo: InsumoProduto) {}
+
+  onDelete(insumo: InsumoProduto) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
-      accept: () => {},
+      accept: () => {
+        let insumos = [...this.cadastroProdutoService.cadastroProduto.insumos];
+
+        this.cadastroProdutoService.cadastroProduto.insumos = [
+          ...this.deleteInsumo(insumos, insumo),
+        ];
+      },
     });
   }
 
@@ -194,5 +204,9 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   get tipoInsumo() {
     return this.formCadastroInsumo.get('tipoInsumo');
+  }
+
+  get autoCompleteNomeInsumo() {
+    return this.formCadastroInsumo.get('autoCompleteNomeInsumo');
   }
 }

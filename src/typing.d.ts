@@ -5,4 +5,5 @@ interface Env {
   FIREBASE_API_KEY: string;
   FIREBASE_AUTH_DOMAIN: string;
   FIREBASE_PROJECT_ID: string;
+  BASE_URL_VIA_CEP: string;
 }

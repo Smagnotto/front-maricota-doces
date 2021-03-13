@@ -13,7 +13,7 @@
   <ng-template pTemplate="body" let-row>
     <tr>
       <td *ngFor="let header of headers">
-        <!-- Skeletons --> 
+        <!-- Skeletons -->
         <p-skeleton
           *ngIf="isLoading && header.typeColumn !== typeColumns.Boolean && header.typeColumn !== typeColumns.ActionsButtons">
         </p-skeleton>
@@ -49,22 +49,3 @@
     </tr>
   </ng-template>
 </p-table>
-
-
-<!-- <p-table [columns]="headers" [value]="data" styleClass="p-datatable-responsive-demo">
-  <ng-template pTemplate="header" let-columns>
-      <tr>
-          <th *ngFor="let col of headers">
-              {{col.labelColumn}}
-          </th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr>
-          <td *ngFor="let col of columns">
-              <span class="p-column-title">{{col.labelColumn}}</span>
-              {{rowData[col.fieldName]}}
-          </td>
-      </tr>
-  </ng-template>
-</p-table> -->
