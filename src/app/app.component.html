@@ -1,13 +1,21 @@
 <div class="layout-wrapper">
-  <app-topbar *ngIf="isAuthenticated" (menuButtonClick)="onMenuButtonClick()"></app-topbar>
-  <app-menu *ngIf="isAuthenticated" [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>
-  <div *ngIf="isAuthenticated" class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}"
+  @if (isAuthenticated) {
+    <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
+  }
+  @if (isAuthenticated) {
+    <app-menu [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>
+  }
+  @if (isAuthenticated) {
+    <div class="layout-mask" [ngClass]="{'layout-mask-active': menuActive}"
     (click)="onMaskClick()"></div>
+  }
 
   <div class="layout-content">
     <div class="content-section" [ngClass]="{'documentation': isAuthenticated}">
       <router-outlet></router-outlet>
-      <app-footer *ngIf="isAuthenticated"></app-footer>
+      @if (isAuthenticated) {
+        <app-footer></app-footer>
+      }
     </div>
   </div>
 </div>

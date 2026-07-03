@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
@@ -11,9 +12,11 @@ import { InsumoProduto } from '../domain/insumo-produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
-  selector: 'app-cadastro-insumos-produtos',
-  templateUrl: './cadastro-insumos-produtos.component.html',
-  styleUrls: ['./cadastro-insumos-produtos.component.css'],
+    selector: 'app-cadastro-insumos-produtos',
+    templateUrl: './cadastro-insumos-produtos.component.html',
+    styleUrls: ['./cadastro-insumos-produtos.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class CadastroInsumosProdutosComponent implements OnInit {
   constructor(
@@ -26,16 +29,16 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   private readonly tipoInsumoConst: String = 'KG';
 
-  formCadastroInsumo: FormGroup = new FormGroup({
-    nomeInsumo: new FormControl({ value: '' }, [Validators.required]),
-    quantidadeInsumo: new FormControl(0, [
+  formCadastroInsumo: UntypedFormGroup = new UntypedFormGroup({
+    nomeInsumo: new UntypedFormControl({ value: '' }, [Validators.required]),
+    quantidadeInsumo: new UntypedFormControl(0, [
       Validators.required,
       Validators.min(1),
     ]),
-    insumoAtivo: new FormControl({ value: false, disabled: true }, []),
-    idInsumo: new FormControl({ value: 0, disabled: true }),
-    autoCompleteNomeInsumo: new FormControl(''),
-    tipoInsumo: new FormControl(this.tipoInsumoConst),
+    insumoAtivo: new UntypedFormControl({ value: false, disabled: true }, []),
+    idInsumo: new UntypedFormControl({ value: 0, disabled: true }),
+    autoCompleteNomeInsumo: new UntypedFormControl(''),
+    tipoInsumo: new UntypedFormControl(this.tipoInsumoConst),
   });
 
   tiposInsumos: TiposInsumos[] = [
@@ -109,7 +112,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     this.suggestions = filtered;
   }
 
-  selecionaInsumo(insumo: Insumo): void {
+  selecionaInsumo(event: AutoCompleteSelectEvent): void {
+    const insumo = event.value as Insumo;
     this.insumoAtivo?.setValue(insumo.ativo);
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);

@@ -1,28 +1,31 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { Cliente } from 'src/app/pages/clientes/domain/cliente';
 import { ClienteService } from 'src/app/pages/clientes/services/cliente.service';
 
 @Component({
-  selector: 'app-cliente-encomenda',
-  templateUrl: './cliente-encomenda.component.html',
-  styleUrls: ['./cliente-encomenda.component.css'],
+    selector: 'app-cliente-encomenda',
+    templateUrl: './cliente-encomenda.component.html',
+    styleUrls: ['./cliente-encomenda.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ClienteEncomendaComponent implements OnInit {
   constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {}
 
-  formCliente: FormGroup = new FormGroup({
-    idCliente: new FormControl(''),
-    autoCompleteNomeCliente: new FormControl(''),
-    nomeCliente: new FormControl('', [Validators.required]),
-    dataEntrega: new FormControl('', [Validators.required]),
-    enderecoCliente: new FormGroup({
-      logradouro: new FormControl('', [Validators.required]),
-      numero: new FormControl(0, [Validators.required, Validators.min(1)]),
-      complemento: new FormControl(''),
-      cep: new FormControl('', [Validators.required]),
+  formCliente: UntypedFormGroup = new UntypedFormGroup({
+    idCliente: new UntypedFormControl(''),
+    autoCompleteNomeCliente: new UntypedFormControl(''),
+    nomeCliente: new UntypedFormControl('', [Validators.required]),
+    dataEntrega: new UntypedFormControl('', [Validators.required]),
+    enderecoCliente: new UntypedFormGroup({
+      logradouro: new UntypedFormControl('', [Validators.required]),
+      numero: new UntypedFormControl(0, [Validators.required, Validators.min(1)]),
+      complemento: new UntypedFormControl(''),
+      cep: new UntypedFormControl('', [Validators.required]),
     }),
   });
 
@@ -38,7 +41,8 @@ export class ClienteEncomendaComponent implements OnInit {
     });
   }
 
-  selecionaCliente(cliente: Cliente) {
+  selecionaCliente(event: AutoCompleteSelectEvent) {
+    const cliente = event.value as Cliente;
     this.idCliente?.setValue(cliente.id);
     this.nomeCliente?.setValue(cliente.nome);
     this.logradouro?.setValue(cliente.endereco.logradouro);

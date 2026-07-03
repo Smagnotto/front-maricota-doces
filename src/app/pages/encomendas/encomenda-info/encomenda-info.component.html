@@ -1,5 +1,5 @@
-<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
-  defaultFocus="Não" rejectButtonStyleClass="p-button-danger"></p-confirmDialog>
+<p-confirmdialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
+defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog>
 
 <form [formGroup]="formEncomenda" (ngSubmit)="onSubmit(formEncomenda)">
 
@@ -11,12 +11,14 @@
     <div class="p-grid p-fluid">
       <div class="p-col-12 p-md-4 p-lg-4">
         <span class="p-float-label">
-          <p-calendar [showIcon]="true" inputId="data_entrega" [showTime]="true" dateFormat="dd/mm/yy"
-            formControlName="dataEntrega"></p-calendar>
+          <p-datepicker [showIcon]="true" inputId="data_entrega" [showTime]="true" dateFormat="dd/mm/yy"
+          formControlName="dataEntrega"></p-datepicker>
           <label for="data_entrega">Data Entrega</label>
         </span>
-        <small *ngIf="dataEntrega?.errors?.required" id="data_entrega-help" class="p-error">Informe a data da
+        @if (dataEntrega?.errors?.required) {
+          <small id="data_entrega-help" class="p-error">Informe a data da
           entrega</small>
+        }
       </div>
 
       <app-cliente-encomenda (onSelectCliente)="SelecionaCliente($event)"></app-cliente-encomenda>
@@ -25,9 +27,9 @@
       <div class="p-col-12">
         <div class="p-col-12 p-md-5 p-lg-4 p-d-flex">
           <button pButton pRipple type="button" (click)="cancel()" label="Cancelar"
-            class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
+          class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
           <button pButton pRipple type="button" type="submit" label="Salvar" class="p-button-raised p-m-2"
-            icon="pi pi-check" iconPos="right" [disabled]="isValid()"></button>
+          icon="pi pi-check" iconPos="right" [disabled]="isValid()"></button>
         </div>
       </div>
 

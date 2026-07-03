@@ -1,18 +1,20 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Message } from 'primeng/api';
+import { ToastMessageOptions } from 'primeng/api';
 import { LoginService } from './service/login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class LoginComponent implements OnInit {
-  formLogin: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+  formLogin: UntypedFormGroup = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email]),
+    password: new UntypedFormControl('', [Validators.required]),
   });
 
   submitted: boolean = false;
@@ -20,7 +22,7 @@ export class LoginComponent implements OnInit {
   isLoading: boolean = false;
   returnUrl: string;
 
-  mensagem: Message[] = [
+  mensagem: ToastMessageOptions[] = [
     { severity: 'error', summary: 'Erro', detail: 'Usuário ou senha inválida' },
   ];
 
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
     return this.formLogin.get('password');
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: UntypedFormGroup) {
     if (form.valid) {
       this.isLoading = true;
       this.error = false;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
@@ -7,9 +7,11 @@ import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 import { ProdutoService } from '../services/produto.service';
 
 @Component({
-  selector: 'app-produtos-steps',
-  templateUrl: './produtos-steps.component.html',
-  styleUrls: ['./produtos-steps.component.css'],
+    selector: 'app-produtos-steps',
+    templateUrl: './produtos-steps.component.html',
+    styleUrls: ['./produtos-steps.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProdutosStepsComponent implements OnInit, OnDestroy {
   items: MenuItem[];

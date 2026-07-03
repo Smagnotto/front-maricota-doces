@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TableHeader } from './model/table-header-responsive';
 import { TypeColumns } from './model/type-columns';
 
 @Component({
-  selector: 'app-table-responsive',
-  templateUrl: './table-responsive.component.html',
-  styleUrls: ['./table-responsive.component.css'],
+    selector: 'app-table-responsive',
+    templateUrl: './table-responsive.component.html',
+    styleUrls: ['./table-responsive.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TableResponsiveComponent implements OnInit {
   @Input() headers: TableHeader[] = [];

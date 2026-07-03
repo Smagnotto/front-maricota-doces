@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../model/User';
 
@@ -8,13 +8,13 @@ import { User } from '../model/User';
   providedIn: 'root',
 })
 export class LoginService {
+  private auth = getAuth();
   private userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
 
   private KEY_USER: string = 'user';
 
   constructor(
-    private afAuth: AngularFireAuth,
     private router: Router
   ) {
     this.userSubject = new BehaviorSubject<User>(
@@ -23,7 +23,7 @@ export class LoginService {
 
     this.user = this.userSubject.asObservable();
 
-    this.afAuth.authState.subscribe((user) => {
+    onAuthStateChanged(this.auth, (user) => {
       if (user) {
         localStorage.setItem(this.KEY_USER, JSON.stringify(user as User));
         this.userSubject.next(user as User);
@@ -35,8 +35,7 @@ export class LoginService {
   }
 
   login(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
+    return signInWithEmailAndPassword(this.auth, email, password)
       .then((result: any) => {
         const userData: User = {
           uid: result.user.uid,
@@ -55,7 +54,7 @@ export class LoginService {
   }
 
   logout() {
-    return this.afAuth.signOut().then(() => {
+    return signOut(this.auth).then(() => {
       localStorage.removeItem(this.KEY_USER);
       this.userSubject.next(null!);
       this.router.navigate(['/login']);

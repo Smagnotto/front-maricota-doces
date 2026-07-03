@@ -1,8 +1,6 @@
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { TabViewModule } from 'primeng/tabview';
-import { SidebarModule } from 'primeng/sidebar';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 
@@ -12,32 +10,29 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PanelModule } from 'primeng/panel';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { CalendarModule } from 'primeng/calendar';
-import { ChipsModule } from 'primeng/chips';
+import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { DropdownModule } from 'primeng/dropdown';
+import { SelectModule } from 'primeng/select';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TextareaModule } from 'primeng/textarea';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ChartModule } from 'primeng/chart';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 import { StepsModule } from 'primeng/steps';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DividerModule } from 'primeng/divider'
 import { TagModule } from 'primeng/tag';
 import {ToastModule} from 'primeng/toast';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @NgModule({
   exports: [
     MenubarModule,
     InputTextModule,
     ButtonModule,
-    TabViewModule,
-    SidebarModule,
     MenuModule,
     TooltipModule,
     TableModule,
@@ -45,26 +40,24 @@ import {ToastModule} from 'primeng/toast';
     ToolbarModule,
     ButtonModule,
     PanelModule,
-    TabViewModule,
     InputTextModule,
     AutoCompleteModule,
-    CalendarModule,
-    ChipsModule,
+    DatePickerModule,
     InputMaskModule,
     InputNumberModule,
-    DropdownModule,
+    SelectModule,
     MultiSelectModule,
-    InputTextareaModule,
+    TextareaModule,
     CardModule,
     SkeletonModule,
     ChartModule,
-    InputSwitchModule,
-    MessagesModule,
+    MessageModule,
     StepsModule,
     ConfirmDialogModule,
     DividerModule,
     TagModule,
-    ToastModule
+    ToastModule,
+    FloatLabelModule
   ],
   providers: [ConfirmationService, MessageService],
 })

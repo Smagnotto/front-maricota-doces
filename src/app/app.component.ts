@@ -1,19 +1,17 @@
-import { Component } from '@angular/core';
-import { PrimeNGConfig } from 'primeng/api';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { LoginService } from './pages/login/service/login.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AppComponent {
   constructor(
-    public primengConfig: PrimeNGConfig,
     private loginService: LoginService
   ) {
-    this.primengConfig.ripple = true;
-
     this.loginService.user.subscribe((user) => {
       this.isAuthenticated = user !== null;
     });

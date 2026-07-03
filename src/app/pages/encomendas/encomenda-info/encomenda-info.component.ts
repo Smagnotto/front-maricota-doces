@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, FormControlName, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Cliente } from '../../clientes/domain/cliente';
@@ -9,9 +9,11 @@ import { ClienteEncomendaComponent } from './cliente-encomenda/cliente-encomenda
 import { ProdutoEncomenda } from './produtos-encomenda/model/ProdutoEncomenda';
 
 @Component({
-  selector: 'app-encomenda-info',
-  templateUrl: './encomenda-info.component.html',
-  styleUrls: ['./encomenda-info.component.css'],
+    selector: 'app-encomenda-info',
+    templateUrl: './encomenda-info.component.html',
+    styleUrls: ['./encomenda-info.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EncomendaInfoComponent implements OnInit {
   constructor(
@@ -24,10 +26,10 @@ export class EncomendaInfoComponent implements OnInit {
 
   encomenda: Encomenda = new Encomenda();
 
-  formEncomenda: FormGroup = new FormGroup({
-    idEncomenda: new FormControl(''),
-    dataEntrega: new FormControl('', [Validators.required]),
-    pago: new FormControl(false),
+  formEncomenda: UntypedFormGroup = new UntypedFormGroup({
+    idEncomenda: new UntypedFormControl(''),
+    dataEntrega: new UntypedFormControl('', [Validators.required]),
+    pago: new UntypedFormControl(false),
   });
 
   ngOnInit(): void {
@@ -45,7 +47,7 @@ export class EncomendaInfoComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: UntypedFormGroup) {
     if (form.valid) {
       this.goBack();
     }

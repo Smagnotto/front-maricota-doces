@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
+import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Produto } from 'src/app/pages/produto/domain/produto';
@@ -8,9 +9,11 @@ import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { ProdutoEncomenda } from './model/ProdutoEncomenda';
 
 @Component({
-  selector: 'app-produtos-encomenda',
-  templateUrl: './produtos-encomenda.component.html',
-  styleUrls: ['./produtos-encomenda.component.css'],
+    selector: 'app-produtos-encomenda',
+    templateUrl: './produtos-encomenda.component.html',
+    styleUrls: ['./produtos-encomenda.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProdutosEncomendaComponent implements OnInit {
   constructor(
@@ -49,15 +52,15 @@ export class ProdutosEncomendaComponent implements OnInit {
   submitted: boolean = false;
   produtosVinculados: ProdutoEncomenda[] = [];
 
-  formProdutos: FormGroup = new FormGroup({
-    quantidadeProduto: new FormControl(0, [
+  formProdutos: UntypedFormGroup = new UntypedFormGroup({
+    quantidadeProduto: new UntypedFormControl(0, [
       Validators.min(1),
       Validators.required,
     ]),
-    nomeProduto: new FormControl('', [Validators.required]),
-    autoCompleteNomeProduto: new FormControl(''),
-    precoProduto: new FormControl({ value: 0, disabled: true }),
-    idProduto: new FormControl(''),
+    nomeProduto: new UntypedFormControl('', [Validators.required]),
+    autoCompleteNomeProduto: new UntypedFormControl(''),
+    precoProduto: new UntypedFormControl({ value: 0, disabled: true }),
+    idProduto: new UntypedFormControl(''),
   });
 
   @Output() onSelectProduto: EventEmitter<ProdutoEncomenda> = new EventEmitter();
@@ -76,13 +79,14 @@ export class ProdutosEncomendaComponent implements OnInit {
     });
   }
 
-  selecionaProduto(produto: Produto) {
+  selecionaProduto(event: AutoCompleteSelectEvent) {
+    const produto = event.value as Produto;
     this.nomeProduto?.setValue(produto.nome);
     this.idProduto?.setValue(produto.id);
     this.precoProduto?.setValue(produto.preco);
   }
 
-  VincularProdutos(formProdutos: FormGroup) {
+  VincularProdutos(formProdutos: UntypedFormGroup) {
     if (formProdutos.valid) {
       const produto: ProdutoEncomenda = {
         id: this.idProduto?.value,

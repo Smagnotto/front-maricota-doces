@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
@@ -7,9 +7,11 @@ import { Insumo } from '../domain/insumo';
 import { InsumoService } from '../services/insumo.service';
 
 @Component({
-  selector: 'app-lista-insumos',
-  templateUrl: './lista-insumos.component.html',
-  styleUrls: ['./lista-insumos.component.css'],
+    selector: 'app-lista-insumos',
+    templateUrl: './lista-insumos.component.html',
+    styleUrls: ['./lista-insumos.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ListaInsumosComponent implements OnInit {
   produtos: Insumo[] = [];

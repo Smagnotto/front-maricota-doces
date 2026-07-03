@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import {
   trigger,
   state,
@@ -9,29 +9,25 @@ import {
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
-  animations: [
-    trigger('submenu', [
-      state(
-        'hidden',
-        style({
-          height: '0',
-          overflow: 'hidden',
-          opacity: 0,
-        })
-      ),
-      state(
-        'visible',
-        style({
-          height: '*',
-          opacity: 1,
-        })
-      ),
-      transition('* <=> *', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
-    ]),
-  ],
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    styleUrls: ['./menu.component.css'],
+    animations: [
+        trigger('submenu', [
+            state('hidden', style({
+                height: '0',
+                overflow: 'hidden',
+                opacity: 0,
+            })),
+            state('visible', style({
+                height: '*',
+                opacity: 1,
+            })),
+            transition('* <=> *', animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')),
+        ]),
+    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class MenuComponent {
   @Input() active: boolean;

@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
-  selector: 'app-revisao-cadastro-produtos',
-  templateUrl: './revisao-cadastro-produtos.component.html',
-  styleUrls: ['./revisao-cadastro-produtos.component.css'],
+    selector: 'app-revisao-cadastro-produtos',
+    templateUrl: './revisao-cadastro-produtos.component.html',
+    styleUrls: ['./revisao-cadastro-produtos.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class RevisaoCadastroProdutosComponent implements OnInit {
   constructor(public cadastroProdutoService: CadastroProdutoService, 

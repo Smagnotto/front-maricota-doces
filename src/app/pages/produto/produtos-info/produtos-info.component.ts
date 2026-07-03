@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Produto } from '../domain/produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 import { ProdutoService } from '../services/produto.service';
 @Component({
-  selector: 'app-produtos-info',
-  templateUrl: './produtos-info.component.html',
-  styleUrls: ['./produtos-info.component.css'],
+    selector: 'app-produtos-info',
+    templateUrl: './produtos-info.component.html',
+    styleUrls: ['./produtos-info.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ProdutosInfoComponent implements OnInit {
   constructor(
@@ -21,11 +23,11 @@ export class ProdutosInfoComponent implements OnInit {
 
   submitted: boolean = false;
 
-  formProduto: FormGroup = new FormGroup({
-    id: new FormControl({ value: 0, disabled: true }),
-    nome: new FormControl('', [Validators.required]),
-    preco: new FormControl({ value: 0 }),
-    ativo: new FormControl(true),
+  formProduto: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl({ value: 0, disabled: true }),
+    nome: new UntypedFormControl('', [Validators.required]),
+    preco: new UntypedFormControl({ value: 0 }),
+    ativo: new UntypedFormControl(true),
   });
 
   ngOnInit(): void {

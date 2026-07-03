@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 
 @Component({
-  selector: 'app-lista-encomendas',
-  templateUrl: './lista-encomendas.component.html',
-  styleUrls: ['./lista-encomendas.component.css']
+    selector: 'app-lista-encomendas',
+    templateUrl: './lista-encomendas.component.html',
+    styleUrls: ['./lista-encomendas.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ListaEncomendasComponent implements OnInit {
 

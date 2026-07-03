@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
@@ -7,9 +7,11 @@ import { Insumo } from '../domain/insumo';
 import { InsumoService } from '../services/insumo.service';
 
 @Component({
-  selector: 'app-insumo-info',
-  templateUrl: './insumo-info.component.html',
-  styleUrls: ['./insumo-info.component.css'],
+    selector: 'app-insumo-info',
+    templateUrl: './insumo-info.component.html',
+    styleUrls: ['./insumo-info.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class InsumoInfoComponent implements OnInit {
   constructor(
@@ -21,10 +23,10 @@ export class InsumoInfoComponent implements OnInit {
 
   submitted: boolean = false;
 
-  formInsumo: FormGroup = new FormGroup({
-    id: new FormControl(0),
-    nome: new FormControl('', [Validators.required]),
-    ativo: new FormControl(true),
+  formInsumo: UntypedFormGroup = new UntypedFormGroup({
+    id: new UntypedFormControl(0),
+    nome: new UntypedFormControl('', [Validators.required]),
+    ativo: new UntypedFormControl(true),
   });
 
   ngOnInit(): void {
@@ -81,7 +83,7 @@ export class InsumoInfoComponent implements OnInit {
     return this.formInsumo.get('quantidade');
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: UntypedFormGroup) {
     if (form.valid) {
       let insumo: Insumo = form.value;
 

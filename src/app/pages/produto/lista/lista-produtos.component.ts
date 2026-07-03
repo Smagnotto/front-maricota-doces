@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
@@ -8,9 +8,11 @@ import { ListaProduto } from '../domain/produto-lista';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
 
 @Component({
-  selector: 'app-lista-produtos',
-  templateUrl: './lista-produtos.component.html',
-  styleUrls: ['./lista-produtos.component.css'],
+    selector: 'app-lista-produtos',
+    templateUrl: './lista-produtos.component.html',
+    styleUrls: ['./lista-produtos.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ListaProdutosComponent implements OnInit {
   produtos: ListaProduto[] = [];

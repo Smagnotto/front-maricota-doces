@@ -1,5 +1,5 @@
-<p-confirmDialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
-  defaultFocus="Não" rejectButtonStyleClass="p-button-danger"></p-confirmDialog>
+<p-confirmdialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
+defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog>
 
 <form [formGroup]="formInsumo" (ngSubmit)="onSubmit(formInsumo)">
 
@@ -12,11 +12,13 @@
       <div class="p-col-12 p-md-4 p-lg-4">
         <span class="p-float-label">
           <input id="nome_insumo" type="text" pInputText formControlName="nome" [maxLength]="30"
-          [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
+            [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
           <label for="nome_insumo">Nome do produto</label>
         </span>
-        <small *ngIf="(nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)" class="p-error">Informe o nome do
+        @if ((nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)) {
+          <small class="p-error">Informe o nome do
           produto.</small>
+        }
       </div>
 
       <div class="p-col-12 p-md-2 p-lg-2">
@@ -25,9 +27,9 @@
 
       <div class="p-col-12 p-md-5 p-lg-4 p-d-flex">
         <button pButton pRipple type="button" (click)="cancel()" label="Cancelar"
-          class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
+        class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
         <button pButton pRipple type="button" type="submit" label="Salvar" class="p-button-raised p-m-2"
-          icon="pi pi-check" iconPos="right"></button>
+        icon="pi pi-check" iconPos="right"></button>
       </div>
     </div>
   </p-card>
