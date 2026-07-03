@@ -27,6 +27,8 @@ import { DividerModule } from 'primeng/divider'
 import { TagModule } from 'primeng/tag';
 import {ToastModule} from 'primeng/toast';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { PasswordModule } from 'primeng/password';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   exports: [
@@ -57,7 +59,9 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     DividerModule,
     TagModule,
     ToastModule,
-    FloatLabelModule
+    FloatLabelModule,
+    PasswordModule,
+    RippleModule
   ],
   providers: [ConfirmationService, MessageService],
 })

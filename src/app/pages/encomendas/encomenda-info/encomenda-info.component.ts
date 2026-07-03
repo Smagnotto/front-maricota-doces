@@ -74,7 +74,6 @@ export class EncomendaInfoComponent implements OnInit {
   }
 
   isValid() {
-    console.log(this.encomenda.isValid());
     return this.encomenda.isValid();
   }
 }

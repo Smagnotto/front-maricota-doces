@@ -5,31 +5,31 @@ defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog
 
   <input type="text" formControlName="id" hidden />
   <p-card>
-    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
       <h5>Cadastro de Insumos</h5>
     </div>
     <div class="p-grid p-fluid">
-      <div class="p-col-12 p-md-4 p-lg-4">
-        <span class="p-float-label">
+      <div class="p-col-12 p-md-4 p-lg-4 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
           <input id="nome_insumo" type="text" pInputText formControlName="nome" [maxLength]="30"
             [ngClass]="{'ng-dirty': (nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)}">
           <label for="nome_insumo">Nome do produto</label>
-        </span>
+        </p-float-label>
         @if ((nome?.invalid && submitted) || (nome?.dirty && nome?.invalid)) {
           <small class="p-error">Informe o nome do
           produto.</small>
         }
       </div>
 
-      <div class="p-col-12 p-md-2 p-lg-2">
-        <p-checkbox name="ativo" [binary]="true" label="Ativo" formControlName="ativo"> </p-checkbox>
+      <div class="p-col-12 p-md-2 p-lg-2 p-d-flex p-ai-center">
+        <p-checkbox name="ativo" [binary]="true" inputId="ativo" formControlName="ativo"></p-checkbox>
+        <label for="ativo" class="p-ml-2">Ativo</label>
       </div>
 
-      <div class="p-col-12 p-md-5 p-lg-4 p-d-flex">
-        <button pButton pRipple type="button" (click)="cancel()" label="Cancelar"
-        class="p-button-raised p-button-danger p-m-2" icon="pi pi-times" iconPos="right"></button>
-        <button pButton pRipple type="button" type="submit" label="Salvar" class="p-button-raised p-m-2"
-        icon="pi pi-check" iconPos="right"></button>
+      <div class="p-col-12 p-md-5 p-lg-4 p-d-flex p-ai-center">
+        <button pButton pRipple type="button" (click)="cancel()"
+        class="p-button-raised p-button-danger p-m-2"><span pButtonLabel>Cancelar</span><i class="pi pi-times" pButtonIcon></i></button>
+        <button pButton pRipple type="submit" class="p-button-raised p-m-2"><span pButtonLabel>Salvar</span><i class="pi pi-check" pButtonIcon></i></button>
       </div>
     </div>
   </p-card>

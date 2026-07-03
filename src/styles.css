@@ -1,3 +1,24 @@
+/*
+ * Compatibility layer: the pre-v18 PrimeNG themes (e.g. vela-blue) exposed a flat set of
+ * CSS variables (--surface-a/b/c/d/f, --text-color, --primary-color, ...) that the app's
+ * own component stylesheets depend on. The new Aura theme (providePrimeNG) only exposes
+ * --p-* prefixed design tokens, so we alias the old names to the new tokens here instead
+ * of rewriting every component stylesheet.
+ */
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --surface-a: var(--p-content-background);
+  --surface-b: var(--p-content-background);
+  --surface-c: var(--p-content-hover-background);
+  --surface-d: var(--p-content-border-color);
+  --surface-f: var(--p-content-background);
+  --text-color: var(--p-text-color);
+  --text-color-secondary: var(--p-text-muted-color);
+  --text-secondary-color: var(--p-text-muted-color);
+  --primary-color: var(--p-primary-color);
+  --primary-color-text: var(--p-primary-contrast-color);
+}
+
 html {
   font-size: 14px;
 }

@@ -1,7 +1,7 @@
 <p-table [value]="data" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
   currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} produtos" [rowsPerPageOptions]="[10,25,50]"
   styleClass="p-datatable-responsive-demo">
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <tr>
       @for (header of headers; track header) {
         <th [pSortableColumn]="header.fieldName"
@@ -14,7 +14,7 @@
       }
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-row>
+  <ng-template #body let-row>
     <tr>
       @for (header of headers; track header) {
         <td>
@@ -34,10 +34,7 @@
               <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
             </div>
           }
-          <!-- Real Values And Actions -->
-          @if (!isLoading) {
-            <span class="p-column-title">{{header.labelColumn}}</span>
-          }
+
           @if (!isLoading && header.typeColumn === typeColumns.String) {
             <span>{{row[header.fieldName]}}</span>
           }
@@ -59,10 +56,10 @@
           }
           @if (!isLoading && header.typeColumn === typeColumns.ActionsButtons) {
             <span>
-              <button pButton pRipple type="button" icon="pi pi-pencil" class="p-mr-2 p-button-sm"
-              (click)="onEditRow(row, $event)"></button>
-              <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-danger p-button-sm"
-              (click)="onDeleteRow(row,$event)"></button>
+              <button pButton pRipple type="button" class="p-mr-2 p-button-sm"
+              (click)="onEditRow(row, $event)"><i class="pi pi-pencil" pButtonIcon></i></button>
+              <button pButton pRipple type="button" class="p-button-danger p-button-sm"
+              (click)="onDeleteRow(row,$event)"><i class="pi pi-trash" pButtonIcon></i></button>
             </span>
           }
         </td>

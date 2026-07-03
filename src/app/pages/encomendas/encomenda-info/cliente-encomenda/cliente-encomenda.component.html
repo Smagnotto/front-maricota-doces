@@ -1,7 +1,6 @@
 <div class="p-col-12 p-grid p-fluid" [formGroup]="formCliente">
-  <div class="p-col-12">
-    <div class="p-col-12 p-md-4 p-lg-6">
-      <span class="p-float-label">
+  <div>
+      <p-float-label>
         <input type="text" formControlName="nomeCliente" hidden />
         <input type="text" formControlName="idCliente" hidden />
 
@@ -10,12 +9,11 @@
           [dropdown]="true">
         </p-autocomplete>
         <label for="nome_cliente">Nome do cliente</label>
-      </span>
+      </p-float-label>
       @if (nomeCliente?.errors?.required) {
         <small id="nome_cliente-help" class="p-error">Informe o nome do
         cliente.</small>
       }
-    </div>
   </div>
 
   <div class="p-col-12">
@@ -25,20 +23,20 @@
 
     <div class="p-col-12 p-grid p-fluid" formGroupName="enderecoCliente">
       <div class="p-col-12 p-md-4 p-lg-2">
-        <span class="p-float-label">
+        <p-float-label>
           <p-inputmask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputmask>
           <label for="cep_cliente">CEP</label>
-        </span>
+        </p-float-label>
         @if (cep?.errors?.required) {
           <small id="cep_cliente-help" class="p-error">Informe o CEP.</small>
         }
       </div>
 
-      <div class="p-col-12 p-md-4 p-lg-4">
-        <span class="p-float-label">
+      <div class="p-col-12 p-md-8 p-lg-4">
+        <p-float-label>
           <input id="logradouro_cliente" type="text" pInputText formControlName="logradouro" [maxLength]="100">
           <label for="logradouro_cliente">Logradouro</label>
-        </span>
+        </p-float-label>
         @if (logradouro?.errors?.required) {
           <small id="logradouro_cliente-help" class="p-error">Informe o logradouro
           do cliente.</small>
@@ -46,21 +44,21 @@
       </div>
 
       <div class="p-col-12 p-md-4 p-lg-2">
-        <span class="p-float-label">
+        <p-float-label>
           <p-inputnumber mode="decimal" inputId="numero_cliente" [useGrouping]="false" formControlName="numero">
           </p-inputnumber>
           <label for="numero_cliente">Número</label>
-        </span>
+        </p-float-label>
         @if (numero?.invalid) {
           <small id="numero_cliente-help" class="p-error">Informe o número.</small>
         }
       </div>
 
-      <div class="p-col-12 p-md-4 p-lg-4">
-        <span class="p-float-label">
-          <input id="logradouro_cliente" type="text" pInputText formControlName="complemento" [maxLength]="60">
-          <label for="logradouro_cliente">Complemento</label>
-        </span>
+      <div class="p-col-12 p-md-8 p-lg-4">
+        <p-float-label>
+          <input id="complemento_cliente" type="text" pInputText formControlName="complemento" [maxLength]="60">
+          <label for="complemento_cliente">Complemento</label>
+        </p-float-label>
       </div>
     </div>
   </div>

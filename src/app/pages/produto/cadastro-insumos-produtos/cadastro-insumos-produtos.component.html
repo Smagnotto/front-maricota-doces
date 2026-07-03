@@ -1,54 +1,55 @@
 <form [formGroup]="formCadastroInsumo">
   <p-card>
-    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
       <h5>Vinculação de Insumos</h5>
     </div>
 
     <input type="text" formControlName="idInsumo" hidden />
 
     <div class="p-grid p-fluid">
-      <div class="p-col-12 p-md-4">
-        <span class="p-float-label">
+      <div class="p-col-12 p-md-4 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
           <input type="text" formControlName="nomeInsumo" hidden />
 
           <p-autocomplete [suggestions]="suggestions" (completeMethod)="search($event)" [dropdown]="true"
-            (onSelect)="selecionaInsumo($event)" field="nome" [required]="true" formControlName="autoCompleteNomeInsumo"
+            (onSelect)="selecionaInsumo($event)" optionLabel="nome" [required]="true" formControlName="autoCompleteNomeInsumo"
             [forceSelection]="true"
             [ngClass]="{'ng-dirty': (nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)}">
           </p-autocomplete>
           <label for="nome_insumo">Nome do Insumo</label>
-        </span>
+        </p-float-label>
         @if ((nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)) {
           <small
           class="p-error">Selecione um produto.</small>
         }
       </div>
 
-      <div class="p-col-12 p-md-3">
-        <span class="p-float-label">
+      <div class="p-col-12 p-md-3 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
           <p-inputnumber id="preco_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo">
           </p-inputnumber>
           <label for="preco_insumo">Quantidade</label>
-        </span>
+        </p-float-label>
         @if ((quantidadeInsumo?.invalid && submitted) || (quantidadeInsumo?.dirty && quantidadeInsumo?.invalid)) {
           <small
           class="p-error">Informe a quantidade do insumo</small>
         }
       </div>
 
-      <div class="p-col-12 p-md-2">
-        <span class="p-float-label">
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
           <p-select inputId="tipoInsumo" [options]="tiposInsumos" optionLabel="nome"
           formControlName="tipoInsumo" optionValue="codigo"></p-select>
           <label for="preco_insumo">Tipo</label>
-        </span>
+        </p-float-label>
       </div>
 
-      <div class="p-col-12 p-md-2">
-        <p-checkbox name="insumo_ativo" [binary]="true" label="Ativo" formControlName="insumoAtivo"> </p-checkbox>
+      <div class="p-col-12 p-md-2 p-d-flex p-ai-center">
+        <p-checkbox name="insumo_ativo" [binary]="true" inputId="insumo_ativo" formControlName="insumoAtivo"></p-checkbox>
+        <label for="insumo_ativo" class="p-ml-2">Ativo</label>
       </div>
 
-      <div class="p-col-12 p-lg-1 p-md-12 p-d-flex p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
+      <div class="p-col-12 p-lg-1 p-md-12 p-d-flex p-ai-center p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
         <p-button label="Vincular" (onClick)="vincularInsumo()" icon="pi pi-plus" iconPos="right"></p-button>
       </div>
     </div>
@@ -64,7 +65,7 @@
       (onEdit)="onEdit($event)" (onDelete)="onDelete($event)"></app-table-responsive>
     </div>
 
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <div class="p-grid p-nogutter p-justify-between">
         <p-button label="Voltar" (onClick)="prevPage()" icon="pi pi-angle-left" styleClass="p-button-danger"></p-button>
         <p-button label="Avançar" [disabled]="cadastroProdutoService.cadastroProduto.insumos?.length === 0"

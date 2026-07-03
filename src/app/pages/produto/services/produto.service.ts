@@ -1,10 +1,14 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, delay, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Produto } from '../domain/produto';
 import { ListaProduto } from '../domain/produto-lista';
+
+const MOCK_DATA: ListaProduto[] = [
+  { id: 1, ativo: true, nome: 'Bolo Matilda', preco: 350}
+]
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +24,10 @@ export class ProdutoService {
   private path: string = 'v1/produtos'
 
   getAllProdutos(): Observable<ListaProduto[]> {
-    return this.http
-      .get<ListaProduto[]>(`${this.url}/${this.path}/`)
-      .pipe(retry(2), catchError(this.handleError));
+    return of([...MOCK_DATA]).pipe(delay(3000))
+    // return this.http
+    //   .get<ListaProduto[]>(`${this.url}/${this.path}/`)
+    //   .pipe(retry(2), catchError(this.handleError));
   }
 
   getProdutoById(id: number): Observable<Produto> {

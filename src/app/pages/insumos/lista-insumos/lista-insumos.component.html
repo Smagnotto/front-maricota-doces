@@ -2,12 +2,13 @@
   defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog>
 <p-card>
   <div class="p-grid">
-    <div class="p-col-12 p-md-12 p-d-flex p-jc-center p-jc-md-start p-jc-lg-start p-sm-end p-md-start p-xl-end">
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
       <h5>Cadastro de Insumos</h5>
     </div>
     <div class="p-col-12 p-d-flex p-jc-end p-sm-end p-md-end p-xl-end">
-      <button pButton pRipple label="Adicionar" icon="pi pi-plus" [routerLink]="['/insumos/cadastro']"
+      <button pButton pRipple [routerLink]="['/insumos/cadastro']"
         routerLinkActive="router-link-exact-active">
+        <i class="pi pi-plus" pButtonIcon></i><span pButtonLabel>Adicionar</span>
       </button>
     </div>
 

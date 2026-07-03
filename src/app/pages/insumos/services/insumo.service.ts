@@ -1,13 +1,19 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, delay, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Insumo } from '../domain/insumo';
+
+const MOCK_DATA: Insumo[] = [
+  {    nome: 'Leite',ativo: true,    id: 1  }
+]
+
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class InsumoService {
   constructor(private http: HttpClient) {}
 
@@ -19,9 +25,11 @@ export class InsumoService {
   private path: string = 'v1/insumos'
 
   getAllInsumos(): Observable<Insumo[]> {
-    return this.http
-      .get<Insumo[]>(`${this.url}/${this.path}`)
-      .pipe(retry(2), catchError(this.handleError));
+    return of([...MOCK_DATA]).pipe(delay(3000));
+
+    // return this.http
+    //   .get<Insumo[]>(`${this.url}/${this.path}`)
+    //   .pipe(retry(2), catchError(this.handleError));
   }
 
   getInsumoById(id: number): Observable<Insumo> {
