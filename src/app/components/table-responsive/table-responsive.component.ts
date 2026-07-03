@@ -39,4 +39,8 @@ export class TableResponsiveComponent implements OnInit {
     this.onDelete.emit(row);
     event.preventDefault();
   }
+
+  onPageChange(event: any) {
+
+  }
 }

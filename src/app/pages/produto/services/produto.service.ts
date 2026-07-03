@@ -24,10 +24,10 @@ export class ProdutoService {
   private path: string = 'v1/produtos'
 
   getAllProdutos(): Observable<ListaProduto[]> {
-    return of([...MOCK_DATA]).pipe(delay(3000))
-    // return this.http
-    //   .get<ListaProduto[]>(`${this.url}/${this.path}/`)
-    //   .pipe(retry(2), catchError(this.handleError));
+    // return of([...MOCK_DATA]).pipe(delay(3000))
+    return this.http
+      .get<ListaProduto[]>(`${this.url}/${this.path}/`)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   getProdutoById(id: number): Observable<Produto> {

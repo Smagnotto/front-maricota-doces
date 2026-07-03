@@ -1,6 +1,6 @@
 <p-table [value]="data" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
   currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} produtos" [rowsPerPageOptions]="[10,25,50]"
-  styleClass="p-datatable-responsive-demo">
+  styleClass="p-datatable-responsive">
   <ng-template #header>
     <tr>
       @for (header of headers; track header) {

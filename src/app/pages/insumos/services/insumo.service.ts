@@ -25,11 +25,11 @@ export class InsumoService {
   private path: string = 'v1/insumos'
 
   getAllInsumos(): Observable<Insumo[]> {
-    return of([...MOCK_DATA]).pipe(delay(3000));
+    // return of([...MOCK_DATA]).pipe(delay(3000));
 
-    // return this.http
-    //   .get<Insumo[]>(`${this.url}/${this.path}`)
-    //   .pipe(retry(2), catchError(this.handleError));
+    return this.http
+      .get<Insumo[]>(`${this.url}/${this.path}`)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   getInsumoById(id: number): Observable<Insumo> {
