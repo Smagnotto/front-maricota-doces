@@ -14,11 +14,11 @@
           <p-autocomplete [suggestions]="suggestions" (completeMethod)="search($event)" [dropdown]="true"
             (onSelect)="selecionaInsumo($event)" optionLabel="nome" [required]="true" formControlName="autoCompleteNomeInsumo"
             [forceSelection]="true"
-            [ngClass]="{'ng-dirty': (nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)}">
+            [ngClass]="{'ng-dirty': nomeInsumo?.invalid && (nomeInsumo?.dirty || nomeInsumo?.touched)}">
           </p-autocomplete>
           <label for="nome_insumo">Nome do Insumo</label>
         </p-float-label>
-        @if ((nomeInsumo?.invalid && submitted) || (nomeInsumo?.dirty && nomeInsumo?.invalid)) {
+        @if (nomeInsumo?.invalid && (nomeInsumo?.dirty || nomeInsumo?.touched)) {
           <small
           class="p-error">Selecione um produto.</small>
         }
@@ -30,7 +30,7 @@
           </p-inputnumber>
           <label for="preco_insumo">Quantidade</label>
         </p-float-label>
-        @if ((quantidadeInsumo?.invalid && submitted) || (quantidadeInsumo?.dirty && quantidadeInsumo?.invalid)) {
+        @if (quantidadeInsumo?.invalid && (quantidadeInsumo?.dirty || quantidadeInsumo?.touched)) {
           <small
           class="p-error">Informe a quantidade do insumo</small>
         }

@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
     password: new UntypedFormControl('', [Validators.required]),
   });
 
-  submitted: boolean = false;
   error: boolean = false;
   isLoading: boolean = false;
   returnUrl: string;
@@ -64,6 +63,6 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
         });
     }
-    this.submitted = true;
+    form.markAllAsTouched();
   }
 }

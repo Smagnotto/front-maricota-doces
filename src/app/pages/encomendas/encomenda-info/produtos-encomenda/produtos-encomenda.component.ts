@@ -49,7 +49,6 @@ export class ProdutosEncomendaComponent implements OnInit {
   ];
 
   filteredProdutos: Produto[] = [];
-  submitted: boolean = false;
   produtosVinculados: ProdutoEncomenda[] = [];
 
   formProdutos: UntypedFormGroup = new UntypedFormGroup({
@@ -106,17 +105,16 @@ export class ProdutosEncomendaComponent implements OnInit {
           rejectVisible: false,
         });
 
-        this.submitted = true;
+        this.formProdutos.markAllAsTouched();
       } else {
         this.produtosVinculados.push(produto);
         this.onSelectProduto.emit(produto);
 
         this.formProdutos.reset({ quantidadeProduto: 0, precoProduto: 0 });
         this.filteredProdutos = [];
-        this.submitted = false;
       }
     } else {
-      this.submitted = true;
+      this.formProdutos.markAllAsTouched();
     }
   }
 

@@ -12,11 +12,11 @@
         (completeMethod)="filterProduto($event)" [dropdown]="true" (onSelect)="selecionaProduto($event)"
         field="nome" [required]="true" formControlName="autoCompleteNomeProduto" [forceSelection]="true"
         [minQueryLength]="1"
-        [ngClass]="{'ng-dirty': (nomeProduto?.invalid && submitted) || (nomeProduto?.dirty && nomeProduto?.invalid)}">
+        [ngClass]="{'ng-dirty': nomeProduto?.invalid && (nomeProduto?.dirty || nomeProduto?.touched)}">
       </p-autocomplete>
       <label for="nome_produto">Nome do Produto</label>
     </p-float-label>
-    @if ((nomeProduto?.invalid && submitted) || (nomeProduto?.dirty && nomeProduto?.invalid)) {
+    @if (nomeProduto?.invalid && (nomeProduto?.dirty || nomeProduto?.touched)) {
       <small
       class="p-error">Selecione um produto.</small>
     }
@@ -28,7 +28,7 @@
       </p-inputnumber>
       <label for="quantidade_produto">Quantidade</label>
     </p-float-label>
-    @if ((quantidadeProduto?.invalid && submitted) || (quantidadeProduto?.dirty && quantidadeProduto?.invalid)) {
+    @if (quantidadeProduto?.invalid && (quantidadeProduto?.dirty || quantidadeProduto?.touched)) {
       <small
       class="p-error">Informe a quantidade do produto</small>
     }

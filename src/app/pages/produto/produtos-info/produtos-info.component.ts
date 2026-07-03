@@ -21,8 +21,6 @@ export class ProdutosInfoComponent implements OnInit {
     private produtoService: ProdutoService
   ) {}
 
-  submitted: boolean = false;
-
   formProduto: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl({ value: 0, disabled: true }),
     nome: new UntypedFormControl('', [Validators.required]),
@@ -48,6 +46,7 @@ export class ProdutosInfoComponent implements OnInit {
   private fillForm(produto: Produto) {
     this.id?.setValue(produto.id);
     this.nome?.setValue(produto.nome);
+    console.log(produto.preco)
     this.preco?.setValue(produto.preco);
     this.ativo?.setValue(produto.ativo);
 
@@ -81,7 +80,7 @@ export class ProdutosInfoComponent implements OnInit {
       return;
     }
 
-    this.submitted = true;
+    this.formProduto.markAllAsTouched();
   }
 
   get id() {

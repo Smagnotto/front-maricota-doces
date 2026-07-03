@@ -21,7 +21,7 @@ export class ClienteService {
 
   getAllClientes(): Observable<Cliente[]> {
     return this.http
-      .get<Cliente[]>(`${this.url}/${this.path}`)
+      .get<Cliente[]>(`${this.url}/${this.path}/`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

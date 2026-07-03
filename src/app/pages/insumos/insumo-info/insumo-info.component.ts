@@ -21,8 +21,6 @@ export class InsumoInfoComponent implements OnInit {
     private service: InsumoService
   ) {}
 
-  submitted: boolean = false;
-
   formInsumo: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(0),
     nome: new UntypedFormControl('', [Validators.required]),
@@ -96,7 +94,7 @@ export class InsumoInfoComponent implements OnInit {
         this.goBack();
       });
     }
-    this.submitted = true;
+    form.markAllAsTouched();
   }
 
   private goBack(): void {

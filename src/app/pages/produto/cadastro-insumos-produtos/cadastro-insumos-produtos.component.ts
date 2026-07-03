@@ -60,7 +60,6 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     },
   ];
 
-  submitted: boolean = false;
   insumos: Insumo[];
   suggestions: any[];
 
@@ -148,16 +147,15 @@ export class CadastroInsumosProdutosComponent implements OnInit {
           rejectVisible: false,
         });
 
-        this.submitted = true;
+        this.formCadastroInsumo.markAllAsTouched();
       } else {
         this.cadastroProdutoService.cadastroProduto.insumos.push(insumo);
 
         this.resetForm();
         this.suggestions = [];
-        this.submitted = false;
       }
     } else {
-      this.submitted = true;
+      this.formCadastroInsumo.markAllAsTouched();
     }
   }
 
