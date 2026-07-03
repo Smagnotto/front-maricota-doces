@@ -9,6 +9,10 @@
 
     <div class="menu-category">Cadastro</div>
     <div class="menu-items">
+      <a [routerLink]=" ['/clientes']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Clientes</a>
+    </div>
+    <div class="menu-items">
       <a [routerLink]=" ['/insumos']" routerLinkActive="router-link-exact-active"
         (click)="onMenuButtonClick($event)">Insumos</a>
     </div>

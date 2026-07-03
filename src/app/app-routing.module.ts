@@ -34,6 +34,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'clientes',
+    loadChildren: () => 
+      import('./pages/clientes/cliente.module').then(
+        (m) => m.ClienteModule
+      ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: '',
   },
