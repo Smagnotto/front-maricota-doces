@@ -20,14 +20,16 @@ export class TableResponsiveComponent implements OnInit {
 
   typeColumns = TypeColumns;
 
+  skeletonRows: any[] = [];
+
   constructor() {}
 
   ngOnInit(): void {
-    if (this.isLoading) {
-      for(let i = 0; i < this.pageSize; i++) {
-        this.data.push({});
-      }
-    }
+    this.skeletonRows = Array.from({ length: this.pageSize }, () => ({}));
+  }
+
+  get tableValue(): any[] {
+    return this.isLoading ? this.skeletonRows : this.data;
   }
 
   onEditRow(row: any, event: Event) {
@@ -38,9 +40,5 @@ export class TableResponsiveComponent implements OnInit {
   onDeleteRow(row: any, event: Event) {
     this.onDelete.emit(row);
     event.preventDefault();
-  }
-
-  onPageChange(event: any) {
-
   }
 }
