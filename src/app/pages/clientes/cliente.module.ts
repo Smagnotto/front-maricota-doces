@@ -6,11 +6,10 @@ import { ClienteRoutingModule } from './cliente-routing.module';
 import { PrimeNGModule } from 'src/app/primeng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
-
-
+import { ClientesInfoComponent } from './clientes-info/clientes-info.component';
 
 @NgModule({
-  declarations: [ListaClientesComponent],
+  declarations: [ListaClientesComponent, ClientesInfoComponent],
   imports: [
     CommonModule,
     ClienteRoutingModule,

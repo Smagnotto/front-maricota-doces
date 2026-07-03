@@ -1,0 +1,94 @@
+<p-confirmdialog header="Confirmação" icon="pi pi-exclamation-triangle" acceptLabel="Sim" rejectLabel="Não"
+    defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog>
+
+<form [formGroup]="formCliente" (ngSubmit)="onSubmit(formCliente)">
+
+    <input type="text" formControlName="id" hidden />
+    <p-card>
+        <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
+            <h5>Cadastro de Clientes</h5>
+        </div>
+        <div class="p-grid p-fluid">
+            <div class="p-col-12 p-md-4 p-lg-4 p-d-flex p-flex-column p-jc-center">
+                <p-float-label>
+                    <input id="nome_Cliente" type="text" pInputText formControlName="nome" [maxLength]="30"
+                        [ngClass]="{'ng-dirty': nome?.invalid && (nome?.dirty || nome?.touched)}">
+                    <label for="nome_Cliente">Nome do cliente</label>
+                </p-float-label>
+                @if (nome?.invalid && (nome?.dirty || nome?.touched)) {
+                <small class="p-error">Informe o nome do cliente.</small>
+                }
+            </div>
+        </div>
+
+        <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
+            <h5>Vinculação de Endereços</h5>
+        </div>
+
+        <div class="p-grid p-fluid" formGroupName="enderecoCliente">
+            <div class="p-col-12 p-md-4 p-lg-2">
+                <p-float-label>
+                    <p-inputmask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputmask>
+                    <label for="cep_cliente">CEP</label>
+                </p-float-label>
+                @if (cep?.errors?.required) {
+                <small id="cep_cliente-help" class="p-error">Informe o CEP.</small>
+                }
+            </div>
+            <div class="p-col-12 p-md-4 p-lg-2">
+                <p-float-label>
+                    <input id="logradouro_cliente" type="text" pInputText formControlName="logradouro"
+                        [maxLength]="100">
+                    <label for="logradouro_cliente">Logradouro</label>
+                </p-float-label>
+                @if (logradouro?.errors?.required) {
+                <small id="logradouro_cliente-help" class="p-error">Informe o logradouro
+                    do cliente.</small>
+                }
+            </div>
+
+            <div class="p-col-12 p-md-4 p-lg-2">
+                <p-float-label>
+                    <p-inputnumber mode="decimal" inputId="numero_cliente" [useGrouping]="false"
+                        formControlName="numero">
+                    </p-inputnumber>
+                    <label for="numero_cliente">Número</label>
+                </p-float-label>
+                @if (numero?.invalid) {
+                <small id="numero_cliente-help" class="p-error">Informe o número.</small>
+                }
+            </div>
+
+            <div class="p-col-12 p-md-4 p-lg-2">
+                <p-float-label>
+                    <input id="complemento_cliente" type="text" pInputText formControlName="complemento"
+                        [maxLength]="60">
+                    <label for="complemento_cliente">Complemento</label>
+                </p-float-label>
+            </div>
+
+            <div
+                class="p-col-12 p-lg-1 p-md-12 p-d-flex p-ai-center p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
+                <p-button label="Vincular" (onClick)="vincular()" icon="pi pi-plus" iconPos="right"></p-button>
+            </div>
+        </div>
+
+        <br />
+
+        <p-divider>
+            <h6>Endereços</h6>
+        </p-divider>
+
+        <div class="p-col-12">
+            <app-table-responsive [data]="enderecosLinked" [headers]="headersEndereco" (onEdit)="onEdit($event)"
+                (onDelete)="onDelete($event)"></app-table-responsive>
+        </div>
+
+        <div class="p-d-flex p-jc-end p-sm-end p-md-end p-xl-end">
+            <button pButton pRipple type="button" (click)="cancel()" class="p-button-raised p-button-danger p-m-2"><span
+                    pButtonLabel>Cancelar</span><i class="pi pi-times" pButtonIcon></i></button>
+            <button pButton pRipple type="submit" class="p-button-raised p-m-2"><span pButtonLabel>Salvar</span><i
+                    class="pi pi-check" pButtonIcon></i></button>
+        </div>
+    </p-card>
+</form>
