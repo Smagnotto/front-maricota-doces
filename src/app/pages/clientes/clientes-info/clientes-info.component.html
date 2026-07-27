@@ -25,7 +25,7 @@
             <h5>Vinculação de Endereços</h5>
         </div>
 
-        <div class="p-grid p-fluid" formGroupName="enderecoCliente">
+        <div class="p-grid p-fluid" [formGroup]="formEndereco">
             <div class="p-col-12 p-md-4 p-lg-2">
                 <p-float-label>
                     <p-inputmask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputmask>

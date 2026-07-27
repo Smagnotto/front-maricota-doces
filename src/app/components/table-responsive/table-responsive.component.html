@@ -66,4 +66,11 @@
       }
     </tr>
   </ng-template>
+  <ng-template #emptymessage>
+    <tr>
+      <td [attr.colspan]="headers.length" style="text-align: center;">
+        Não há itens para exibir...
+      </td>
+    </tr>
+  </ng-template>
 </p-table>

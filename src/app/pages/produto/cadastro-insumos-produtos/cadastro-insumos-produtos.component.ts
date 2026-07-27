@@ -173,7 +173,21 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     });
   }
 
-  onEdit(insumo: InsumoProduto) {}
+  onEdit(insumo: InsumoProduto) {
+    const insumoCatalogo = this.insumos?.find((x) => x.id === insumo.id_insumo);
+
+    this.idInsumo?.setValue(insumo.id_insumo);
+    this.nomeInsumo?.setValue(insumo.nome);
+    this.autoCompleteNomeInsumo?.setValue({ nome: insumo.nome });
+    this.quantidadeInsumo?.setValue(insumo.quantidade);
+    this.tipoInsumo?.setValue(insumo.tipo);
+    this.insumoAtivo?.setValue(insumoCatalogo?.ativo ?? false);
+
+    this.cadastroProdutoService.cadastroProduto.insumos = this.deleteInsumo(
+      this.cadastroProdutoService.cadastroProduto.insumos,
+      insumo
+    );
+  }
 
   onDelete(insumo: InsumoProduto) {
     this.confirmationService.confirm({

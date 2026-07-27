@@ -23,52 +23,57 @@ export class ClientesInfoComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: ClienteService
-  ) {}
+  ) { }
 
   enderecosLinked: Endereco[] = []
 
   headersEndereco: TableHeader[] = [
-      {
-        fieldName: 'cep',
-        labelColumn: 'Cep',
-        sortableColumn: true,
-        typeColumn: TypeColumns.String,
-      },
-      {
-        fieldName: 'logradouro',
-        labelColumn: 'Logradouro',
-        sortableColumn: true,
-        typeColumn: TypeColumns.String,
-      },
-      {
-        fieldName: 'numero',
-        labelColumn: 'Número',
-        sortableColumn: true,
-        typeColumn: TypeColumns.String,
-      },
-      {
-        fieldName: 'complemento',
-        labelColumn: 'Complemento',
-        sortableColumn: true,
-        typeColumn: TypeColumns.String,
-      },
-      {
-        fieldName: '',
-        labelColumn: 'Ações',
-        sortableColumn: false,
-        typeColumn: TypeColumns.ActionsButtons,
-      },
-    ];
+    {
+      fieldName: 'cep',
+      labelColumn: 'Cep',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
+    },
+    {
+      fieldName: 'logradouro',
+      labelColumn: 'Logradouro',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
+    },
+    {
+      fieldName: 'numero',
+      labelColumn: 'Número',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
+    },
+    {
+      fieldName: 'complemento',
+      labelColumn: 'Complemento',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String,
+    },
+    {
+      fieldName: '',
+      labelColumn: 'Ações',
+      sortableColumn: false,
+      typeColumn: TypeColumns.ActionsButtons,
+    },
+  ];
 
   formCliente: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(0),
     nome: new UntypedFormControl('', [Validators.required]),
-    enderecoCliente: new UntypedFormGroup({
-      logradouro: new UntypedFormControl('', [Validators.required]),
-      numero: new UntypedFormControl(0, [Validators.required, Validators.min(1)]),
-      complemento: new UntypedFormControl(''),
-      cep: new UntypedFormControl('', [Validators.required]),
-    })
+  });
+
+  // Formulário de apoio para montar um endereço por vez antes de "vincular".
+  // Fica fora de `formCliente` de propósito: se estivesse aninhado, o reset
+  // feito após vincular (que limpa os campos obrigatórios) invalidaria
+  // `formCliente` para sempre, mesmo com o endereço já salvo em `enderecosLinked`.
+  formEndereco: UntypedFormGroup = new UntypedFormGroup({
+    logradouro: new UntypedFormControl('', [Validators.required]),
+    numero: new UntypedFormControl(0, [Validators.required, Validators.min(1)]),
+    complemento: new UntypedFormControl(''),
+    cep: new UntypedFormControl('', [Validators.required]),
   });
 
   ngOnInit(): void {
@@ -93,6 +98,8 @@ export class ClientesInfoComponent implements OnInit {
   private fillForm(Cliente: Cliente) {
     this.id?.setValue(Cliente.id);
     this.nome?.setValue(Cliente.nome);
+
+    if (Cliente.endereco) this.enderecosLinked.push(Cliente.endereco)
   }
 
   cancel(): void {
@@ -120,31 +127,35 @@ export class ClientesInfoComponent implements OnInit {
   }
 
   get logradouro() {
-    return this.formCliente.get('enderecoCliente')?.get('logradouro');
+    return this.formEndereco.get('logradouro');
   }
 
   get numero() {
-    return this.formCliente.get('enderecoCliente')?.get('numero');
+    return this.formEndereco.get('numero');
   }
 
   get complemento() {
-    return this.formCliente.get('enderecoCliente')?.get('complemento');
+    return this.formEndereco.get('complemento');
   }
 
   get cep() {
-    return this.formCliente.get('enderecoCliente')?.get('cep');
+    return this.formEndereco.get('cep');
   }
 
   onSubmit(form: UntypedFormGroup) {
     if (form.valid) {
-      let Cliente: Cliente = form.value;
+
+      let Cliente: Cliente = {
+        ...form.value,
+        endereco: this.enderecosLinked[0] ?? null,
+      };
 
       let subscribeApi: Observable<Cliente>;
 
       if (!Cliente.id) subscribeApi = this.service.saveCliente(Cliente);
       else subscribeApi = this.service.updateCliente(Cliente);
 
-      subscribeApi.subscribe((response) => {
+      subscribeApi.subscribe(() => {
         this.goBack();
       });
     }
@@ -163,25 +174,33 @@ export class ClientesInfoComponent implements OnInit {
     this.router.navigate(['../revisao'], { relativeTo: this.route });
   }
 
-  onEdit(endereco: Endereco) {}
-  
+  onEdit(endereco: Endereco) {
+    this.cep?.setValue(this.formatCep(String(endereco.cep)));
+    this.logradouro?.setValue(endereco.logradouro);
+    this.numero?.setValue(endereco.numero);
+    this.complemento?.setValue(endereco.complemento);
+
+    this.enderecosLinked = this.enderecosLinked.filter((item) => item !== endereco);
+  }
+
+  private formatCep(cep: string): string {
+    const digits = cep.replace(/\D/g, '');
+    return digits.length === 8 ? `${digits.slice(0, 5)}-${digits.slice(5)}` : cep;
+  }
+
   onDelete(endereco: Endereco) {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
-        // let enderecos = [...this.cadastroProdutoService.cadastroProduto.insumos];
-
-        // this.cadastroProdutoService.cadastroProduto.insumos = [
-        //   ...this.deleteInsumo(insumos, insumo),
-        // ];
+        this.enderecosLinked = this.enderecosLinked.filter((item) => item !== endereco);
       },
     });
   }
 
   vincular() {
-    if (this.formCliente.get('enderecoCliente')?.valid) {
+    if (this.formEndereco.valid) {
       let endereco: Endereco = {
-        cep: this.cep?.value,
+        cep: this.cep?.value.replace("-", ""),
         logradouro: this.logradouro?.value,
         numero: this.numero?.value,
         complemento: this.complemento?.value,
@@ -189,24 +208,24 @@ export class ClientesInfoComponent implements OnInit {
 
       if (this.enderecosLinked.filter((x) => x.cep === endereco.cep && x.numero === endereco.numero).length > 0) {
         this.confirmationService.confirm({
-          header: 'Insumo repetido.',
+          header: 'Endereço repetido',
           message: 'Não é possível adicionar o mesmo endereço',
           acceptLabel: 'OK',
           rejectVisible: false,
         });
 
-        this.formCliente.get('enderecoCliente')?.markAllAsTouched();
+        this.formEndereco.markAllAsTouched();
       } else {
         this.enderecosLinked.push(endereco)
         this.resetFormEndereco();
       }
     } else {
-       this.formCliente.get('enderecoCliente')?.markAllAsTouched();
+      this.formEndereco.markAllAsTouched();
     }
   }
 
   private resetFormEndereco() {
-    this.formCliente.get('enderecoCliente')?.reset();
+    this.formEndereco.reset();
   }
-      
+
 }
