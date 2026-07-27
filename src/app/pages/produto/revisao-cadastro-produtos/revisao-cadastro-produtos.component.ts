@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
+import { ProdutoService } from '../services/produto.service';
 
 @Component({
     selector: 'app-revisao-cadastro-produtos',
@@ -10,36 +11,37 @@ import { CadastroProdutoService } from '../services/cadastro-produtos.service';
     standalone: false
 })
 export class RevisaoCadastroProdutosComponent implements OnInit {
-  constructor(public cadastroProdutoService: CadastroProdutoService, 
+  constructor(
+    public cadastroProdutoService: CadastroProdutoService,
+    private produtoService: ProdutoService,
     private router: Router,
     private route: ActivatedRoute) {}
 
-  margemLucro = 100;
-  precoProduto: number  = 0;
-
-  precoTotalProduto: number = 0;
+  custoProduto: number = 0;
+  precoProduto: number = 0;
+  isLoadingSimulacao: boolean = false;
 
   ngOnInit() {
-    this.calculatePrecoProduto();
-    this.calculatePrecoTotalProduto();
+    this.simularPrecificacao();
   }
 
-  calculatePrecoProduto() {
-    let total = 0;
-    for (let insumo of this.cadastroProdutoService.cadastroProduto.insumos) {
-      total += insumo.valor;
-    }
+  simularPrecificacao() {
+    this.isLoadingSimulacao = true;
 
-    this.precoProduto = total;
-  }
-
-  calculatePrecoTotalProduto() {
-
-    this.precoTotalProduto = this.precoProduto + this.precoProduto * (this.margemLucro / 100);
+    this.produtoService.simularProduto(this.cadastroProdutoService.cadastroProduto).subscribe({
+      next: (precificacao) => {
+        this.custoProduto = precificacao.custo;
+        this.precoProduto = precificacao.preco;
+        this.isLoadingSimulacao = false;
+      },
+      error: () => {
+        this.isLoadingSimulacao = false;
+      },
+    });
   }
 
   prevPage(): void {
-    this.router.navigate(['../insumos'], { relativeTo: this.route });
+    this.router.navigate(['../componentes'], { relativeTo: this.route });
   }
 
   finalizar(): void {

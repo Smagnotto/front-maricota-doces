@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -24,8 +24,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     public cadastroProdutoService: CadastroProdutoService,
-    private route: ActivatedRoute,
-    private elementRef: ElementRef<HTMLElement>
+    private route: ActivatedRoute
   ) {}
 
   private readonly tipoInsumoConst: string = 'KG';
@@ -84,9 +83,32 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   ngOnInit(): void {
     this.service.getAllInsumos().subscribe((insumos: Insumo[]) => {
       this.insumos = insumos.filter((x) => x.ativo);
+      this.recalcularValoresInsumosVinculados();
     });
 
     this.resetForm();
+  }
+
+  private recalcularValoresInsumosVinculados(): void {
+    console.log("OK");
+    this.cadastroProdutoService.cadastroProduto.insumos = this.cadastroProdutoService.cadastroProduto.insumos.map(
+      (insumoVinculado) => {
+        const insumoCatalogo = this.insumos?.find((x) => x.id === insumoVinculado.id_insumo);
+
+        if (!insumoCatalogo) return insumoVinculado;
+
+        const quantidadeNaUnidadeDoInsumo = converterQuantidade(
+          insumoVinculado.quantidade,
+          insumoVinculado.tipo,
+          insumoCatalogo.tipo
+        );
+
+        return {
+          ...insumoVinculado,
+          valor: quantidadeNaUnidadeDoInsumo * insumoCatalogo.preco,
+        };
+      }
+    );
   }
 
   search(event: any) {
@@ -109,26 +131,6 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     this.nomeInsumo?.setValue(insumo.nome);
     this.precoInsumo?.setValue(insumo.preco)
     this.tipoInsumo?.setValue(insumo.tipo)
-
-    this.atualizarPrecoExibido(insumo.preco);
-  }
-
-  private atualizarPrecoExibido(valor: number): void {
-    setTimeout(() => {
-      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_insumo input');
-      if (input) {
-        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor ?? 0);
-      }
-    });
-  }
-
-  private atualizarQuantidadeExibida(valor: number): void {
-    setTimeout(() => {
-      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#quantidade_insumo input');
-      if (input) {
-        input.value = new Intl.NumberFormat('pt-BR', { useGrouping: false }).format(valor ?? 0);
-      }
-    });
   }
 
   prevPage(): void {
@@ -136,7 +138,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   nextPage(): void {
-    this.router.navigate(['../revisao'], { relativeTo: this.route });
+    this.router.navigate(['../componentes'], { relativeTo: this.route });
   }
 
   vincularInsumo() {
@@ -188,9 +190,6 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       quantidadeInsumo: 0,
       precoInsumo: 0
     });
-
-    this.atualizarPrecoExibido(0);
-    this.atualizarQuantidadeExibida(0);
   }
 
   private deleteInsumo(insumos: InsumoProduto[], insumo: InsumoProduto) {
@@ -208,6 +207,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     this.quantidadeInsumo?.setValue(insumo.quantidade);
     this.tipoInsumo?.setValue(insumo.tipo);
     this.insumoAtivo?.setValue(insumoCatalogo?.ativo ?? false);
+
+    this.precoInsumo?.setValue(insumoCatalogo?.preco ?? 0);
 
     this.cadastroProdutoService.cadastroProduto.insumos = this.deleteInsumo(
       this.cadastroProdutoService.cadastroProduto.insumos,

@@ -26,7 +26,8 @@
 
       <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
         <p-float-label>
-            <p-inputnumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo">
+            <p-inputnumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo"
+              appValorExibido="moeda">
             </p-inputnumber>
             <label for="preco_insumo">Preço</label>
           </p-float-label>
@@ -34,7 +35,8 @@
 
       <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
         <p-float-label>
-          <p-inputnumber id="quantidade_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo">
+          <p-inputnumber id="quantidade_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo"
+            appValorExibido="decimal">
           </p-inputnumber>
           <label for="quantidade_insumo">Quantidade</label>
         </p-float-label>

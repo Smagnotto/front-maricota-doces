@@ -1,0 +1,29 @@
+<p-toast></p-toast>
+
+<form [formGroup]="formConfiguracoes" (ngSubmit)="onSubmit(formConfiguracoes)">
+  <p-card>
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
+      <h5>Configurações</h5>
+    </div>
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-4 p-lg-3 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-inputnumber id="margem_percentual" mode="decimal" suffix="%" locale="pt-BR" [minFractionDigits]="2"
+            formControlName="margemPercentual" appValorExibido="percentual"
+            [ngClass]="{'ng-dirty': margemPercentual?.invalid && (margemPercentual?.dirty || margemPercentual?.touched)}">
+          </p-inputnumber>
+          <label for="margem_percentual">Margem de lucro (%)</label>
+        </p-float-label>
+        @if (margemPercentual?.invalid && (margemPercentual?.dirty || margemPercentual?.touched)) {
+          <small class="p-error">Informe a margem de lucro.</small>
+        }
+      </div>
+
+      <div class="p-col-12 p-md-5 p-lg-4 p-d-flex p-ai-center">
+        <button pButton pRipple type="submit" class="p-button-raised p-m-2">
+          <span pButtonLabel>Salvar</span><i class="pi pi-check" pButtonIcon></i>
+        </button>
+      </div>
+    </div>
+  </p-card>
+</form>

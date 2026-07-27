@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { Produto } from '../domain/produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
@@ -20,7 +20,8 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
   constructor(
     private cadastroProdutoService: CadastroProdutoService,
     private router: Router,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +35,10 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
         routerLink: '/insumos',
       },
       {
+        label: 'Componentes',
+        routerLink: '/componentes',
+      },
+      {
         label: 'Revisão',
         routerLink: '/revisao',
       },
@@ -41,12 +46,14 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
 
     this.subscription = this.cadastroProdutoService.cadastroComplete$.subscribe(
       (cadastro) => {
+        // preco/custo não são enviados: o backend os calcula a partir dos
+        // insumos, componentes e da margem de lucro configurada em /v1/configuracoes.
         let produto: Produto = {
           nome: cadastro.nome,
           ativo: cadastro.ativo,
-          preco: cadastro.preco,
           id: cadastro.id | 0,
-          insumos: cadastro.insumos
+          insumos: cadastro.insumos,
+          componentes: cadastro.componentes
         };
 
         let subscribeApi: Observable<Produto>;
@@ -55,8 +62,17 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
           subscribeApi = this.produtoService.saveProduto(produto);
         else subscribeApi = this.produtoService.updateProduto(produto);
 
-        subscribeApi.subscribe((response) => {
-          this.router.navigate(['/produtos']);
+        subscribeApi.subscribe({
+          next: () => {
+            this.router.navigate(['/produtos']);
+          },
+          error: (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Não foi possível salvar o produto',
+              detail: typeof error === 'string' ? error : 'Verifique os dados informados e tente novamente.',
+            });
+          },
         });
       }
     );

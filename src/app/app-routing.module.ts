@@ -35,11 +35,19 @@ const routes: Routes = [
   },
   {
     path: 'clientes',
-    loadChildren: () => 
+    loadChildren: () =>
       import('./pages/clientes/cliente.module').then(
         (m) => m.ClienteModule
       ),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'configuracoes',
+    loadChildren: () =>
+      import('./pages/configuracoes/configuracoes.module').then(
+        (m) => m.ConfiguracoesModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',

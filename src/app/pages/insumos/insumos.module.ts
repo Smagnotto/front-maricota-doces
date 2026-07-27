@@ -7,6 +7,7 @@ import { ListaInsumosComponent } from './lista-insumos/lista-insumos.component';
 import { InsumoService } from './services/insumo.service';
 import { InsumoInfoComponent } from './insumo-info/insumo-info.component';
 import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
+import { ValorExibidoModule } from 'src/app/components/valor-exibido/valor-exibido.module';
 
 @NgModule({
   declarations: [ListaInsumosComponent, InsumoInfoComponent],
@@ -16,7 +17,8 @@ import { TableResponsiveModule } from 'src/app/components/table-responsive/table
     PrimeNGModule,
     ReactiveFormsModule,
     FormsModule,
-    TableResponsiveModule
+    TableResponsiveModule,
+    ValorExibidoModule
   ],
   providers: [InsumoService],
 })

@@ -1,11 +1,11 @@
-<div class="p-col-12 p-grid p-fluid" [formGroup]="formCliente">
+<div class="p-col-12 p-grid p-fluid" style="padding-top: 20px"; [formGroup]="formCliente">
   <div>
       <p-float-label>
         <input type="text" formControlName="nomeCliente" hidden />
         <input type="text" formControlName="idCliente" hidden />
 
         <p-autocomplete formControlName="autoCompleteNomeCliente" field="nome" [suggestions]="filteredClients"
-          [minQueryLength]="1" (completeMethod)="filterClient($event)" (onSelect)="selecionaCliente($event)"
+          [minQueryLength]="1" (completeMethod)="filterClient($event)" optionLabel="nome" (onSelect)="selecionaCliente($event)"
           [dropdown]="true">
         </p-autocomplete>
         <label for="nome_cliente">Nome do cliente</label>

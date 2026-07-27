@@ -1,0 +1,78 @@
+<form [formGroup]="formCadastroComponente">
+  <p-card>
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
+      <h5>Vinculação de Produtos Componentes</h5>
+    </div>
+
+    <input type="text" formControlName="idProduto" hidden />
+
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-3 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <input type="text" formControlName="nomeComponente" hidden />
+
+          <p-autocomplete [suggestions]="suggestions" (completeMethod)="search($event)" [dropdown]="true"
+            (onSelect)="selecionaComponente($event)" optionLabel="nome" [required]="true"
+            formControlName="autoCompleteNomeComponente" [forceSelection]="true"
+            [ngClass]="{'ng-dirty': nomeComponente?.invalid && (nomeComponente?.dirty || nomeComponente?.touched)}">
+          </p-autocomplete>
+          <label for="nome_componente">Produto</label>
+        </p-float-label>
+        @if (nomeComponente?.invalid && (nomeComponente?.dirty || nomeComponente?.touched)) {
+          <small class="p-error">Selecione um produto.</small>
+        }
+      </div>
+
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-inputnumber id="custo_componente" mode="currency" currency="BRL" locale="pt-BR"
+            formControlName="custoComponente" appValorExibido="moeda">
+          </p-inputnumber>
+          <label for="custo_componente">Custo unitário</label>
+        </p-float-label>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-inputnumber id="quantidade_componente" mode="decimal" [useGrouping]="false"
+            formControlName="quantidadeComponente" appValorExibido="decimal">
+          </p-inputnumber>
+          <label for="quantidade_componente">Quantidade</label>
+        </p-float-label>
+        @if (quantidadeComponente?.invalid && (quantidadeComponente?.dirty || quantidadeComponente?.touched)) {
+          <small class="p-error">Informe a quantidade.</small>
+        }
+      </div>
+
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-select inputId="tipoComponente" [options]="tiposInsumosOptions" optionLabel="nome"
+            formControlName="tipoComponente" optionValue="codigo"></p-select>
+          <label for="tipoComponente">Tipo</label>
+        </p-float-label>
+      </div>
+
+      <div class="p-col-12 p-lg-1 p-md-12 p-d-flex p-ai-center p-jc-end p-jc-md-start p-jc-lg-end p-sm-end p-md-start p-xl-end">
+        <p-button label="Vincular" (onClick)="vincularComponente()" icon="pi pi-plus" iconPos="right"></p-button>
+      </div>
+    </div>
+
+    <br />
+
+    <p-divider>
+      <h6>Produtos Componentes Vinculados</h6>
+    </p-divider>
+
+    <div class="p-col-12">
+      <app-table-responsive [data]="cadastroProdutoService.cadastroProduto.componentes" [headers]="headersComponentes"
+        (onEdit)="onEdit($event)" (onDelete)="onDelete($event)"></app-table-responsive>
+    </div>
+
+    <ng-template #footer>
+      <div class="p-grid p-nogutter p-justify-between">
+        <p-button label="Voltar" (onClick)="prevPage()" icon="pi pi-angle-left" styleClass="p-button-danger"></p-button>
+        <p-button label="Avançar" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</form>

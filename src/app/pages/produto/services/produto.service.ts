@@ -5,6 +5,7 @@ import { catchError, delay, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Produto } from '../domain/produto';
 import { ListaProduto } from '../domain/produto-lista';
+import { Precificacao } from '../domain/precificacao';
 
 const MOCK_DATA: ListaProduto[] = [
   { id: 1, ativo: true, nome: 'Bolo Matilda', preco: 350}
@@ -66,6 +67,23 @@ export class ProdutoService {
     return this.http
       .delete<Produto>(`${this.url}/${this.path}/${id}`, this.httpOptions)
       .pipe(retry(1), catchError(this.handleError));
+  }
+
+  simularProduto(produto: Produto): Observable<Precificacao> {
+    let simulacao = {
+      nome: produto.nome,
+      ativo: produto.ativo,
+      insumos: produto.insumos,
+      componentes: produto.componentes,
+    };
+
+    return this.http
+      .post<Precificacao>(
+        `${this.url}/${this.path}/simular`,
+        JSON.stringify(simulacao),
+        this.httpOptions
+      )
+      .pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {

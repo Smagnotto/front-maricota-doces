@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -19,8 +19,7 @@ export class InsumoInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
-    private service: InsumoService,
-    private elementRef: ElementRef<HTMLElement>
+    private service: InsumoService
   ) {}
 
   private readonly tipoInsumoConst: string = 'KG';
@@ -63,13 +62,6 @@ export class InsumoInfoComponent implements OnInit {
     this.ativo?.setValue(insumo.ativo);
     this.preco?.setValue(insumo.preco);
     this.tipoInsumo?.setValue(insumo.tipo)
-
-    setTimeout(() => {
-      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_insumo input');
-      if (input) {
-        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(insumo.preco ?? 0);
-      }
-    });
   }
 
   cancel(): void {

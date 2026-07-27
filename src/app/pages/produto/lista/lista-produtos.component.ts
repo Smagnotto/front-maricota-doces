@@ -25,6 +25,12 @@ export class ListaProdutosComponent implements OnInit {
       typeColumn: TypeColumns.String,
     },
     {
+      fieldName: 'custo',
+      labelColumn: 'Custo',
+      sortableColumn: true,
+      typeColumn: TypeColumns.Currency,
+    },
+    {
       fieldName: 'preco',
       labelColumn: 'Preço',
       sortableColumn: true,

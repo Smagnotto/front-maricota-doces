@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CadastroComponentesProdutosComponent } from './cadastro-componentes-produtos/cadastro-componentes-produtos.component';
 import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/cadastro-insumos-produtos.component';
 import { ListaProdutosComponent } from './lista/lista-produtos.component';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
@@ -21,6 +22,10 @@ const routes: Routes = [
         component: CadastroInsumosProdutosComponent,
       },
       {
+        path: 'componentes',
+        component: CadastroComponentesProdutosComponent,
+      },
+      {
         path: 'revisao',
         component: RevisaoCadastroProdutosComponent,
       },
@@ -37,6 +42,10 @@ const routes: Routes = [
       {
         path: 'insumos',
         component: CadastroInsumosProdutosComponent,
+      },
+      {
+        path: 'componentes',
+        component: CadastroComponentesProdutosComponent,
       },
       {
         path: 'revisao',

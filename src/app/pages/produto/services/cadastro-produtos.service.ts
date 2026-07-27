@@ -21,8 +21,8 @@ export class CadastroProdutoService {
       id: 0,
       ativo: true,
       nome: '',
-      preco: 0,
-      insumos: []
+      insumos: [],
+      componentes: []
     };
 
   }

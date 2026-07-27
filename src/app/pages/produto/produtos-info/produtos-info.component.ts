@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -18,14 +18,14 @@ export class ProdutosInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     public cadastroProdutoService: CadastroProdutoService,
     private route: ActivatedRoute,
-    private produtoService: ProdutoService,
-    private elementRef: ElementRef<HTMLElement>
+    private produtoService: ProdutoService
   ) {}
 
   formProduto: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl({ value: 0, disabled: true }),
     nome: new UntypedFormControl('', [Validators.required]),
-    preco: new UntypedFormControl(0),
+    custo: new UntypedFormControl({ value: 0, disabled: true }),
+    preco: new UntypedFormControl({ value: 0, disabled: true }),
     ativo: new UntypedFormControl(true),
   });
 
@@ -47,23 +47,11 @@ export class ProdutosInfoComponent implements OnInit {
   private fillForm(produto: Produto) {
     this.id?.setValue(produto.id);
     this.nome?.setValue(produto.nome);
+    this.custo?.setValue(produto.custo);
     this.preco?.setValue(produto.preco);
     this.ativo?.setValue(produto.ativo);
 
     this.cadastroProdutoService.cadastroProduto = produto;
-
-    // O p-inputnumber (primeng) não recalcula o texto exibido quando seu valor é
-    // atualizado via FormControl.setValue() vindo de uma resposta HTTP assíncrona — o
-    // campo fica preso mostrando "NaN"/o valor antigo até o usuário focar e desfocar o
-    // campo manualmente. Nem detectChanges() nem ApplicationRef.tick() resolvem isso
-    // (bug do componente, não da nossa change detection). Como contorno, escrevemos o
-    // texto formatado diretamente no input nativo.
-    setTimeout(() => {
-      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_produto input');
-      if (input) {
-        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(produto.preco ?? 0);
-      }
-    });
   }
 
   cancel(): void {
@@ -82,9 +70,13 @@ export class ProdutosInfoComponent implements OnInit {
         ativo: this.ativo?.value,
         nome: this.nome?.value,
         id: this.id?.value,
+        custo: this.custo?.value,
         preco: this.preco?.value,
-        insumos: this.cadastroProdutoService.cadastroProduto.insumos
+        insumos: this.cadastroProdutoService.cadastroProduto.insumos,
+        componentes: this.cadastroProdutoService.cadastroProduto.componentes
       };
+
+      console.log(produto);
 
       this.cadastroProdutoService.cadastroProduto = produto;
       this.router.navigate(['insumos'], { relativeTo: this.route });
@@ -101,6 +93,10 @@ export class ProdutosInfoComponent implements OnInit {
 
   get nome() {
     return this.formProduto.get('nome');
+  }
+
+  get custo() {
+    return this.formProduto.get('custo');
   }
 
   get preco() {

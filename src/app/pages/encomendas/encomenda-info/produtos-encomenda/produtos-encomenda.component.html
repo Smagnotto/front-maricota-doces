@@ -11,7 +11,7 @@
       <p-autocomplete formControlName="autoCompleteNomeProduto" [suggestions]="filteredProdutos"
         (completeMethod)="filterProduto($event)" [dropdown]="true" (onSelect)="selecionaProduto($event)"
         field="nome" [required]="true" formControlName="autoCompleteNomeProduto" [forceSelection]="true"
-        [minQueryLength]="1"
+        [minQueryLength]="1" optionLabel="nome"
         [ngClass]="{'ng-dirty': nomeProduto?.invalid && (nomeProduto?.dirty || nomeProduto?.touched)}">
       </p-autocomplete>
       <label for="nome_produto">Nome do Produto</label>

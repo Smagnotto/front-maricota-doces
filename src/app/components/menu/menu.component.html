@@ -29,9 +29,8 @@
 
     <div class="menu-category">Configuração</div>
     <div class="menu-items">
-      <a>Configuração
-        <p-tag value="Comming Soon" severity="warn"></p-tag>
-      </a>
+      <a [routerLink]=" ['/configuracoes']" routerLinkActive="router-link-exact-active"
+        (click)="onMenuButtonClick($event)">Configuração</a>
     </div>
   </div>
 </div>

@@ -8,19 +8,22 @@ import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
 import { ProdutosStepsComponent } from './produtos-steps/produtos-steps.component';
 import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/cadastro-insumos-produtos.component';
+import { CadastroComponentesProdutosComponent } from './cadastro-componentes-produtos/cadastro-componentes-produtos.component';
 import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
+import { ValorExibidoModule } from 'src/app/components/valor-exibido/valor-exibido.module';
 import { RevisaoCadastroProdutosComponent } from './revisao-cadastro-produtos/revisao-cadastro-produtos.component';
 import { CadastroProdutoService } from './services/cadastro-produtos.service';
 
 @NgModule({
-  declarations: [ListaProdutosComponent, ProdutosInfoComponent, ProdutosStepsComponent, CadastroInsumosProdutosComponent, RevisaoCadastroProdutosComponent],
+  declarations: [ListaProdutosComponent, ProdutosInfoComponent, ProdutosStepsComponent, CadastroInsumosProdutosComponent, CadastroComponentesProdutosComponent, RevisaoCadastroProdutosComponent],
   imports: [
     CommonModule,
     ProdutosRoutingModule,
     PrimeNGModule,
     ReactiveFormsModule,
     FormsModule,
-    TableResponsiveModule
+    TableResponsiveModule,
+    ValorExibidoModule
   ],
   providers: [ProdutoService, CadastroProdutoService],
 })
