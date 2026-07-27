@@ -69,7 +69,7 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
               summary: 'Produto Cadastrado',
               detail: 'O produto foi cadastrado com sucesso.',
             });
-            this.router.navigate(['/produtos']);
+            setTimeout(() => this.router.navigate(['/produtos']), 1000);
           },
           error: (error) => {
             this.messageService.add({

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from '../services/cliente.service';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../domain/cliente';
@@ -23,6 +23,7 @@ import { UtilService } from 'src/app/_helpers/utilService';
 export class ClientesInfoComponent implements OnInit {
   constructor(
     private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
     private service: ClienteService,
@@ -188,7 +189,13 @@ export class ClientesInfoComponent implements OnInit {
       else subscribeApi = this.service.updateCliente(Cliente);
 
       subscribeApi.subscribe(() => {
-        this.goBack();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Cliente salvo',
+          detail: 'O cliente foi salvo com sucesso.',
+        });
+
+        setTimeout(() => this.goBack(), 1000);
       });
     }
     form.markAllAsTouched();

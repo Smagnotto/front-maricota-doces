@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { Insumo } from '../domain/insumo';
 import { InsumoService } from '../services/insumo.service';
@@ -17,6 +17,7 @@ import { tiposInsumosOptions, TiposInsumos } from '../domain/tipos-insumos';
 export class InsumoInfoComponent implements OnInit {
   constructor(
     private confirmationService: ConfirmationService,
+    private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute,
     private service: InsumoService
@@ -102,7 +103,13 @@ export class InsumoInfoComponent implements OnInit {
       else subscribeApi = this.service.updateInsumo(insumo);
 
       subscribeApi.subscribe((response) => {
-        this.goBack();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Insumo salvo',
+          detail: 'O insumo foi salvo com sucesso.',
+        });
+
+        setTimeout(() => this.goBack(), 1000);
       });
     }
     form.markAllAsTouched();
