@@ -64,8 +64,6 @@ export class InsumoInfoComponent implements OnInit {
     this.preco?.setValue(insumo.preco);
     this.tipoInsumo?.setValue(insumo.tipo)
 
-    console.log(insumo.preco)
-
     setTimeout(() => {
       const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_insumo input');
       if (input) {

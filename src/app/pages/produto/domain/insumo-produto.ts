@@ -4,5 +4,6 @@ export interface InsumoProduto {
     id_insumo: number;
     nome: string;
     quantidade: number;    
-    tipo: TiposInsumos
+    tipo: TiposInsumos;
+    valor: number;
 }

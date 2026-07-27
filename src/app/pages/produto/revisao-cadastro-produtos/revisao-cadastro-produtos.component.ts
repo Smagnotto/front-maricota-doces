@@ -15,28 +15,28 @@ export class RevisaoCadastroProdutosComponent implements OnInit {
     private route: ActivatedRoute) {}
 
   margemLucro = 100;
-  precoProduto: number;
+  precoProduto: number  = 0;
 
-  precoTotalProduto: number;
+  precoTotalProduto: number = 0;
 
   ngOnInit() {
-    // this.calculatePrecoProduto();
-    // this.calculatePrecoTotalProduto();
+    this.calculatePrecoProduto();
+    this.calculatePrecoTotalProduto();
   }
 
-  // calculatePrecoProduto() {
-  //   let total = 0;
-  //   for (let insumo of this.cadastroProdutoService.insumosVinculados) {
-  //     total += insumo.preco;
-  //   }
+  calculatePrecoProduto() {
+    let total = 0;
+    for (let insumo of this.cadastroProdutoService.cadastroProduto.insumos) {
+      total += insumo.valor;
+    }
 
-  //   this.precoProduto = total;
-  // }
+    this.precoProduto = total;
+  }
 
-  // calculatePrecoTotalProduto() {
+  calculatePrecoTotalProduto() {
 
-  //   this.precoTotalProduto = this.precoProduto + this.precoProduto * (this.margemLucro / 100);
-  // }
+    this.precoTotalProduto = this.precoProduto + this.precoProduto * (this.margemLucro / 100);
+  }
 
   prevPage(): void {
     this.router.navigate(['../insumos'], { relativeTo: this.route });

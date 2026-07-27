@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -6,7 +6,7 @@ import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
-import { tiposInsumosOptions, TiposInsumos } from '../../insumos/domain/tipos-insumos';
+import { converterQuantidade, tiposInsumosOptions, TiposInsumos } from '../../insumos/domain/tipos-insumos';
 import { InsumoService } from '../../insumos/services/insumo.service';
 import { InsumoProduto } from '../domain/insumo-produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
@@ -24,7 +24,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     public cadastroProdutoService: CadastroProdutoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private elementRef: ElementRef<HTMLElement>
   ) {}
 
   private readonly tipoInsumoConst: string = 'KG';
@@ -39,7 +40,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     insumoAtivo: new UntypedFormControl({ value: false, disabled: true }, []),
     idInsumo: new UntypedFormControl({ value: 0, disabled: true }),
     autoCompleteNomeInsumo: new UntypedFormControl(''),
-    tipoInsumo: new UntypedFormControl(this.tipoInsumoConst),
+    tipoInsumo: new UntypedFormControl({value: this.tipoInsumoConst }),
   });
 
   tiposInsumosOptions: TiposInsumos[] = tiposInsumosOptions
@@ -65,6 +66,12 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       labelColumn: 'Tipo',
       sortableColumn: true,
       typeColumn: TypeColumns.String,
+    },
+    {
+      fieldName: 'valor',
+      labelColumn: 'Valor Total',
+      sortableColumn: true,
+      typeColumn: TypeColumns.Currency,
     },
     {
       fieldName: '',
@@ -101,6 +108,27 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);
     this.precoInsumo?.setValue(insumo.preco)
+    this.tipoInsumo?.setValue(insumo.tipo)
+
+    this.atualizarPrecoExibido(insumo.preco);
+  }
+
+  private atualizarPrecoExibido(valor: number): void {
+    setTimeout(() => {
+      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_insumo input');
+      if (input) {
+        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor ?? 0);
+      }
+    });
+  }
+
+  private atualizarQuantidadeExibida(valor: number): void {
+    setTimeout(() => {
+      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#quantidade_insumo input');
+      if (input) {
+        input.value = new Intl.NumberFormat('pt-BR', { useGrouping: false }).format(valor ?? 0);
+      }
+    });
   }
 
   prevPage(): void {
@@ -113,11 +141,20 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   vincularInsumo() {
     if (this.formCadastroInsumo.valid) {
+      const insumoCatalogo = this.insumos?.find((x) => x.id === this.idInsumo?.value);
+
+      const quantidadeNaUnidadeDoInsumo = converterQuantidade(
+        this.quantidadeInsumo?.value,
+        this.tipoInsumo?.value,
+        insumoCatalogo?.tipo ?? this.tipoInsumo?.value
+      );
+
       let insumo: InsumoProduto = {
         id_insumo: this.idInsumo?.value,
         nome: this.nomeInsumo?.value,
         quantidade: this.quantidadeInsumo?.value,
         tipo: this.tipoInsumo?.value,
+        valor: quantidadeNaUnidadeDoInsumo * this.precoInsumo?.value
       };
 
       if (
@@ -149,7 +186,11 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       tipoInsumo: this.tipoInsumoConst,
       idInsumo: 0,
       quantidadeInsumo: 0,
+      precoInsumo: 0
     });
+
+    this.atualizarPrecoExibido(0);
+    this.atualizarQuantidadeExibida(0);
   }
 
   private deleteInsumo(insumos: InsumoProduto[], insumo: InsumoProduto) {

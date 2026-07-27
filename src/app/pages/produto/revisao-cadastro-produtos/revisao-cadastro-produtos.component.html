@@ -6,11 +6,12 @@
           <th rowspan="3">Insumos</th>
         </tr>
         <tr>
-          <th colspan="2">Resumo Produto</th>
+          <th colspan="3">Resumo Produto</th>
         </tr>
         <tr>
           <th>Quantidade</th>
           <th>Tipo</th>
+          <th>Valor</th>
         </tr>
       </ng-template>
       <ng-template #body let-insumo>
@@ -18,15 +19,16 @@
           <td>{{insumo.nome}}</td>
           <td>{{insumo.quantidade}}</td>
           <td>{{insumo.tipo}}</td>
+          <td>{{insumo.valor | currency: 'BRL'}}</td>
         </tr>
       </ng-template>
-      <!-- <ng-template #footer>
+      <ng-template #footer>
         <tr>
-          <td colspan="1" class="p-text-right"></td>
+          <td colspan="2" class="p-text-right"></td>
           <td>Total: {{precoProduto | currency: 'BRL'}}</td>
           <td>Preço: {{precoTotalProduto | currency: 'BRL'}}</td>
         </tr>
-      </ng-template> -->
+      </ng-template>
     </p-table>
 
     <ng-template #footer>
