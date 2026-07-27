@@ -53,6 +53,13 @@ export class ListaProdutosComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  filtroAtivoOptions = [
+    { label: 'Todos', value: 'todos' },
+    { label: 'Ativos', value: 'ativos' },
+    { label: 'Inativos', value: 'inativos' },
+  ];
+  filtroAtivo: string = 'todos';
+
   constructor(
     private service: ProdutoService,
     private route: ActivatedRoute,
@@ -65,9 +72,15 @@ export class ListaProdutosComponent implements OnInit {
     this.getAllProdutos();
   }
 
+  onFiltroAtivoChange(): void {
+    this.getAllProdutos();
+  }
+
   private getAllProdutos(): void {
     this.isLoading = true;
-    this.service.getAllProdutos().subscribe((produtos: ListaProduto[]) => {
+    const ativo = this.filtroAtivo === 'todos' ? undefined : this.filtroAtivo === 'ativos';
+
+    this.service.getAllProdutos(ativo).subscribe((produtos: ListaProduto[]) => {
       this.produtos = produtos;
       this.isLoading = false;
     });

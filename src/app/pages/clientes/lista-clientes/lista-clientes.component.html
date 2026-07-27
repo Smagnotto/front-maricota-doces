@@ -6,6 +6,14 @@
     <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
       <h5>Cadastro de Clientes</h5>
     </div>
+    <div class="p-col-12 p-md-4 p-lg-3 p-d-flex p-flex-column p-jc-center">
+      <p-float-label>
+        <p-select inputId="filtroAtivo" [options]="filtroAtivoOptions" optionLabel="label" optionValue="value"
+          [(ngModel)]="filtroAtivo" (onChange)="onFiltroAtivoChange()"></p-select>
+        <label for="filtroAtivo">Situação</label>
+      </p-float-label>
+    </div>
+
     <div class="p-col-12 p-d-flex p-jc-end p-sm-end p-md-end p-xl-end">
       <button pButton pRipple [routerLink]="['/clientes/cadastro']"
         routerLinkActive="router-link-exact-active">

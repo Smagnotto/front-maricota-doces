@@ -24,10 +24,12 @@ export class ProdutoService {
   private url: string = environment.baseUrl;
   private path: string = 'v1/produtos'
 
-  getAllProdutos(): Observable<ListaProduto[]> {
+  getAllProdutos(ativo?: boolean): Observable<ListaProduto[]> {
     // return of([...MOCK_DATA]).pipe(delay(3000))
+    const query = ativo === undefined ? '' : `?ativo=${ativo}`;
+
     return this.http
-      .get<ListaProduto[]>(`${this.url}/${this.path}/`)
+      .get<ListaProduto[]>(`${this.url}/${this.path}/${query}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

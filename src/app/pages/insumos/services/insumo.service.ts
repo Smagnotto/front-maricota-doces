@@ -19,9 +19,11 @@ export class InsumoService {
   private url: string = environment.baseUrl;
   private path: string = 'v1/insumos'
 
-  getAllInsumos(): Observable<Insumo[]> {
+  getAllInsumos(ativo?: boolean): Observable<Insumo[]> {
+    const query = ativo === undefined ? '' : `?ativo=${ativo}`;
+
     return this.http
-      .get<Insumo[]>(`${this.url}/${this.path}`)
+      .get<Insumo[]>(`${this.url}/${this.path}${query}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

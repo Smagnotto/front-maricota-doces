@@ -52,6 +52,13 @@ export class ListaInsumosComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  filtroAtivoOptions = [
+    { label: 'Todos', value: 'todos' },
+    { label: 'Ativos', value: 'ativos' },
+    { label: 'Inativos', value: 'inativos' },
+  ];
+  filtroAtivo: string = 'todos';
+
   constructor(
     private service: InsumoService,
     private confirmationService: ConfirmationService,
@@ -63,9 +70,15 @@ export class ListaInsumosComponent implements OnInit {
     this.getAllInsumos();
   }
 
+  onFiltroAtivoChange(): void {
+    this.getAllInsumos();
+  }
+
   private getAllInsumos(): void {
     this.isLoading = true;
-    this.service.getAllInsumos().subscribe((produtos: Insumo[]) => {
+    const ativo = this.filtroAtivo === 'todos' ? undefined : this.filtroAtivo === 'ativos';
+
+    this.service.getAllInsumos(ativo).subscribe((produtos: Insumo[]) => {
       this.produtos = produtos;
       this.isLoading = false;
     });

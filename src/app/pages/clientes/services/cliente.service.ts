@@ -19,9 +19,11 @@ export class ClienteService {
   private url: string = environment.baseUrl;
   private path: string = 'v1/clientes'
 
-  getAllClientes(): Observable<Cliente[]> {
+  getAllClientes(ativo?: boolean): Observable<Cliente[]> {
+    const query = ativo === undefined ? '' : `?ativo=${ativo}`;
+
     return this.http
-      .get<Cliente[]>(`${this.url}/${this.path}/`)
+      .get<Cliente[]>(`${this.url}/${this.path}/${query}`)
       .pipe(retry(2), catchError(this.handleError));
   }
 

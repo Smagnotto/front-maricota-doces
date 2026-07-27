@@ -24,7 +24,14 @@ export class ListaClientesComponent implements OnInit {
       typeColumn: TypeColumns.String,
     },
     {
-      fieldName: '', 
+      fieldName: 'ativo',
+      labelColumn: 'Ativo',
+      sortableColumn: false,
+      typeColumn: TypeColumns.Boolean,
+      isDisabled: true,
+    },
+    {
+      fieldName: '',
       labelColumn: 'Ações',
       sortableColumn: false,
       typeColumn: TypeColumns.ActionsButtons,
@@ -32,6 +39,13 @@ export class ListaClientesComponent implements OnInit {
   ];
 
   isLoading: boolean = false;
+
+  filtroAtivoOptions = [
+    { label: 'Todos', value: 'todos' },
+    { label: 'Ativos', value: 'ativos' },
+    { label: 'Inativos', value: 'inativos' },
+  ];
+  filtroAtivo: string = 'todos';
 
   constructor(
     private service: ClienteService,
@@ -44,9 +58,15 @@ export class ListaClientesComponent implements OnInit {
     this.getAllClientes()
   }
 
+  onFiltroAtivoChange(): void {
+    this.getAllClientes();
+  }
+
   private getAllClientes(): void {
       this.isLoading = true;
-      this.service.getAllClientes().subscribe((produtos: Cliente[]) => {
+      const ativo = this.filtroAtivo === 'todos' ? undefined : this.filtroAtivo === 'ativos';
+
+      this.service.getAllClientes(ativo).subscribe((produtos: Cliente[]) => {
         this.clientes = produtos;
         this.isLoading = false;
       });

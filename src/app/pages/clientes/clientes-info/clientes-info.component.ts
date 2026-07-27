@@ -70,6 +70,7 @@ export class ClientesInfoComponent implements OnInit {
   formCliente: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(0),
     nome: new UntypedFormControl('', [Validators.required]),
+    ativo: new UntypedFormControl(true),
   });
 
   // Formulário de apoio para montar um endereço por vez antes de "vincular".
@@ -92,6 +93,7 @@ export class ClientesInfoComponent implements OnInit {
         this.fillForm({
           id: 0,
           nome: '',
+          ativo: true
         });
     });
 
@@ -132,6 +134,7 @@ export class ClientesInfoComponent implements OnInit {
   private fillForm(Cliente: Cliente) {
     this.id?.setValue(Cliente.id);
     this.nome?.setValue(Cliente.nome);
+    this.ativo?.setValue(Cliente.ativo);
     if (Cliente.enderecos) this.enderecosLinked = [...this.enderecosLinked, ...Cliente.enderecos]
   }
 
