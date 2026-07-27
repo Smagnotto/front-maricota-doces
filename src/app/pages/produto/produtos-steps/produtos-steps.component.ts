@@ -64,6 +64,11 @@ export class ProdutosStepsComponent implements OnInit, OnDestroy {
 
         subscribeApi.subscribe({
           next: () => {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Produto Cadastrado',
+              detail: 'O produto foi cadastrado com sucesso.',
+            });
             this.router.navigate(['/produtos']);
           },
           error: (error) => {

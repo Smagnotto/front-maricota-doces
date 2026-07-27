@@ -27,12 +27,12 @@
     <p-table [value]="cadastroProdutoService.cadastroProduto.componentes">
       <ng-template #header>
         <tr>
-          <th colspan="4">Produtos Componentes</th>
+          <th colspan="3">Produtos Componentes</th>
         </tr>
         <tr>
           <th style="width: 25%">Nome</th>
           <th style="width: 25%">Quantidade</th>
-          <th style="width: 25%">Tipo</th>
+          <th style="width: 25%"></th>
           <th style="width: 25%">Valor</th>
         </tr>
       </ng-template>
@@ -40,7 +40,7 @@
         <tr>
           <td>{{componente.nome}}</td>
           <td>{{componente.quantidade}}</td>
-          <td>{{componente.tipo}}</td>
+          <td></td>
           <td>{{componente.valor | currency: 'BRL'}}</td>
         </tr>
       </ng-template>

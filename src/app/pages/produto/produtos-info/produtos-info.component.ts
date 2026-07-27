@@ -76,8 +76,6 @@ export class ProdutosInfoComponent implements OnInit {
         componentes: this.cadastroProdutoService.cadastroProduto.componentes
       };
 
-      console.log(produto);
-
       this.cadastroProdutoService.cadastroProduto = produto;
       this.router.navigate(['insumos'], { relativeTo: this.route });
 

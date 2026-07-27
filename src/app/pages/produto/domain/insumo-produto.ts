@@ -1,5 +1,5 @@
 export interface InsumoProduto {
-    id_insumo: number;
+    id: number;
     nome: string;
     quantidade: number;
     tipo: string;

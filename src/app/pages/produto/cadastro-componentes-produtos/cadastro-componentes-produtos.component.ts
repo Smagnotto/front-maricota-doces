@@ -5,7 +5,6 @@ import { ConfirmationService } from 'primeng/api';
 import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
-import { tiposInsumosOptions, TiposInsumos } from '../../insumos/domain/tipos-insumos';
 import { ComponenteProduto } from '../domain/componente-produto';
 import { Produto } from '../domain/produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
@@ -27,8 +26,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  private readonly tipoComponenteConst: string = 'KG';
-
   formCadastroComponente: UntypedFormGroup = new UntypedFormGroup({
     nomeComponente: new UntypedFormControl({ value: '' }, [Validators.required]),
     quantidadeComponente: new UntypedFormControl(0, [
@@ -38,10 +35,7 @@ export class CadastroComponentesProdutosComponent implements OnInit {
     custoComponente: new UntypedFormControl({ value: 0, disabled: true }),
     idProduto: new UntypedFormControl({ value: 0, disabled: true }),
     autoCompleteNomeComponente: new UntypedFormControl(''),
-    tipoComponente: new UntypedFormControl({ value: this.tipoComponenteConst }),
   });
-
-  tiposInsumosOptions: TiposInsumos[] = tiposInsumosOptions;
 
   suggestions: Produto[] = [];
 
@@ -55,12 +49,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
     {
       fieldName: 'quantidade',
       labelColumn: 'Quantidade',
-      sortableColumn: true,
-      typeColumn: TypeColumns.String,
-    },
-    {
-      fieldName: 'tipo',
-      labelColumn: 'Tipo',
       sortableColumn: true,
       typeColumn: TypeColumns.String,
     },
@@ -113,7 +101,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
         id_produto: this.idProduto?.value,
         nome: this.nomeComponente?.value,
         quantidade: this.quantidadeComponente?.value,
-        tipo: this.tipoComponente?.value,
         valor: this.quantidadeComponente?.value * this.custoComponente?.value,
       };
 
@@ -143,7 +130,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
 
   private resetForm(): void {
     this.formCadastroComponente.reset({
-      tipoComponente: this.tipoComponenteConst,
       idProduto: 0,
       quantidadeComponente: 0,
       custoComponente: 0,
@@ -161,7 +147,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
     this.nomeComponente?.setValue(componente.nome);
     this.autoCompleteNomeComponente?.setValue({ nome: componente.nome });
     this.quantidadeComponente?.setValue(componente.quantidade);
-    this.tipoComponente?.setValue(componente.tipo);
     this.custoComponente?.setValue(
       componente.quantidade ? componente.valor / componente.quantidade : 0
     );
@@ -195,10 +180,6 @@ export class CadastroComponentesProdutosComponent implements OnInit {
 
   get idProduto() {
     return this.formCadastroComponente.get('idProduto');
-  }
-
-  get tipoComponente() {
-    return this.formCadastroComponente.get('tipoComponente');
   }
 
   get autoCompleteNomeComponente() {

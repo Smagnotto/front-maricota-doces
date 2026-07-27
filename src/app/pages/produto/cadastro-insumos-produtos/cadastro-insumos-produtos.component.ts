@@ -90,10 +90,9 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   private recalcularValoresInsumosVinculados(): void {
-    console.log("OK");
     this.cadastroProdutoService.cadastroProduto.insumos = this.cadastroProdutoService.cadastroProduto.insumos.map(
       (insumoVinculado) => {
-        const insumoCatalogo = this.insumos?.find((x) => x.id === insumoVinculado.id_insumo);
+        const insumoCatalogo = this.insumos?.find((x) => x.id === insumoVinculado.id);
 
         if (!insumoCatalogo) return insumoVinculado;
 
@@ -152,7 +151,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       );
 
       let insumo: InsumoProduto = {
-        id_insumo: this.idInsumo?.value,
+        id: this.idInsumo?.value,
         nome: this.nomeInsumo?.value,
         quantidade: this.quantidadeInsumo?.value,
         tipo: this.tipoInsumo?.value,
@@ -161,7 +160,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
       if (
         this.cadastroProdutoService.cadastroProduto.insumos.filter(
-          (x) => x.id_insumo === insumo.id_insumo
+          (x) => x.id === insumo.id
         ).length > 0
       ) {
         this.confirmationService.confirm({
@@ -199,9 +198,9 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   onEdit(insumo: InsumoProduto) {
-    const insumoCatalogo = this.insumos?.find((x) => x.id === insumo.id_insumo);
+    const insumoCatalogo = this.insumos?.find((x) => x.id === insumo.id);
 
-    this.idInsumo?.setValue(insumo.id_insumo);
+    this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);
     this.autoCompleteNomeInsumo?.setValue({ nome: insumo.nome });
     this.quantidadeInsumo?.setValue(insumo.quantidade);
