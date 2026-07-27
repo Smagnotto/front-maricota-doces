@@ -81,8 +81,8 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.service.getAllInsumos().subscribe((insumos: Insumo[]) => {
-      this.insumos = insumos.filter((x) => x.ativo);
+    this.service.getAllInsumos(true).subscribe((insumos: Insumo[]) => {
+      this.insumos = insumos;
       this.recalcularValoresInsumosVinculados();
     });
 
