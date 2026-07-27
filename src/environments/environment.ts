@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   baseUrl: "",
-  urlViaCep: "",
+  urlViaCep: "https://viacep.com.br/ws/#cep#/json/",
   firebase: {
     apiKey: "AIzaSyBu4HFRQFGs_yt5rvX963DhoF19rX-qxCE",
     authDomain: "maricota-doces-81756.firebaseapp.com",

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -18,13 +18,14 @@ export class ProdutosInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     public cadastroProdutoService: CadastroProdutoService,
     private route: ActivatedRoute,
-    private produtoService: ProdutoService
+    private produtoService: ProdutoService,
+    private elementRef: ElementRef<HTMLElement>
   ) {}
 
   formProduto: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl({ value: 0, disabled: true }),
     nome: new UntypedFormControl('', [Validators.required]),
-    preco: new UntypedFormControl({ value: 0 }),
+    preco: new UntypedFormControl(0),
     ativo: new UntypedFormControl(true),
   });
 
@@ -46,12 +47,23 @@ export class ProdutosInfoComponent implements OnInit {
   private fillForm(produto: Produto) {
     this.id?.setValue(produto.id);
     this.nome?.setValue(produto.nome);
-    console.log(produto.preco)
     this.preco?.setValue(produto.preco);
     this.ativo?.setValue(produto.ativo);
 
     this.cadastroProdutoService.cadastroProduto = produto;
 
+    // O p-inputnumber (primeng) não recalcula o texto exibido quando seu valor é
+    // atualizado via FormControl.setValue() vindo de uma resposta HTTP assíncrona — o
+    // campo fica preso mostrando "NaN"/o valor antigo até o usuário focar e desfocar o
+    // campo manualmente. Nem detectChanges() nem ApplicationRef.tick() resolvem isso
+    // (bug do componente, não da nossa change detection). Como contorno, escrevemos o
+    // texto formatado diretamente no input nativo.
+    setTimeout(() => {
+      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_produto input');
+      if (input) {
+        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(produto.preco ?? 0);
+      }
+    });
   }
 
   cancel(): void {

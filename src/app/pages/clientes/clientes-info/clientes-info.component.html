@@ -27,12 +27,17 @@
 
         <div class="p-grid p-fluid" [formGroup]="formEndereco">
             <div class="p-col-12 p-md-4 p-lg-2">
-                <p-float-label>
-                    <p-inputmask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputmask>
-                    <label for="cep_cliente">CEP</label>
-                </p-float-label>
+                <p-iconfield>
+                    <p-float-label>
+                        <p-inputmask id="cep_cliente" mask="99999-999" formControlName="cep"></p-inputmask>
+                        <label for="cep_cliente">CEP</label>
+                        @if (isLoadingCep) {
+                            <i class="pi pi-spin pi-spinner p-inputmask-icon p-inputmask-icon-right" ></i>
+                        }
+                    </p-float-label>
+                </p-iconfield>
                 @if (cep?.errors?.required) {
-                <small id="cep_cliente-help" class="p-error">Informe o CEP.</small>
+                    <small id="cep_cliente-help" class="p-error">Informe o CEP.</small>
                 }
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">

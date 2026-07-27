@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ClienteService } from '../services/cliente.service';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Cliente } from '../domain/cliente';
 import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Endereco } from '../domain/endereco';
+import { UtilService } from 'src/app/_helpers/utilService';
 
 @Component({
   selector: 'app-clientes-info',
@@ -22,9 +25,12 @@ export class ClientesInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
-    private service: ClienteService
+    private service: ClienteService,
+    private utilService: UtilService,
+    private destroyRef: DestroyRef
   ) { }
 
+  isLoadingCep: boolean = false
   enderecosLinked: Endereco[] = []
 
   headersEndereco: TableHeader[] = [
@@ -87,6 +93,33 @@ export class ClientesInfoComponent implements OnInit {
           nome: '',
         });
     });
+
+    this.cep?.valueChanges
+      .pipe(
+        debounceTime(600),
+        distinctUntilChanged(),
+        filter((value: string) => { 
+          console.log(value)
+
+
+          const valueValidation  = !!value && value.replace(/\D/g, '').length === 8
+
+          console.log(valueValidation)
+          return valueValidation
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((value: string) => this.buscarEnderecoPorCep(value));
+  }
+
+  private buscarEnderecoPorCep(cep: string): void {
+    this.isLoadingCep = true
+    this.utilService.getEnderecoByCep(cep).subscribe((endereco) => {
+      this.isLoadingCep = false
+      if (endereco?.erro) return;
+
+      this.logradouro?.setValue(endereco.logradouro);
+    });
   }
 
   private getCliente(id: number): void {
@@ -98,8 +131,7 @@ export class ClientesInfoComponent implements OnInit {
   private fillForm(Cliente: Cliente) {
     this.id?.setValue(Cliente.id);
     this.nome?.setValue(Cliente.nome);
-
-    if (Cliente.endereco) this.enderecosLinked.push(Cliente.endereco)
+    if (Cliente.enderecos) this.enderecosLinked = [...this.enderecosLinked, ...Cliente.enderecos]
   }
 
   cancel(): void {
@@ -147,7 +179,7 @@ export class ClientesInfoComponent implements OnInit {
 
       let Cliente: Cliente = {
         ...form.value,
-        endereco: this.enderecosLinked[0] ?? null,
+        enderecos: this.enderecosLinked ?? []
       };
 
       let subscribeApi: Observable<Cliente>;

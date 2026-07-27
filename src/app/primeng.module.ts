@@ -29,6 +29,8 @@ import {ToastModule} from 'primeng/toast';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   exports: [
@@ -61,7 +63,9 @@ import { RippleModule } from 'primeng/ripple';
     ToastModule,
     FloatLabelModule,
     PasswordModule,
-    RippleModule
+    RippleModule,
+    IconFieldModule, 
+    InputIconModule,
   ],
   providers: [ConfirmationService, MessageService],
 })

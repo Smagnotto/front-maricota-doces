@@ -45,10 +45,10 @@ export class ClienteEncomendaComponent implements OnInit {
     const cliente = event.value as Cliente;
     this.idCliente?.setValue(cliente.id);
     this.nomeCliente?.setValue(cliente.nome);
-    this.logradouro?.setValue(cliente.endereco?.logradouro);
-    this.cep?.setValue(cliente.endereco?.cep);
-    this.numero?.setValue(cliente.endereco?.numero);
-    this.complemento?.setValue(cliente.endereco?.complemento);
+    this.logradouro?.setValue(cliente.enderecos?.[0]?.logradouro);
+    this.cep?.setValue(cliente.enderecos?.[0]?.cep);
+    this.numero?.setValue(cliente.enderecos?.[0]?.numero);
+    this.complemento?.setValue(cliente.enderecos?.[0]?.complemento);
 
     this.onSelectCliente.emit(cliente);
   }
