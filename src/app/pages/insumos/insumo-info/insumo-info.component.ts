@@ -1,10 +1,11 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { Insumo } from '../domain/insumo';
 import { InsumoService } from '../services/insumo.service';
+import { tiposInsumosOptions, TiposInsumos } from '../domain/tipos-insumos';
 
 @Component({
     selector: 'app-insumo-info',
@@ -18,13 +19,20 @@ export class InsumoInfoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
-    private service: InsumoService
+    private service: InsumoService,
+    private elementRef: ElementRef<HTMLElement>
   ) {}
+
+  private readonly tipoInsumoConst: string = 'KG';
+  tiposInsumosOptions: TiposInsumos[] = tiposInsumosOptions
+  
 
   formInsumo: UntypedFormGroup = new UntypedFormGroup({
     id: new UntypedFormControl(0),
     nome: new UntypedFormControl('', [Validators.required]),
     ativo: new UntypedFormControl(true),
+    preco: new UntypedFormControl(0),
+    tipo: new UntypedFormControl(this.tipoInsumoConst)
   });
 
   ngOnInit(): void {
@@ -37,6 +45,8 @@ export class InsumoInfoComponent implements OnInit {
           ativo: true,
           id: 0,
           nome: '',
+          preco: 0,
+          tipo: this.tipoInsumoConst
         });
     });
   }
@@ -51,6 +61,17 @@ export class InsumoInfoComponent implements OnInit {
     this.id?.setValue(insumo.id);
     this.nome?.setValue(insumo.nome);
     this.ativo?.setValue(insumo.ativo);
+    this.preco?.setValue(insumo.preco);
+    this.tipoInsumo?.setValue(insumo.tipo)
+
+    console.log(insumo.preco)
+
+    setTimeout(() => {
+      const input = this.elementRef.nativeElement.querySelector<HTMLInputElement>('#preco_insumo input');
+      if (input) {
+        input.value = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(insumo.preco ?? 0);
+      }
+    });
   }
 
   cancel(): void {
@@ -73,12 +94,12 @@ export class InsumoInfoComponent implements OnInit {
     return this.formInsumo.get('ativo');
   }
 
-  get id() {
-    return this.formInsumo.get('id');
+  get tipoInsumo() {
+    return this.formInsumo.get('tipo');
   }
 
-  get quantidade() {
-    return this.formInsumo.get('quantidade');
+  get id() {
+    return this.formInsumo.get('id');
   }
 
   onSubmit(form: UntypedFormGroup) {

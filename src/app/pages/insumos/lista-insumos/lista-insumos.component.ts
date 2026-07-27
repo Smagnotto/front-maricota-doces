@@ -24,6 +24,18 @@ export class ListaInsumosComponent implements OnInit {
       typeColumn: TypeColumns.String,
     },
     {
+      fieldName: 'preco',
+      labelColumn: 'Preço',
+      sortableColumn: true,
+      typeColumn: TypeColumns.Currency,
+    },
+    {
+      fieldName: 'tipo',
+      labelColumn: 'Tipo',
+      sortableColumn: true,
+      typeColumn: TypeColumns.String
+    },
+    {
       fieldName: 'ativo',
       labelColumn: 'Ativo',
       sortableColumn: false,

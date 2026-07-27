@@ -6,7 +6,7 @@ import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
-import { TiposInsumos } from '../../insumos/domain/tipos-insumos';
+import { tiposInsumosOptions, TiposInsumos } from '../../insumos/domain/tipos-insumos';
 import { InsumoService } from '../../insumos/services/insumo.service';
 import { InsumoProduto } from '../domain/insumo-produto';
 import { CadastroProdutoService } from '../services/cadastro-produtos.service';
@@ -27,7 +27,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  private readonly tipoInsumoConst: String = 'KG';
+  private readonly tipoInsumoConst: string = 'KG';
 
   formCadastroInsumo: UntypedFormGroup = new UntypedFormGroup({
     nomeInsumo: new UntypedFormControl({ value: '' }, [Validators.required]),
@@ -35,30 +35,14 @@ export class CadastroInsumosProdutosComponent implements OnInit {
       Validators.required,
       Validators.min(1),
     ]),
+    precoInsumo: new UntypedFormControl({ value: 0, disabled: true}),
     insumoAtivo: new UntypedFormControl({ value: false, disabled: true }, []),
     idInsumo: new UntypedFormControl({ value: 0, disabled: true }),
     autoCompleteNomeInsumo: new UntypedFormControl(''),
     tipoInsumo: new UntypedFormControl(this.tipoInsumoConst),
   });
 
-  tiposInsumos: TiposInsumos[] = [
-    {
-      nome: 'Kg',
-      codigo: 'KG',
-    },
-    {
-      nome: 'g',
-      codigo: 'G',
-    },
-    {
-      nome: 'l',
-      codigo: 'L',
-    },
-    {
-      nome: 'ml',
-      codigo: 'ML',
-    },
-  ];
+  tiposInsumosOptions: TiposInsumos[] = tiposInsumosOptions
 
   insumos: Insumo[];
   suggestions: any[];
@@ -116,6 +100,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
     this.insumoAtivo?.setValue(insumo.ativo);
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);
+    this.precoInsumo?.setValue(insumo.preco)
   }
 
   prevPage(): void {
@@ -224,5 +209,9 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   get autoCompleteNomeInsumo() {
     return this.formCadastroInsumo.get('autoCompleteNomeInsumo');
+  }
+
+  get precoInsumo() {
+    return this.formCadastroInsumo.get('precoInsumo')
   }
 }

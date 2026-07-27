@@ -20,6 +20,22 @@ defaultFocus="reject" rejectButtonStyleClass="p-button-danger"></p-confirmdialog
         }
       </div>
 
+      <div class="p-col-12 p-md-3 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-inputnumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="preco">
+          </p-inputnumber>
+          <label for="preco_insumo">Preço</label>
+        </p-float-label>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-select inputId="tipoInsumo" [options]="tiposInsumosOptions" optionLabel="nome"
+          formControlName="tipo" optionValue="codigo"></p-select>
+          <label for="preco_insumo">Tipo</label>
+        </p-float-label>
+      </div>
+
       <div class="p-col-12 p-md-2 p-lg-2 p-d-flex p-ai-center">
         <p-checkbox name="ativo" [binary]="true" inputId="ativo" formControlName="ativo"></p-checkbox>
         <label for="ativo" class="p-ml-2">Ativo</label>

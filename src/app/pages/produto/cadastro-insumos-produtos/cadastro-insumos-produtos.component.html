@@ -7,7 +7,7 @@
     <input type="text" formControlName="idInsumo" hidden />
 
     <div class="p-grid p-fluid">
-      <div class="p-col-12 p-md-4 p-d-flex p-flex-column p-jc-center">
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
         <p-float-label>
           <input type="text" formControlName="nomeInsumo" hidden />
 
@@ -24,11 +24,19 @@
         }
       </div>
 
-      <div class="p-col-12 p-md-3 p-d-flex p-flex-column p-jc-center">
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
         <p-float-label>
-          <p-inputnumber id="preco_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo">
+            <p-inputnumber id="preco_insumo" mode="currency" currency="BRL" locale="pt-BR" formControlName="precoInsumo">
+            </p-inputnumber>
+            <label for="preco_insumo">Preço</label>
+          </p-float-label>
+      </div>
+
+      <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
+        <p-float-label>
+          <p-inputnumber id="quantidade_insumo" mode="decimal" [useGrouping]="false" formControlName="quantidadeInsumo">
           </p-inputnumber>
-          <label for="preco_insumo">Quantidade</label>
+          <label for="quantidade_insumo">Quantidade</label>
         </p-float-label>
         @if (quantidadeInsumo?.invalid && (quantidadeInsumo?.dirty || quantidadeInsumo?.touched)) {
           <small
@@ -38,7 +46,7 @@
 
       <div class="p-col-12 p-md-2 p-d-flex p-flex-column p-jc-center">
         <p-float-label>
-          <p-select inputId="tipoInsumo" [options]="tiposInsumos" optionLabel="nome"
+          <p-select inputId="tipoInsumo" [options]="tiposInsumosOptions" optionLabel="nome"
           formControlName="tipoInsumo" optionValue="codigo"></p-select>
           <label for="preco_insumo">Tipo</label>
         </p-float-label>

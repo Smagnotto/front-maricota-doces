@@ -5,11 +5,6 @@ import { catchError, delay, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Insumo } from '../domain/insumo';
 
-const MOCK_DATA: Insumo[] = [
-  {    nome: 'Leite',ativo: true,    id: 1  }
-]
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -25,8 +20,6 @@ export class InsumoService {
   private path: string = 'v1/insumos'
 
   getAllInsumos(): Observable<Insumo[]> {
-    // return of([...MOCK_DATA]).pipe(delay(3000));
-
     return this.http
       .get<Insumo[]>(`${this.url}/${this.path}`)
       .pipe(retry(2), catchError(this.handleError));
