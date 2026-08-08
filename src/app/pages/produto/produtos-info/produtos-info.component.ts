@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ApplicationRef, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
@@ -13,6 +13,8 @@ import { ProdutoService } from '../services/produto.service';
     standalone: false
 })
 export class ProdutosInfoComponent implements OnInit {
+  private appRef = inject(ApplicationRef);
+
   constructor(
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -39,8 +41,12 @@ export class ProdutosInfoComponent implements OnInit {
   }
 
   private getProduto(id: number): void {
-    this.produtoService.getProdutoById(id).subscribe((response) => {
-      this.fillForm(response);
+    this.produtoService.getProdutoById(id).subscribe({
+      next: (response) => {
+        this.fillForm(response);
+        this.appRef.tick();
+      },
+      error: (err) => console.error('Erro ao carregar produto:', err)
     });
   }
 

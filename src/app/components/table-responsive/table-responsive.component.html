@@ -1,76 +1,123 @@
-<p-table [value]="tableValue" [totalRecords]="data.length" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
-  currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} itens" [rowsPerPageOptions]="[10,25,50]"
-  styleClass="p-datatable-responsive">
-  <ng-template #header>
-    <tr>
-      @for (header of headers; track header) {
-        <th [pSortableColumn]="header.fieldName"
-          [pSortableColumnDisabled]="!header.sortableColumn">
-          {{ header.labelColumn }}
-          @if (header.sortableColumn) {
-            <p-sort-icon [field]="header.fieldName"></p-sort-icon>
-          }
-        </th>
-      }
-    </tr>
-  </ng-template>
-  <ng-template #body let-row>
-    <tr>
-      @for (header of headers; track header) {
-        <td>
-          <!-- Skeletons -->
-          @if (isLoading && header.typeColumn !== typeColumns.Boolean && header.typeColumn !== typeColumns.ActionsButtons) {
-            <p-skeleton
-              >
-            </p-skeleton>
-          }
-          @if (isLoading && header.typeColumn === typeColumns.Boolean) {
-            <p-skeleton size="2rem" styleClass="p-mr-2">
-            </p-skeleton>
-          }
-          @if (isLoading && header.typeColumn === typeColumns.ActionsButtons) {
-            <div class="p-d-flex p-ai-end">
+@if (!isMobile) {
+  <p-table [value]="tableValue" [totalRecords]="data.length" [paginator]="true" [rows]="pageSize" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} até {last} de {totalRecords} itens" [rowsPerPageOptions]="[10,25,50]">
+    <ng-template #header>
+      <tr>
+        @for (header of headers; track header) {
+          <th [pSortableColumn]="header.fieldName"
+            [pSortableColumnDisabled]="!header.sortableColumn">
+            {{ header.labelColumn }}
+            @if (header.sortableColumn) {
+              <p-sort-icon [field]="header.fieldName"></p-sort-icon>
+            }
+          </th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template #body let-row>
+      <tr>
+        @for (header of headers; track header) {
+          <td>
+            @if (isLoading && header.typeColumn !== typeColumns.Boolean && header.typeColumn !== typeColumns.ActionsButtons) {
+              <p-skeleton></p-skeleton>
+            }
+            @if (isLoading && header.typeColumn === typeColumns.Boolean) {
               <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
-              <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
-            </div>
-          }
+            }
+            @if (isLoading && header.typeColumn === typeColumns.ActionsButtons) {
+              <div class="p-d-flex p-ai-end">
+                <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
+                <p-skeleton size="2rem" styleClass="p-mr-2"></p-skeleton>
+              </div>
+            }
 
-          @if (!isLoading && header.typeColumn === typeColumns.String) {
-            <span>{{row[header.fieldName]}}</span>
-          }
-          @if (!isLoading && header.typeColumn === typeColumns.Currency) {
-            <span
-            >{{row[header.fieldName] | currency}}</span>
-          }
-          @if (!isLoading && header.typeColumn === typeColumns.Boolean) {
-            <span>
-              <p-checkbox name="checkbox-row" [value]="row[header.fieldName]" [(ngModel)]="row[header.fieldName]"
-                [binary]="true" [disabled]="header.isDisabled || false"
-                (onChange)="header.callback ? header.callback(row) : null">
-              </p-checkbox>
-            </span>
-          }
-          @if (!isLoading && header.typeColumn === typeColumns.Date) {
-            <span
-            >{{row[header.fieldName] | date: 'short'}}</span>
-          }
-          @if (!isLoading && header.typeColumn === typeColumns.ActionsButtons) {
-            <span>
-              <button pButton pRipple type="button" class="p-mr-2 p-button-sm"
-              (click)="onEditRow(row, $event)"><i class="pi pi-pencil" pButtonIcon></i></button>
-              <button pButton pRipple type="button" class="p-button-danger p-button-sm"
-              (click)="onDeleteRow(row,$event)"><i class="pi pi-trash" pButtonIcon></i></button>
-            </span>
-          }
+            @if (!isLoading && header.typeColumn === typeColumns.String) {
+              <span>{{row[header.fieldName]}}</span>
+            }
+            @if (!isLoading && header.typeColumn === typeColumns.Currency) {
+              <span>{{row[header.fieldName] | currency}}</span>
+            }
+            @if (!isLoading && header.typeColumn === typeColumns.Boolean) {
+              <span>
+                <p-checkbox name="checkbox-row" [value]="row[header.fieldName]" [(ngModel)]="row[header.fieldName]"
+                  [binary]="true" [disabled]="header.isDisabled || false"
+                  (onChange)="header.callback ? header.callback(row) : null">
+                </p-checkbox>
+              </span>
+            }
+            @if (!isLoading && header.typeColumn === typeColumns.Date) {
+              <span>{{row[header.fieldName] | date: 'short'}}</span>
+            }
+            @if (!isLoading && header.typeColumn === typeColumns.ActionsButtons) {
+              <span>
+                <button pButton pRipple type="button" class="p-mr-2 p-button-sm"
+                (click)="onEditRow(row, $event)"><i class="pi pi-pencil" pButtonIcon></i></button>
+                <button pButton pRipple type="button" class="p-button-danger p-button-sm"
+                (click)="onDeleteRow(row,$event)"><i class="pi pi-trash" pButtonIcon></i></button>
+              </span>
+            }
+          </td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+      <tr>
+        <td [attr.colspan]="headers.length" style="text-align: center;">
+          Não há itens para exibir...
         </td>
-      }
-    </tr>
-  </ng-template>
-  <ng-template #emptymessage>
-    <tr>
-      <td [attr.colspan]="headers.length" style="text-align: center;">
-        Não há itens para exibir...
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+      </tr>
+    </ng-template>
+  </p-table>
+} @else {
+  <p-dataview [value]="tableValue" [paginator]="true" [rows]="pageSize"
+    [emptyMessage]="'Não há itens para exibir...'">
+    <ng-template #list let-items>
+      <div class="dataview-list">
+        @for (row of items; track row; let i = $index) {
+          <div class="dataview-card">
+            @if (isLoading) {
+              <div class="card-body">
+                <p-skeleton width="60%" height="1rem" styleClass="p-mb-2"></p-skeleton>
+                <p-skeleton width="80%" height="1rem" styleClass="p-mb-2"></p-skeleton>
+                <p-skeleton width="40%" height="1rem"></p-skeleton>
+              </div>
+            } @else {
+              <div class="card-body">
+                @for (header of dataHeaders; track header) {
+                  <div class="card-field">
+                    <span class="card-label">{{ header.labelColumn }}</span>
+                    @if (header.typeColumn === typeColumns.String) {
+                      <span class="card-value">{{ row[header.fieldName] }}</span>
+                    }
+                    @if (header.typeColumn === typeColumns.Currency) {
+                      <span class="card-value">{{ row[header.fieldName] | currency }}</span>
+                    }
+                    @if (header.typeColumn === typeColumns.Boolean) {
+                      <span class="card-value">
+                        <p-checkbox name="checkbox-mobile" [value]="row[header.fieldName]" [(ngModel)]="row[header.fieldName]"
+                          [binary]="true" [disabled]="header.isDisabled || false"
+                          (onChange)="header.callback ? header.callback(row) : null">
+                        </p-checkbox>
+                      </span>
+                    }
+                    @if (header.typeColumn === typeColumns.Date) {
+                      <span class="card-value">{{ row[header.fieldName] | date: 'short' }}</span>
+                    }
+                  </div>
+                }
+              </div>
+              @if (hasActions) {
+                <div class="card-actions">
+                  <button pButton pRipple type="button" class="p-button-sm p-button-text"
+                    (click)="onEditRow(row, $event)"><i class="pi pi-pencil" pButtonIcon></i></button>
+                  <button pButton pRipple type="button" class="p-button-danger p-button-sm p-button-text"
+                    (click)="onDeleteRow(row, $event)"><i class="pi pi-trash" pButtonIcon></i></button>
+                </div>
+              }
+            }
+          </div>
+        }
+      </div>
+    </ng-template>
+  </p-dataview>
+}

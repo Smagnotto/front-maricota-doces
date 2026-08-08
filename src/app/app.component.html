@@ -1,6 +1,8 @@
 <div class="layout-wrapper">
   @if (isAuthenticated) {
-    <app-topbar (menuButtonClick)="onMenuButtonClick()"></app-topbar>
+    <app-topbar (menuButtonClick)="onMenuButtonClick()"
+               [updateAvailable]="updateAvailable"
+               (updateApp)="applyUpdate()"></app-topbar>
   }
   @if (isAuthenticated) {
     <app-menu [active]="menuActive" (onClickMenus)="hideMenu()"></app-menu>

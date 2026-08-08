@@ -189,6 +189,17 @@
   background: linear-gradient(to bottom, #141d26, #5a6067);
 }
 
+.update-btn {
+  color: var(--primary-color) !important;
+  border-bottom-color: var(--primary-color) !important;
+  animation: pulse-update 2s ease-in-out infinite;
+}
+
+@keyframes pulse-update {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 @media screen and (max-width: 960px) {
   .layout-wrapper.layout-news-active .layout-content {
     padding-top: 180px;

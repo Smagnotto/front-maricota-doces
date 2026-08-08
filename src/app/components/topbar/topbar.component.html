@@ -4,6 +4,13 @@
   </a>
 
   <ul class="topbar-menu">
+    @if (updateAvailable) {
+      <li>
+        <a class="update-btn" (click)="updateApp.emit()" title="Nova versão disponível — clique para atualizar">
+          <i class="pi pi-sync" aria-hidden="true" style="font-size: 1rem"></i>
+        </a>
+      </li>
+    }
     @if (pushSupported) {
       <li>
         <a (click)="togglePush()" [title]="pushSubscribed ? 'Desativar notificacoes' : 'Ativar notificacoes'">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ApplicationRef, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
@@ -59,6 +59,8 @@ export class ListaInsumosComponent implements OnInit {
   ];
   filtroAtivo: string = 'todos';
 
+  private appRef = inject(ApplicationRef);
+
   constructor(
     private service: InsumoService,
     private confirmationService: ConfirmationService,
@@ -78,9 +80,17 @@ export class ListaInsumosComponent implements OnInit {
     this.isLoading = true;
     const ativo = this.filtroAtivo === 'todos' ? undefined : this.filtroAtivo === 'ativos';
 
-    this.service.getAllInsumos(ativo).subscribe((produtos: Insumo[]) => {
-      this.produtos = produtos;
-      this.isLoading = false;
+    this.service.getAllInsumos(ativo).subscribe({
+      next: (produtos: Insumo[]) => {
+        this.produtos = produtos;
+        this.isLoading = false;
+        this.appRef.tick();
+      },
+      error: (err) => {
+        console.error('Erro ao carregar insumos:', err);
+        this.isLoading = false;
+        this.appRef.tick();
+      }
     });
   }
 

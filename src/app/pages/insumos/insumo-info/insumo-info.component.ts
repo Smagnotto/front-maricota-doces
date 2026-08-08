@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ApplicationRef, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -15,6 +15,8 @@ import { tiposInsumosOptions, TiposInsumos } from '../domain/tipos-insumos';
     standalone: false
 })
 export class InsumoInfoComponent implements OnInit {
+  private appRef = inject(ApplicationRef);
+
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -52,8 +54,12 @@ export class InsumoInfoComponent implements OnInit {
   }
 
   private getInsumo(id: number): void {
-    this.service.getInsumoById(id).subscribe((response) => {
-      this.fillForm(response);
+    this.service.getInsumoById(id).subscribe({
+      next: (response) => {
+        this.fillForm(response);
+        this.appRef.tick();
+      },
+      error: (err) => console.error('Erro ao carregar insumo:', err)
     });
   }
 
@@ -102,14 +108,17 @@ export class InsumoInfoComponent implements OnInit {
       if (!insumo.id) subscribeApi = this.service.saveInsumo(insumo);
       else subscribeApi = this.service.updateInsumo(insumo);
 
-      subscribeApi.subscribe((response) => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Insumo salvo',
-          detail: 'O insumo foi salvo com sucesso.',
-        });
-
-        setTimeout(() => this.goBack(), 1000);
+      subscribeApi.subscribe({
+        next: (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Insumo salvo',
+            detail: 'O insumo foi salvo com sucesso.',
+          });
+          this.appRef.tick();
+          setTimeout(() => this.goBack(), 1000);
+        },
+        error: (err) => console.error('Erro ao salvar insumo:', err)
       });
     }
     form.markAllAsTouched();

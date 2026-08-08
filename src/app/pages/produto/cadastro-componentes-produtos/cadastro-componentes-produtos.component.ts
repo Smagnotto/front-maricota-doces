@@ -118,7 +118,7 @@ export class CadastroComponentesProdutosComponent implements OnInit {
 
         this.formCadastroComponente.markAllAsTouched();
       } else {
-        this.cadastroProdutoService.cadastroProduto.componentes.push(componente);
+        this.cadastroProdutoService.cadastroProduto.componentes = [...this.cadastroProdutoService.cadastroProduto.componentes, componente];
 
         this.resetForm();
         this.suggestions = [];

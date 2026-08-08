@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/pages/login/service/login.service';
 import { PushNotificationService } from 'src/app/core/services/push-notification.service';
@@ -14,7 +14,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
   private pushService = inject(PushNotificationService);
   private pushSub: Subscription;
 
+  @Input() updateAvailable = false;
   @Output() menuButtonClick = new EventEmitter<void>();
+  @Output() updateApp = new EventEmitter<void>();
 
   pushSupported = false;
   pushSubscribed = false;

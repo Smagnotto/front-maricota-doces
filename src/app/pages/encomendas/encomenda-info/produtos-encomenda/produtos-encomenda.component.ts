@@ -107,7 +107,7 @@ export class ProdutosEncomendaComponent implements OnInit {
 
         this.formProdutos.markAllAsTouched();
       } else {
-        this.produtosVinculados.push(produto);
+        this.produtosVinculados = [...this.produtosVinculados, produto];
         this.onSelectProduto.emit(produto);
 
         this.formProdutos.reset({ quantidadeProduto: 0, precoProduto: 0 });

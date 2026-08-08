@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ApplicationRef, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
@@ -60,6 +60,8 @@ export class ListaProdutosComponent implements OnInit {
   ];
   filtroAtivo: string = 'todos';
 
+  private appRef = inject(ApplicationRef);
+
   constructor(
     private service: ProdutoService,
     private route: ActivatedRoute,
@@ -80,9 +82,17 @@ export class ListaProdutosComponent implements OnInit {
     this.isLoading = true;
     const ativo = this.filtroAtivo === 'todos' ? undefined : this.filtroAtivo === 'ativos';
 
-    this.service.getAllProdutos(ativo).subscribe((produtos: ListaProduto[]) => {
-      this.produtos = produtos;
-      this.isLoading = false;
+    this.service.getAllProdutos(ativo).subscribe({
+      next: (produtos: ListaProduto[]) => {
+        this.produtos = produtos;
+        this.isLoading = false;
+        this.appRef.tick();
+      },
+      error: (err) => {
+        console.error('Erro ao carregar produtos:', err);
+        this.isLoading = false;
+        this.appRef.tick();
+      }
     });
   }
 

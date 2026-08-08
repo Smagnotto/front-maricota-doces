@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ApplicationRef, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { ConfiguracoesService } from './services/configuracoes.service';
     standalone: false
 })
 export class ConfiguracoesComponent implements OnInit, OnDestroy {
+  private appRef = inject(ApplicationRef);
   private pushSub: Subscription;
 
   pushSupported = false;
@@ -30,8 +31,12 @@ export class ConfiguracoesComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    this.service.getConfiguracoes().subscribe((response) => {
-      this.margemPercentual?.setValue(response.margemPercentual);
+    this.service.getConfiguracoes().subscribe({
+      next: (response) => {
+        this.margemPercentual?.setValue(response.margemPercentual);
+        this.appRef.tick();
+      },
+      error: (err) => console.error('Erro ao carregar configurações:', err)
     });
 
     this.pushSupported = this.pushService.isSupported;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -21,6 +21,8 @@ import { UtilService } from 'src/app/_helpers/utilService';
 })
 
 export class ClientesInfoComponent implements OnInit {
+  private appRef = inject(ApplicationRef);
+
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -126,8 +128,12 @@ export class ClientesInfoComponent implements OnInit {
   }
 
   private getCliente(id: number): void {
-    this.service.getClienteById(id).subscribe((response) => {
-      this.fillForm(response);
+    this.service.getClienteById(id).subscribe({
+      next: (response) => {
+        this.fillForm(response);
+        this.appRef.tick();
+      },
+      error: (err) => console.error('Erro ao carregar cliente:', err)
     });
   }
 
@@ -191,14 +197,17 @@ export class ClientesInfoComponent implements OnInit {
       if (!Cliente.id) subscribeApi = this.service.saveCliente(Cliente);
       else subscribeApi = this.service.updateCliente(Cliente);
 
-      subscribeApi.subscribe(() => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Cliente salvo',
-          detail: 'O cliente foi salvo com sucesso.',
-        });
-
-        setTimeout(() => this.goBack(), 1000);
+      subscribeApi.subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Cliente salvo',
+            detail: 'O cliente foi salvo com sucesso.',
+          });
+          this.appRef.tick();
+          setTimeout(() => this.goBack(), 1000);
+        },
+        error: (err) => console.error('Erro ao salvar cliente:', err)
       });
     }
     form.markAllAsTouched();
@@ -258,7 +267,7 @@ export class ClientesInfoComponent implements OnInit {
 
         this.formEndereco.markAllAsTouched();
       } else {
-        this.enderecosLinked.push(endereco)
+        this.enderecosLinked = [...this.enderecosLinked, endereco];
         this.resetFormEndereco();
       }
     } else {

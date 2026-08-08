@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TableHeader } from './model/table-header-responsive';
 import { TypeColumns } from './model/type-columns';
 
@@ -19,6 +19,7 @@ export class TableResponsiveComponent implements OnInit {
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
 
   typeColumns = TypeColumns;
+  isMobile = false;
 
   skeletonRows: any[] = [];
 
@@ -26,10 +27,28 @@ export class TableResponsiveComponent implements OnInit {
 
   ngOnInit(): void {
     this.skeletonRows = Array.from({ length: this.pageSize }, () => ({}));
+    this.checkMobile();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobile();
+  }
+
+  private checkMobile() {
+    this.isMobile = window.innerWidth <= 640;
   }
 
   get tableValue(): any[] {
     return this.isLoading ? this.skeletonRows : this.data;
+  }
+
+  get dataHeaders(): TableHeader[] {
+    return this.headers.filter(h => h.typeColumn !== TypeColumns.ActionsButtons);
+  }
+
+  get hasActions(): boolean {
+    return this.headers.some(h => h.typeColumn === TypeColumns.ActionsButtons);
   }
 
   onEditRow(row: any, event: Event) {
