@@ -15,7 +15,7 @@ export class ClienteSupabaseService extends ClienteService {
     if (ativo !== undefined) {
       query = query.eq('ativo', ativo);
     }
-    return from(query.order('nome')).pipe(
+    return this.supabase.fromQuery(query.order('nome')).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as Cliente[];
@@ -25,7 +25,7 @@ export class ClienteSupabaseService extends ClienteService {
   }
 
   getClienteById(id: number): Observable<Cliente> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client
         .from('clientes')
         .select('id, nome, ativo, enderecos (id, logradouro, cep, complemento, numero)')
@@ -41,7 +41,7 @@ export class ClienteSupabaseService extends ClienteService {
   }
 
   getClienteByNome(nome: string): Observable<Cliente[]> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('clientes').select('*').ilike('nome', `%${nome}%`)
     ).pipe(
       map(({ data, error }) => {
@@ -54,7 +54,7 @@ export class ClienteSupabaseService extends ClienteService {
 
   saveCliente(cliente: Cliente): Observable<Cliente> {
     const { id, enderecos, ...payload } = cliente;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('clientes').insert(payload).select().single()
     ).pipe(
       switchMap(({ data, error }) => {
@@ -73,12 +73,12 @@ export class ClienteSupabaseService extends ClienteService {
 
   updateCliente(cliente: Cliente): Observable<Cliente> {
     const { id, enderecos, ...payload } = cliente;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('clientes').update(payload).eq('id', id).select().single()
     ).pipe(
       switchMap(({ data, error }) => {
         if (error) throw error;
-        return from(
+        return this.supabase.fromQuery(
           this.supabase.client.from('enderecos').delete().eq('cliente_id', id)
         ).pipe(
           switchMap(() => {
@@ -96,10 +96,10 @@ export class ClienteSupabaseService extends ClienteService {
   }
 
   deleteCliente(id: number): Observable<Cliente> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('enderecos').delete().eq('cliente_id', id)
     ).pipe(
-      switchMap(() => from(
+      switchMap(() => this.supabase.fromQuery(
         this.supabase.client.from('clientes').delete().eq('id', id).select().single()
       )),
       map(({ data, error }) => {
@@ -118,9 +118,9 @@ export class ClienteSupabaseService extends ClienteService {
       complemento: e.complemento || null,
       numero: e.numero,
     }));
-    return from(
-      this.supabase.client.from('enderecos').insert(payload).then(() => undefined)
-    );
+    return this.supabase.fromQuery(
+      this.supabase.client.from('enderecos').insert(payload)
+    ).pipe(map(() => undefined));
   }
 
   private handleError(error: any) {

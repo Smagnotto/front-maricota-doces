@@ -31,6 +31,7 @@ import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @NgModule({
   exports: [
@@ -64,8 +65,9 @@ import { InputIconModule } from 'primeng/inputicon';
     FloatLabelModule,
     PasswordModule,
     RippleModule,
-    IconFieldModule, 
+    IconFieldModule,
     InputIconModule,
+    ToggleSwitchModule,
   ],
   providers: [ConfirmationService, MessageService],
 })

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { SupabaseService } from 'src/app/core/supabase/supabase.service';
 import { Insumo } from '../domain/insumo';
@@ -14,7 +14,7 @@ export class InsumoSupabaseService extends InsumoService {
     if (ativo !== undefined) {
       query = query.eq('ativo', ativo);
     }
-    return from(query.order('nome')).pipe(
+    return this.supabase.fromQuery(query.order('nome')).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as Insumo[];
@@ -24,7 +24,7 @@ export class InsumoSupabaseService extends InsumoService {
   }
 
   getInsumoByNome(nome: string): Observable<Insumo[]> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('insumos').select('*').ilike('nome', `%${nome}%`)
     ).pipe(
       map(({ data, error }) => {
@@ -36,7 +36,7 @@ export class InsumoSupabaseService extends InsumoService {
   }
 
   getInsumoById(id: number): Observable<Insumo> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('insumos').select('*').eq('id', id).single()
     ).pipe(
       map(({ data, error }) => {
@@ -49,7 +49,7 @@ export class InsumoSupabaseService extends InsumoService {
 
   saveInsumo(insumo: Insumo): Observable<Insumo> {
     const { id, ...payload } = insumo;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('insumos').insert(payload).select().single()
     ).pipe(
       map(({ data, error }) => {
@@ -62,7 +62,7 @@ export class InsumoSupabaseService extends InsumoService {
 
   updateInsumo(insumo: Insumo): Observable<Insumo> {
     const { id, ...payload } = insumo;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('insumos').update(payload).eq('id', id).select().single()
     ).pipe(
       map(({ data, error }) => {
@@ -74,7 +74,7 @@ export class InsumoSupabaseService extends InsumoService {
   }
 
   deleteInsumo(id: number): Observable<Insumo> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('insumos').delete().eq('id', id).select().single()
     ).pipe(
       map(({ data, error }) => {

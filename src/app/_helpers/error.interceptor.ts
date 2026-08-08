@@ -10,7 +10,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError(err => {
       if (err.status === 401) {
         loginService.logout();
-        location.reload();
       }
       const error = err.error?.message || err.statusText;
       return throwError(() => error);

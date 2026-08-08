@@ -19,17 +19,12 @@ import ptBr from '@angular/common/locales/pt';
 import { LoginModule } from './pages/login/login.module';
 import { authInterceptor } from './_helpers/auth.interceptor';
 import { errorInterceptor } from './_helpers/error.interceptor';
-import { initializeApp } from 'firebase/app';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { environment } from 'src/environments/environment';
 import { backendProviders } from './core/providers/backend.providers';
 
 registerLocaleData(ptBr);
-
-if (environment.backendType === 'java') {
-  initializeApp(environment.firebase);
-}
 
 @NgModule({
   declarations: [AppComponent],

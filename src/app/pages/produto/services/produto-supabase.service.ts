@@ -20,7 +20,7 @@ export class ProdutoSupabaseService extends ProdutoService {
     if (ativo !== undefined) {
       query = query.eq('ativo', ativo);
     }
-    return from(query.order('nome')).pipe(
+    return this.supabase.fromQuery(query.order('nome')).pipe(
       map(({ data, error }) => {
         if (error) throw error;
         return data as ListaProduto[];
@@ -30,7 +30,7 @@ export class ProdutoSupabaseService extends ProdutoService {
   }
 
   getProdutoById(id: number): Observable<Produto> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client
         .from('produtos')
         .select(`
@@ -55,7 +55,7 @@ export class ProdutoSupabaseService extends ProdutoService {
   }
 
   getProdutoByNome(nome: string): Observable<Produto[]> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('produtos').select('*').ilike('nome', `%${nome}%`)
     ).pipe(
       map(({ data, error }) => {
@@ -68,7 +68,7 @@ export class ProdutoSupabaseService extends ProdutoService {
 
   saveProduto(produto: Produto): Observable<Produto> {
     const { id, insumos, componentes, margemPercentual, ...payload } = produto;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('produtos')
         .insert({ ...payload, margem_percentual: margemPercentual })
         .select()
@@ -87,7 +87,7 @@ export class ProdutoSupabaseService extends ProdutoService {
 
   updateProduto(produto: Produto): Observable<Produto> {
     const { id, insumos, componentes, margemPercentual, ...payload } = produto;
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.from('produtos')
         .update({ ...payload, margem_percentual: margemPercentual })
         .eq('id', id)
@@ -107,7 +107,7 @@ export class ProdutoSupabaseService extends ProdutoService {
 
   deleteProduto(id: number): Observable<Produto> {
     return this.deleteRelations(id).pipe(
-      switchMap(() => from(
+      switchMap(() => this.supabase.fromQuery(
         this.supabase.client.from('produtos').delete().eq('id', id).select().single()
       )),
       map(({ data, error }) => {
@@ -119,7 +119,7 @@ export class ProdutoSupabaseService extends ProdutoService {
   }
 
   simularProduto(produto: Produto): Observable<Precificacao> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client.rpc('simular_produto', {
         p_insumos: produto.insumos,
         p_componentes: produto.componentes,

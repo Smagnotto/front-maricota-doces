@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { SupabaseService } from 'src/app/core/supabase/supabase.service';
 import { Configuracoes } from '../domain/configuracoes';
@@ -10,7 +10,7 @@ export class ConfiguracoesSupabaseService extends ConfiguracoesService {
   private supabase = inject(SupabaseService);
 
   getConfiguracoes(): Observable<Configuracoes> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client
         .from('configuracoes')
         .select('margem_percentual')
@@ -26,7 +26,7 @@ export class ConfiguracoesSupabaseService extends ConfiguracoesService {
   }
 
   updateConfiguracoes(configuracoes: Configuracoes): Observable<Configuracoes> {
-    return from(
+    return this.supabase.fromQuery(
       this.supabase.client
         .from('configuracoes')
         .update({ margem_percentual: configuracoes.margemPercentual })

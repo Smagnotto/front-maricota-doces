@@ -27,3 +27,26 @@
     </div>
   </p-card>
 </form>
+
+@if (pushSupported) {
+  <p-card styleClass="p-mt-3">
+    <div class="p-col-12 p-md-12 p-d-flex p-jc-start">
+      <h5>Notificações</h5>
+    </div>
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-d-flex p-ai-center p-gap-2">
+        <p-toggleswitch
+          [ngModel]="pushSubscribed"
+          (ngModelChange)="togglePush()"
+          [disabled]="pushLoading">
+        </p-toggleswitch>
+        <label class="p-ml-2">
+          @if (pushLoading) {
+            <i class="pi pi-spin pi-spinner" style="margin-right: 0.5rem"></i>
+          }
+          {{ pushSubscribed ? 'Notificações ativadas' : 'Notificações desativadas' }}
+        </label>
+      </div>
+    </div>
+  </p-card>
+}
