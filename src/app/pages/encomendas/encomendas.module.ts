@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableResponsiveModule } from 'src/app/components/table-responsive/table-responsive.module';
 import { ListaEncomendasComponent } from './lista-encomendas/lista-encomendas.component';
 import { EncomendaInfoComponent } from './encomenda-info/encomenda-info.component';
-import { ClienteService } from '../clientes/services/cliente.service';
 import { ProdutosEncomendaComponent } from './encomenda-info/produtos-encomenda/produtos-encomenda.component';
 import { ClienteEncomendaComponent } from './encomenda-info/cliente-encomenda/cliente-encomenda.component';
 
@@ -22,6 +21,6 @@ import { ClienteEncomendaComponent } from './encomenda-info/cliente-encomenda/cl
     FormsModule,
     TableResponsiveModule,
   ],
-  providers: [ClienteService],
+  providers: [],
 })
 export class EncomendasModule {}

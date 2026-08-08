@@ -1,31 +1,34 @@
-import { Component, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastMessageOptions } from 'primeng/api';
 import { LoginService } from './service/login.service';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+  standalone: false,
 })
 export class LoginComponent implements OnInit {
-  formLogin: UntypedFormGroup = new UntypedFormGroup({
+  private loginService = inject(LoginService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  formLogin = new UntypedFormGroup({
     email: new UntypedFormControl('', [Validators.required, Validators.email]),
     password: new UntypedFormControl('', [Validators.required]),
   });
 
-  error: boolean = false;
-  isLoading: boolean = false;
+  error = false;
+  isLoading = false;
   returnUrl: string;
 
   mensagem: ToastMessageOptions[] = [
-    { severity: 'error', summary: 'Erro', detail: 'Usuário ou senha inválida' },
+    { severity: 'error', summary: 'Erro', detail: 'Usuario ou senha invalida' },
   ];
 
-  constructor(private loginService: LoginService, private router: Router, private route: ActivatedRoute) {
+  constructor() {
     if (this.loginService.userValue) {
       this.router.navigate(['/']);
     }

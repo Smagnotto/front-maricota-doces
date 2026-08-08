@@ -1,74 +1,11 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, delay, retry } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 import { Insumo } from '../domain/insumo';
 
-@Injectable({
-  providedIn: 'root',
-})
-
-export class InsumoService {
-  constructor(private http: HttpClient) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-
-  private url: string = environment.baseUrl;
-  private path: string = 'v1/insumos'
-
-  getAllInsumos(ativo?: boolean): Observable<Insumo[]> {
-    const query = ativo === undefined ? '' : `?ativo=${ativo}`;
-
-    return this.http
-      .get<Insumo[]>(`${this.url}/${this.path}${query}`)
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  getInsumoById(id: number): Observable<Insumo> {
-    return this.http
-      .get<Insumo>(`${this.url}/${this.path}/${id}`)
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  saveInsumo(insumo: Insumo): Observable<Insumo> {
-    return this.http
-      .post<Insumo>(
-        `${this.url}/${this.path}`,
-        JSON.stringify(insumo),
-        this.httpOptions
-      )
-      .pipe(retry(2), catchError(this.handleError));
-  }
-
-  updateInsumo(insumo: Insumo): Observable<Insumo> {
-    return this.http
-      .put<Insumo>(
-        `${this.url}/${this.path}/${insumo.id}`,
-        JSON.stringify(insumo),
-        this.httpOptions
-      )
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  deleteInsumo(id: number) {
-    return this.http
-      .delete<Insumo>(`${this.url}/${this.path}/${id}`, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Erro ocorreu no lado do client
-      errorMessage = error.error.message;
-    } else {
-      // Erro ocorreu no lado do servidor
-      errorMessage =
-        `Código do erro: ${error.status}, ` + `menssagem: ${error.message}`;
-    }
-    return throwError(errorMessage);
-  }
+export abstract class InsumoService {
+  abstract getAllInsumos(ativo?: boolean): Observable<Insumo[]>;
+  abstract getInsumoByNome(nome: string): Observable<Insumo[]>;
+  abstract getInsumoById(id: number): Observable<Insumo>;
+  abstract saveInsumo(insumo: Insumo): Observable<Insumo>;
+  abstract updateInsumo(insumo: Insumo): Observable<Insumo>;
+  abstract deleteInsumo(id: number): Observable<Insumo>;
 }

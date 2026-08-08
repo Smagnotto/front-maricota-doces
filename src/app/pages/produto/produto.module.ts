@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaProdutosComponent } from './lista/lista-produtos.component';
 import { ProdutosRoutingModule } from './produto-routing.module';
 import { PrimeNGModule } from 'src/app/primeng.module';
-import { ProdutoService } from 'src/app/pages/produto/services/produto.service';
 import { ProdutosInfoComponent } from './produtos-info/produtos-info.component';
 import { ProdutosStepsComponent } from './produtos-steps/produtos-steps.component';
 import { CadastroInsumosProdutosComponent } from './cadastro-insumos-produtos/cadastro-insumos-produtos.component';
@@ -25,6 +24,6 @@ import { CadastroProdutoService } from './services/cadastro-produtos.service';
     TableResponsiveModule,
     ValorExibidoModule
   ],
-  providers: [ProdutoService, CadastroProdutoService],
+  providers: [CadastroProdutoService],
 })
 export class ProdutoModule {}

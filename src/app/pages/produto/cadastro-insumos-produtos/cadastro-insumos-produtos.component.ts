@@ -3,6 +3,7 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { forkJoin } from 'rxjs';
 import { TableHeader } from 'src/app/components/table-responsive/model/table-header-responsive';
 import { TypeColumns } from 'src/app/components/table-responsive/model/type-columns';
 import { Insumo } from '../../insumos/domain/insumo';
@@ -44,8 +45,10 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   tiposInsumosOptions: TiposInsumos[] = tiposInsumosOptions
 
-  insumos: Insumo[];
-  suggestions: any[];
+  // Cache dos insumos já conhecidos (retornados pela busca por nome ou já vinculados
+  // ao produto), usado para obter tipo/preço/ativo sem precisar carregar o catálogo inteiro.
+  insumosCatalogo: { [id: number]: Insumo } = {};
+  suggestions: Insumo[];
 
   headersInsumos: TableHeader[] = [
     {
@@ -81,10 +84,14 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.service.getAllInsumos(true).subscribe((insumos: Insumo[]) => {
-      this.insumos = insumos;
-      this.recalcularValoresInsumosVinculados();
-    });
+    const idsVinculados = this.cadastroProdutoService.cadastroProduto.insumos.map((x) => x.id);
+
+    if (idsVinculados.length > 0) {
+      forkJoin(idsVinculados.map((id) => this.service.getInsumoById(id))).subscribe((insumos: Insumo[]) => {
+        insumos.forEach((insumo) => (this.insumosCatalogo[insumo.id] = insumo));
+        this.recalcularValoresInsumosVinculados();
+      });
+    }
 
     this.resetForm();
   }
@@ -92,7 +99,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   private recalcularValoresInsumosVinculados(): void {
     this.cadastroProdutoService.cadastroProduto.insumos = this.cadastroProdutoService.cadastroProduto.insumos.map(
       (insumoVinculado) => {
-        const insumoCatalogo = this.insumos?.find((x) => x.id === insumoVinculado.id);
+        const insumoCatalogo = this.insumosCatalogo[insumoVinculado.id];
 
         if (!insumoCatalogo) return insumoVinculado;
 
@@ -111,20 +118,17 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   search(event: any) {
-    let filtered: any[] = [];
-    let query = event.query;
-    for (let i = 0; i < this.insumos.length; i++) {
-      let insumo = this.insumos[i];
-      if (insumo.nome.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(insumo);
-      }
-    }
+    const query = event.query;
 
-    this.suggestions = filtered;
+    this.service.getInsumoByNome(query).subscribe((insumos: Insumo[]) => {
+      insumos.forEach((insumo) => (this.insumosCatalogo[insumo.id] = insumo));
+      this.suggestions = insumos;
+    });
   }
 
   selecionaInsumo(event: AutoCompleteSelectEvent): void {
     const insumo = event.value as Insumo;
+    this.insumosCatalogo[insumo.id] = insumo;
     this.insumoAtivo?.setValue(insumo.ativo);
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);
@@ -142,7 +146,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
 
   vincularInsumo() {
     if (this.formCadastroInsumo.valid) {
-      const insumoCatalogo = this.insumos?.find((x) => x.id === this.idInsumo?.value);
+      const insumoCatalogo = this.insumosCatalogo[this.idInsumo?.value];
 
       const quantidadeNaUnidadeDoInsumo = converterQuantidade(
         this.quantidadeInsumo?.value,
@@ -198,7 +202,7 @@ export class CadastroInsumosProdutosComponent implements OnInit {
   }
 
   onEdit(insumo: InsumoProduto) {
-    const insumoCatalogo = this.insumos?.find((x) => x.id === insumo.id);
+    const insumoCatalogo = this.insumosCatalogo[insumo.id];
 
     this.idInsumo?.setValue(insumo.id);
     this.nomeInsumo?.setValue(insumo.nome);

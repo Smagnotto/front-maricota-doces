@@ -1,7 +1,12 @@
 export const environment = {
-  production: false,
+  production: true,
+  backendType: 'supabase' as 'java' | 'supabase',
   baseUrl: "",
   urlViaCep: "https://viacep.com.br/ws/#cep#/json/",
+  supabase: {
+    url: 'https://mvcsotywujkelhlbpksx.supabase.co',
+    anonKey: 'sb_publishable_rnwMPtBuaux7oiqEao8_LA_TUprmytO',
+  },
   firebase: {
     apiKey: "AIzaSyBu4HFRQFGs_yt5rvX963DhoF19rX-qxCE",
     authDomain: "maricota-doces-81756.firebaseapp.com",

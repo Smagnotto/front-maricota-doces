@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth.guard';
+import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
@@ -17,13 +17,13 @@ const routes: Routes = [
     path: 'produtos',
     loadChildren: () =>
       import('./pages/produto/produto.module').then((m) => m.ProdutoModule),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'insumos',
     loadChildren: () =>
       import('./pages/insumos/insumos.module').then((m) => m.InsumoModule),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'encomendas',
@@ -31,7 +31,7 @@ const routes: Routes = [
       import('./pages/encomendas/encomendas.module').then(
         (m) => m.EncomendasModule
       ),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: 'clientes',
@@ -39,7 +39,7 @@ const routes: Routes = [
       import('./pages/clientes/cliente.module').then(
         (m) => m.ClienteModule
       ),
-    canActivate: [AuthGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'configuracoes',
@@ -47,7 +47,7 @@ const routes: Routes = [
       import('./pages/configuracoes/configuracoes.module').then(
         (m) => m.ConfiguracoesModule
       ),
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: '**',

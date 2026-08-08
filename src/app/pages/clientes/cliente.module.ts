@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClienteService } from './services/cliente.service';
 import { ListaClientesComponent } from './lista-clientes/lista-clientes.component';
 import { ClienteRoutingModule } from './cliente-routing.module';
 import { PrimeNGModule } from 'src/app/primeng.module';
@@ -18,6 +17,6 @@ import { ClientesInfoComponent } from './clientes-info/clientes-info.component';
     FormsModule,
     TableResponsiveModule
   ],
-  providers: [ClienteService]
+  providers: []
 })
 export class ClienteModule { }
