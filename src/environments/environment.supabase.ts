@@ -15,5 +15,6 @@ export const environment = {
     messagingSenderId: "",
     appId: ""
   },
+  vapidPublicKey: 'BEVz8OzYiARhh1UMdgL-D7oFbmDn_8k4E1_EONToOo25CfcbfX8Ablo7KjKrAPsJzXYRxZ1kS49FeqN8TKmk2s4',
   primeNgLicense: "eyJpZCI6IjZlY2U3YjU5LTdmM2QtNDljNi04OGI2LTNlYzg3MDRmYzRiYSIsInByb2R1Y3QiOiJwcmltZXVpIiwidGllciI6ImNvbW11bml0eSIsInR5cGUiOiJkZXYiLCJpYXQiOjE3ODMwODY5NjMsImV4cCI6MTgxNDYyMjk2M30.3_J4aA0v-JOAXWVNTfl2aSaNl70P_x0dfZ-VIA81IA-bVmq7W9Mm-Br5fRSKkEOdqXqQuTtImOQ47OrU7bXTAQ"
 };

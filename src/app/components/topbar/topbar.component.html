@@ -4,6 +4,18 @@
   </a>
 
   <ul class="topbar-menu">
+    @if (pushSupported) {
+      <li>
+        <a (click)="togglePush()" [title]="pushSubscribed ? 'Desativar notificacoes' : 'Ativar notificacoes'">
+          @if (pushLoading) {
+            <i class="pi pi-spin pi-spinner" aria-hidden="true" style="font-size: 1rem"></i>
+          } @else {
+            <i class="pi" [class.pi-bell]="pushSubscribed" [class.pi-bell-slash]="!pushSubscribed"
+               aria-hidden="true" style="font-size: 1rem"></i>
+          }
+        </a>
+      </li>
+    }
     <li>
       <a (click)="logout()">
         <i class="pi pi-power-off" aria-hidden="true" style="font-size: 1rem"></i>
